@@ -5,88 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: #f5f7fb;
+    :root{
+      --bg:#f5f7fb; --card:#fff; --ink:#0b1220; --muted:#667085;
+      --navy:#0a2540; --shadow:0 6px 18px rgba(15, 23, 42, .08);
+      --radius:14px;
+      --pos:#16a34a; --neg:#dc2626; --neu:#6b7280;
+      --hi:#ef4444; --med:#f59e0b; --lo:#3b82f6;
+      --chip:#eef2ff;
     }
-
-    header {
-      background: #0a2540;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .container {
-      padding: 15px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 15px;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .kpi-value {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .positive { color: green; }
-    .negative { color: red; }
-    .neutral { color: gray; }
-
-    .tag {
-      padding: 3px 6px;
-      border-radius: 5px;
-      font-size: 12px;
-      color: white;
-    }
-
-    .precio { background: #ff6b6b; }
-    .producto { background: #4dabf7; }
-
-    select {
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
+    *{box-sizing:border-box}
+    body{margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--ink);}
+    header{background:var(--navy); color:#fff; padding:18px 14px;}
+    header .wrap{max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:6px;}
+    header h1{margin:0; font-size:20px;}
+    header .sub{opacity:.9; font-size:13px;}
+    .container{max-width:1100px; margin:0 auto; padding:14px; display:flex; flex-direction:column; gap:12px;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    select{padding:10px 10px; border-radius:10px; border:1px solid #e5e7eb; background:#fff; font-size:14px;}
+    .grid{display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));}
+    .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px;}
+    .card h2{margin:0 0 10px; font-size:16px;}
+    .muted{color:var(--muted); font-size:13px;}
+    .pill{display:inline-flex; align-items:center; gap:6px; background:var(--chip); padding:6px 10px; border-radius:999px; font-size:12px; color:#111827;}
+    .kpi{display:flex; justify-content:space-between; align-items:flex-end; gap:10px;}
+    .kpi .value{font-size:22px; font-weight:700;}
+    .positive{color:var(--pos)} .negative{color:var(--neg)} .neutral{color:var(--neu)}
+    .tag{display:inline-block; padding:4px 8px; border-radius:8px; font-size:12px; color:#fff; text-transform:capitalize;}
+    .precio{background:#ef4444} .producto{background:#3b82f6} .canal{background:#22c55e}
+    .badge{display:inline-block; padding:4px 8px; border-radius:8px; font-size:12px; background:#f3f4f6; color:#111827;}
+    .status-firmado{background:#dcfce7; color:#166534}
+    .status-expirado{background:#fee2e2; color:#991b1b}
+    .status-en{background:#fef9c3; color:#854d0e}
+    .alert{border-left:4px solid var(--hi); background:#fff; padding:12px; border-radius:12px; box-shadow:var(--shadow);}
+    .alert.high{border-left-color:var(--hi)}
+    .alert.medium{border-left-color:var(--med)}
+    .alert.low{border-left-color:var(--lo)}
+    .table{width:100%; border-collapse:collapse;}
+    .table th,.table td{padding:10px; border-bottom:1px solid #eef2f7; text-align:left; font-size:13px; vertical-align:top;}
+    .table th{color:#475569; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.04em;}
+    .imp{outline:2px solid #fde68a; border-radius:12px; padding:10px;}
+    .split{display:grid; grid-template-columns: 1.2fr .8fr; gap:12px;}
+    @media (max-width: 860px){ .split{grid-template-columns:1fr;} header h1{font-size:18px;} }
+    a{color:#2563eb; text-decoration:none}
+    a:hover{text-decoration:underline}
   </style>
 </head>
 
 <body>
-
 <header>
-  <h1>📺 Dashboard TV Iberia</h1>
-  <p id="lastUpdate"></p>
+  <div class="wrap">
+    <h1>📺 Dashboard TV Iberia</h1>
+    <div class="sub" id="lastUpdate">Última actualización: —</div>
+  </div>
 </header>
 
 <div class="container">
 
-  <!-- Filtro -->
-  <select id="countryFilter" onchange="render()">
-    <option value="all">Todos</option>
-    <option value="España">España</option>
-    <option value="Portugal">Portugal</option>
-  </select>
+  <!-- Filtros -->
+  <div class="row">
+    <span class="pill">Filtro</span>
+    <select id="countryFilter" onchange="renderAll()">
+      <option value="all">Todos los países</option>
+      <option value="España">España</option>
+      <option value="Portugal">Portugal</option>
+    </select>
 
-  <!-- KPIs -->
-  <div class="grid" id="kpis"></div>
+    <select id="operatorFilter" onchange="renderAll()">
+      <option value="all">Todos los operadores</option>
+    </select>
 
-  <!-- Cuotas -->
-  <div class="card">
-    <h3>🏆 Cuotas</h3>
-    <ul id="shares"></ul>
+    <span class="muted">Tip: marca como “important:true” en JSON para que salga ⚠</span>
   </div>
 
-  <!-- Noticias -->
+  <!-- ALERTAS -->
+  <div id="alertsBlock" class="grid"></div>
+
+  <div class="split">
+
+    <!-- Comparativa Operadores -->
+    <div class="card">
+      <h2>📌 Comparativa por operador</h2>
+      <div class="muted">Vista rápida: producto TV, posicionamiento, precios, canales, tendencia</div>
+      <div style="height:10px"></div>
+      <div id="operatorsCompare"></div>
+    </div>
+
+    <!-- Top Insights -->
+    <div class="card">
+      <h2>🧠 Top insights</h2>
+      <ul id="topInsights" class="muted" style="margin:0; padding-left:18px;"></ul>
+    </div>
+
+  </div>
+
+  <!-- Noticias + Paramount impact -->
+  <div class="split">
+    <div class="card">
+      <h2>📰 Noticias & movimientos</h2>
+      <div id="newsList"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 Paramount impact</h2>
+      <div class="muted">Solo items con <b>paramountImpact</b> en JSON</div>
+      <div style="height:10px"></div>
+      <div id="paramountImpact"></div>
+    </div>
+  </div>
+
+  <!-- Tracking acuerdos -->
   <div class="card">
+    <h2>📑 Tracking de acuerdos</h2>
+    <div class="muted">Estado, vigencia, canales, owner y link</div>
+    <div style="height:10px"></div>
+    <div id="agreementsTable"></div>
+  </div>
+
+</div>
+
+<script>
+let DATA = null;
+
+fetch('data.json')
+  .then(r => r.json())
+  .then(d => {
+    DATA = d;
+    document.getElementById("lastUpdate").innerText = "Última actualización: " + (d.lastUpdate || "—");
+    populateOperatorFilter();
+    renderAll();
+  });
 
