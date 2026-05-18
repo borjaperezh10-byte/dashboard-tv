@@ -1,38 +1,50 @@
 {
-  "lastUpdate": "8 mayo 2026",
-
   "kpis": {
-    "spain": "Mercado competitivo",
-    "portugal": "4.7M subs (plano)"
+    "spain": "11.4M suscriptores TV",
+    "portugal": "4.7M suscriptores TV"
   },
-
-  "insights": [
-    "Mercado TV maduro en Iberia",
-    "Presión en precios por low cost",
-    "Bundles con OTT son clave"
-  ],
 
   "news": [
     {
-      "title": "Orange impulsa su plataforma TV",
-      "impact": "Movimiento estratégico hacia partners y operadores locales"
+      "title": "El mercado Pay TV en España se mantiene fuerte",
+      "summary": "El pay TV sigue siendo clave pese al crecimiento del streaming.",
+      "link": "https://www.advanced-television.com/2026/01/14/spain-pay-tv-maintains-strength-fast-gains-momentum/"
     },
     {
-      "title": "Movistar revisa precios",
-      "impact": "Refuerza ARPU en entorno competitivo"
+      "title": "Portugal alcanza 4.7M suscriptores TV",
+      "summary": "El crecimiento es el más bajo desde 2006 según ANACOM.",
+      "link": "https://www.broadbandtvnews.com/2026/03/13/portugal-pay-tv-growth-hits-19-year-low-fibre-passes-70/"
     }
   ],
 
-  "agreements": [
+  "insights": [
     {
-      "operator": "Movistar",
-      "status": "En negociación",
-      "notes": "Long form en discusión"
+      "text": "El mercado español combina Pay TV fuerte con FAST y AVOD",
+      "link": "https://www.advanced-television.com/2026/01/14/spain-pay-tv-maintains-strength-fast-gains-momentum/"
     },
     {
-      "operator": "Orange",
-      "status": "Firmado",
-      "notes": "Acuerdo hasta 2028"
+      "text": "Portugal es un mercado maduro con crecimiento mínimo",
+      "link": "https://www.broadbandtvnews.com/2026/03/13/portugal-pay-tv-growth-hits-19-year-low-fibre-passes-70/"
+    }
+  ],
+
+  "spainOperators": [
+    {
+      "name": "Movistar",
+      "desc": "Operador líder con oferta premium y fútbol"
+    },
+    {
+      "name": "+Orange",
+      "desc": "Fuerte crecimiento con bundles y TV flexible"
+    },
+    {
+      "name": "Vodafone",
+      "desc": "Reposicionamiento del producto TV"
+    },
+    {
+      "name": "DIGI",
+      "desc": "Low-cost en expansión con entrada en TV"
     }
   ]
 }
+``
