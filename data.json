@@ -1,0 +1,43 @@
+{
+  "lastUpdate": "8 mayo 2026",
+
+  "kpis": {
+    "spain": {
+      "subs": "Mercado convergente",
+      "growth": "Competitivo",
+      "trend": "neutral"
+    },
+    "portugal": {
+      "subs": "4.7M",
+      "growth": "Plano",
+      "trend": "negative"
+    }
+  },
+
+  "shares": [
+    {"country": "Portugal", "operator": "MEO", "share": "42%"},
+    {"country": "Portugal", "operator": "NOS", "share": "35%"},
+    {"country": "Portugal", "operator": "Vodafone", "share": "19%"}
+  ],
+
+  "news": [
+    {
+      "country": "España",
+      "title": "Orange lanza Vuela TV",
+      "type": "producto",
+      "impact": "Expansión modelo wholesale"
+    },
+    {
+      "country": "España",
+      "title": "Movistar sube precios",
+      "type": "precio",
+      "impact": "Incremento ARPU"
+    }
+  ],
+
+  "insights": [
+    "Mercado TV maduro y sin crecimiento",
+    "Presión en precios por operadores low cost",
+    "TV cada vez más vinculada a bundles con OTT"
+  ]
+}
