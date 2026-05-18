@@ -1,104 +1,29 @@
 {
   "lastUpdate": "8 mayo 2026",
 
-  "operators": [
-    {
-      "country": "España",
-      "name": "Movistar",
-      "tvProduct": "Movistar Plus+",
-      "positioning": "Premium / deporte fuerte",
-      "pricingNotes": "Subidas/ajustes recientes",
-      "channelsNotes": "Relevante para lineup premium",
-      "trend": "neutral"
+  "kpis": {
+    "spain": {
+      "subs": "Mercado convergente"
     },
-    {
-      "country": "España",
-      "name": "MasOrange",
-      "tvProduct": "Orange TV / Orange TV Libre",
-      "positioning": "Bundle + wholesale + OTT",
-      "pricingNotes": "Paquetes flexibles",
-      "channelsNotes": "Foco en paquetes amplios",
-      "trend": "positive"
-    },
-    {
-      "country": "Portugal",
-      "name": "NOS",
-      "tvProduct": "NOS TV",
-      "positioning": "Mainstream / líder #2",
-      "pricingNotes": "Bundle estándar",
-      "channelsNotes": "Lineup clave en PT",
-      "trend": "neutral"
+    "portugal": {
+      "subs": "4.7M"
     }
-  ],
-
-  "alerts": [
-    {
-      "country": "España",
-      "severity": "high",
-      "title": "⚠ Cambio relevante de precios en Movistar",
-      "details": "Afecta packs TV y/o estrategia ARPU",
-      "date": "2026-05-08",
-      "operator": "Movistar",
-      "important": true
-    }
-  ],
+  },
 
   "news": [
     {
-      "country": "España",
-      "operator": "MasOrange",
-      "type": "producto",
-      "title": "Lanzamiento/actualización de plataforma TV",
-      "impact": "Aumenta alcance vía partners / wholesale",
-      "date": "2026-05-08",
-      "important": true,
-      "paramountImpact": {
-        "level": "high",
-        "summary": "Oportunidad de mejorar distribución y packaging de canales Paramount"
-      }
+      "title": "Orange lanza Vuela TV",
+      "impact": "Expansión modelo wholesale"
     },
     {
-      "country": "Portugal",
-      "operator": "NOS",
-      "type": "canal",
-      "title": "Cambio en line-up / HD / reposicionamiento",
-      "impact": "Puede afectar audiencia y valor percibido",
-      "date": "2026-05-07",
-      "important": false,
-      "paramountImpact": {
-        "level": "medium",
-        "summary": "Revisar EPG/posición y obligaciones de visibilidad"
-      }
+      "title": "Movistar sube precios",
+      "impact": "Incremento ARPU"
     }
   ],
 
   "topInsights": [
-    "Mercado TV maduro → el crecimiento viene por churn y bundles",
-    "Presión en precios por low-cost + bundling con OTT",
-    "La clave es packaging/visibilidad (EPG, HD, no-lineal) más que volumen de canales"
-  ],
-
-  "agreements": [
-    {
-      "country": "España",
-      "operator": "Movistar",
-      "status": "en discusión",
-      "type": "PayTV",
-      "start": "2023-04-01",
-      "end": "2026-12-31",
-      "channels": ["Comedy Central", "MTV", "Nickelodeon", "Nick Jr", "MTV 00s"],
-      "owner": "SkyShowtime / Paramount",
-      "notes": "Long form en discusión; revisar no-lineal/entrega",
-      "linkLabel": "Doc/Notas internas",
-      "linkUrl": ""
-    },
-    {
-      "country": "España",
-      "operator": "Orange",
-      "status": "firmado",
-      "type": "PayTV",
-      "start": "2024-10-01",
-      "end": "2028-02-29",
-      "channels": ["Comedy Central", "Nickelodeon", "NickJr", "MTV", "MTV 00s", "MTV Live"],
-      "owner": "SkyShowtime",
-      "notes": "Amendment firmado; incluye marcas/operadoras añadidas",
+    "Mercado maduro",
+    "Presión en precios",
+    "Dominio del bundle"
+  ]
+}
