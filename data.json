@@ -2,28 +2,37 @@
   "lastUpdate": "8 mayo 2026",
 
   "kpis": {
-    "spain": {
-      "subs": "Mercado convergente"
-    },
-    "portugal": {
-      "subs": "4.7M"
-    }
+    "spain": "Mercado competitivo",
+    "portugal": "4.7M subs (plano)"
   },
+
+  "insights": [
+    "Mercado TV maduro en Iberia",
+    "Presión en precios por low cost",
+    "Bundles con OTT son clave"
+  ],
 
   "news": [
     {
-      "title": "Orange lanza Vuela TV",
-      "impact": "Expansión modelo wholesale"
+      "title": "Orange impulsa su plataforma TV",
+      "impact": "Movimiento estratégico hacia partners y operadores locales"
     },
     {
-      "title": "Movistar sube precios",
-      "impact": "Incremento ARPU"
+      "title": "Movistar revisa precios",
+      "impact": "Refuerza ARPU en entorno competitivo"
     }
   ],
 
-  "topInsights": [
-    "Mercado maduro",
-    "Presión en precios",
-    "Dominio del bundle"
+  "agreements": [
+    {
+      "operator": "Movistar",
+      "status": "En negociación",
+      "notes": "Long form en discusión"
+    },
+    {
+      "operator": "Orange",
+      "status": "Firmado",
+      "notes": "Acuerdo hasta 2028"
+    }
   ]
 }
