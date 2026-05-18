@@ -2,27 +2,145 @@
 <html>
 <head>
   <title>Dashboard TV Iberia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f7fb;
+      color: #333;
+    }
+
+    header {
+      background-color: #0a2540;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .kpi {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .news-item {
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-right: 6px;
+      color: white;
+    }
+
+    .precio { background: #ff6b6b; }
+    .producto { background: #4dabf7; }
+    .canal { background: #51cf66; }
+
+  </style>
 </head>
+
 <body>
 
+<header>
   <h1>📺 Dashboard TV Iberia</h1>
+  <p>España & Portugal – Mercado TV</p>
+</header>
 
-  <h2>KPIs</h2>
-  <p><b>España:</b> Mercado convergente</p>
-  <p><b>Portugal:</b> 4.7M subs (Plano)</p>
+<div class="container">
 
-  <h2>Cuotas Portugal</h2>
-  <ul>
-    <li>MEO: 42%</li>
-    <li>NOS: 35%</li>
-    <li>Vodafone: 19%</li>
-  </ul>
+  <!-- KPIs -->
+  <div class="grid">
 
-  <h2>Noticias</h2>
-  <ul>
-    <li>Orange lanza Vuela TV</li>
-    <li>Movistar sube precios</li>
-  </ul>
+    <div class="card">
+      <h2>🇪🇸 España</h2>
+      <div class="kpi">Mercado convergente</div>
+      <p>Fibra dominante / alta competencia</p>
+    </div>
+
+    <div class="card">
+      <h2>🇵🇹 Portugal</h2>
+      <div class="kpi">4.7M subs</div>
+      <p>Crecimiento plano</p>
+    </div>
+
+  </div>
+
+  <!-- Cuotas -->
+  <div class="card" style="margin-top:20px;">
+    <h2>🏆 Cuotas – Portugal</h2>
+    <ul>
+      <li><b>MEO</b> – 42%</li>
+      <li><b>NOS</b> – 35%</li>
+      <li><b>Vodafone</b> – 19%</li>
+      <li><b>DIGI/NOWO</b> – ~3%</li>
+    </ul>
+  </div>
+
+  <!-- Noticias -->
+  <div class="card" style="margin-top:20px;">
+    <h2>📰 Últimas noticias</h2>
+
+    <div class="news-item">
+      <span class="tag producto">Producto</span>
+      <b>Orange lanza Vuela TV</b><br>
+      Expansión modelo wholesale TV
+    </div>
+
+    <div class="news-item">
+      <span class="tag precio">Precio</span>
+      <b>Movistar sube precios</b><br>
+      Presión para aumentar ARPU
+    </div>
+
+    <div class="news-item">
+      <span class="tag canal">Canales</span>
+      <b>Digi amplía oferta TV</b><br>
+      Mayor volumen de canales low-cost
+    </div>
+
+  </div>
+
+  <!-- Insight -->
+  <div class="card" style="margin-top:20px;">
+    <h2>🧠 Insight clave</h2>
+    <p>
+      Mercado TV en Iberia maduro, con bajo crecimiento.
+      Competencia centrada en precio, contenidos y bundles con OTT.
+    </p>
+  </div>
+
+</div>
 
 </body>
 </html>
