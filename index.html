@@ -6,66 +6,58 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       margin: 0;
-      background-color: #f5f7fb;
-      color: #333;
+      background: #f5f7fb;
     }
 
     header {
-      background-color: #0a2540;
+      background: #0a2540;
       color: white;
       padding: 20px;
       text-align: center;
     }
 
-    h1 {
-      margin: 0;
-    }
-
     .container {
-      padding: 20px;
+      padding: 15px;
     }
 
     .grid {
       display: grid;
+      gap: 15px;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
     }
 
     .card {
       background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .card h2 {
-      margin-top: 0;
-    }
-
-    .kpi {
+    .kpi-value {
       font-size: 22px;
       font-weight: bold;
-      margin-top: 10px;
     }
 
-    .news-item {
-      margin-bottom: 10px;
-    }
+    .positive { color: green; }
+    .negative { color: red; }
+    .neutral { color: gray; }
 
     .tag {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 3px 6px;
+      border-radius: 5px;
       font-size: 12px;
-      margin-right: 6px;
       color: white;
     }
 
     .precio { background: #ff6b6b; }
     .producto { background: #4dabf7; }
-    .canal { background: #51cf66; }
+
+    select {
+      padding: 5px;
+      margin-bottom: 10px;
+    }
 
   </style>
 </head>
@@ -74,73 +66,27 @@
 
 <header>
   <h1>📺 Dashboard TV Iberia</h1>
-  <p>España & Portugal – Mercado TV</p>
+  <p id="lastUpdate"></p>
 </header>
 
 <div class="container">
 
+  <!-- Filtro -->
+  <select id="countryFilter" onchange="render()">
+    <option value="all">Todos</option>
+    <option value="España">España</option>
+    <option value="Portugal">Portugal</option>
+  </select>
+
   <!-- KPIs -->
-  <div class="grid">
-
-    <div class="card">
-      <h2>🇪🇸 España</h2>
-      <div class="kpi">Mercado convergente</div>
-      <p>Fibra dominante / alta competencia</p>
-    </div>
-
-    <div class="card">
-      <h2>🇵🇹 Portugal</h2>
-      <div class="kpi">4.7M subs</div>
-      <p>Crecimiento plano</p>
-    </div>
-
-  </div>
+  <div class="grid" id="kpis"></div>
 
   <!-- Cuotas -->
-  <div class="card" style="margin-top:20px;">
-    <h2>🏆 Cuotas – Portugal</h2>
-    <ul>
-      <li><b>MEO</b> – 42%</li>
-      <li><b>NOS</b> – 35%</li>
-      <li><b>Vodafone</b> – 19%</li>
-      <li><b>DIGI/NOWO</b> – ~3%</li>
-    </ul>
+  <div class="card">
+    <h3>🏆 Cuotas</h3>
+    <ul id="shares"></ul>
   </div>
 
   <!-- Noticias -->
-  <div class="card" style="margin-top:20px;">
-    <h2>📰 Últimas noticias</h2>
+  <div class="card">
 
-    <div class="news-item">
-      <span class="tag producto">Producto</span>
-      <b>Orange lanza Vuela TV</b><br>
-      Expansión modelo wholesale TV
-    </div>
-
-    <div class="news-item">
-      <span class="tag precio">Precio</span>
-      <b>Movistar sube precios</b><br>
-      Presión para aumentar ARPU
-    </div>
-
-    <div class="news-item">
-      <span class="tag canal">Canales</span>
-      <b>Digi amplía oferta TV</b><br>
-      Mayor volumen de canales low-cost
-    </div>
-
-  </div>
-
-  <!-- Insight -->
-  <div class="card" style="margin-top:20px;">
-    <h2>🧠 Insight clave</h2>
-    <p>
-      Mercado TV en Iberia maduro, con bajo crecimiento.
-      Competencia centrada en precio, contenidos y bundles con OTT.
-    </p>
-  </div>
-
-</div>
-
-</body>
-</html>
