@@ -1,43 +1,104 @@
 {
   "lastUpdate": "8 mayo 2026",
 
-  "kpis": {
-    "spain": {
-      "subs": "Mercado convergente",
-      "growth": "Competitivo",
+  "operators": [
+    {
+      "country": "España",
+      "name": "Movistar",
+      "tvProduct": "Movistar Plus+",
+      "positioning": "Premium / deporte fuerte",
+      "pricingNotes": "Subidas/ajustes recientes",
+      "channelsNotes": "Relevante para lineup premium",
       "trend": "neutral"
     },
-    "portugal": {
-      "subs": "4.7M",
-      "growth": "Plano",
-      "trend": "negative"
+    {
+      "country": "España",
+      "name": "MasOrange",
+      "tvProduct": "Orange TV / Orange TV Libre",
+      "positioning": "Bundle + wholesale + OTT",
+      "pricingNotes": "Paquetes flexibles",
+      "channelsNotes": "Foco en paquetes amplios",
+      "trend": "positive"
+    },
+    {
+      "country": "Portugal",
+      "name": "NOS",
+      "tvProduct": "NOS TV",
+      "positioning": "Mainstream / líder #2",
+      "pricingNotes": "Bundle estándar",
+      "channelsNotes": "Lineup clave en PT",
+      "trend": "neutral"
     }
-  },
+  ],
 
-  "shares": [
-    {"country": "Portugal", "operator": "MEO", "share": "42%"},
-    {"country": "Portugal", "operator": "NOS", "share": "35%"},
-    {"country": "Portugal", "operator": "Vodafone", "share": "19%"}
+  "alerts": [
+    {
+      "country": "España",
+      "severity": "high",
+      "title": "⚠ Cambio relevante de precios en Movistar",
+      "details": "Afecta packs TV y/o estrategia ARPU",
+      "date": "2026-05-08",
+      "operator": "Movistar",
+      "important": true
+    }
   ],
 
   "news": [
     {
       "country": "España",
-      "title": "Orange lanza Vuela TV",
+      "operator": "MasOrange",
       "type": "producto",
-      "impact": "Expansión modelo wholesale"
+      "title": "Lanzamiento/actualización de plataforma TV",
+      "impact": "Aumenta alcance vía partners / wholesale",
+      "date": "2026-05-08",
+      "important": true,
+      "paramountImpact": {
+        "level": "high",
+        "summary": "Oportunidad de mejorar distribución y packaging de canales Paramount"
+      }
     },
     {
-      "country": "España",
-      "title": "Movistar sube precios",
-      "type": "precio",
-      "impact": "Incremento ARPU"
+      "country": "Portugal",
+      "operator": "NOS",
+      "type": "canal",
+      "title": "Cambio en line-up / HD / reposicionamiento",
+      "impact": "Puede afectar audiencia y valor percibido",
+      "date": "2026-05-07",
+      "important": false,
+      "paramountImpact": {
+        "level": "medium",
+        "summary": "Revisar EPG/posición y obligaciones de visibilidad"
+      }
     }
   ],
 
-  "insights": [
-    "Mercado TV maduro y sin crecimiento",
-    "Presión en precios por operadores low cost",
-    "TV cada vez más vinculada a bundles con OTT"
-  ]
-}
+  "topInsights": [
+    "Mercado TV maduro → el crecimiento viene por churn y bundles",
+    "Presión en precios por low-cost + bundling con OTT",
+    "La clave es packaging/visibilidad (EPG, HD, no-lineal) más que volumen de canales"
+  ],
+
+  "agreements": [
+    {
+      "country": "España",
+      "operator": "Movistar",
+      "status": "en discusión",
+      "type": "PayTV",
+      "start": "2023-04-01",
+      "end": "2026-12-31",
+      "channels": ["Comedy Central", "MTV", "Nickelodeon", "Nick Jr", "MTV 00s"],
+      "owner": "SkyShowtime / Paramount",
+      "notes": "Long form en discusión; revisar no-lineal/entrega",
+      "linkLabel": "Doc/Notas internas",
+      "linkUrl": ""
+    },
+    {
+      "country": "España",
+      "operator": "Orange",
+      "status": "firmado",
+      "type": "PayTV",
+      "start": "2024-10-01",
+      "end": "2028-02-29",
+      "channels": ["Comedy Central", "Nickelodeon", "NickJr", "MTV", "MTV 00s", "MTV Live"],
+      "owner": "SkyShowtime",
+      "notes": "Amendment firmado; incluye marcas/operadoras añadidas",
