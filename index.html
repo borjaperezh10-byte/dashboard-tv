@@ -8,29 +8,29 @@
     body {
       margin: 0;
       font-family: Arial;
-      background: #f5f7fb;
       display: flex;
+      background: #f5f7fb;
     }
 
     /* SIDEBAR */
     .sidebar {
-      width: 70px;
+      width: 80px;
       background: #0a2540;
       height: 100vh;
-      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 20px;
+      color: white;
     }
 
     .sidebar div {
       margin: 20px 0;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 22px;
     }
 
-    /* CONTENT */
+    /* MAIN */
     .main {
       flex: 1;
       padding: 20px;
@@ -40,7 +40,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
     }
 
     .button {
@@ -54,29 +53,34 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 15px;
+      margin-top: 20px;
     }
 
     .card {
       background: white;
       padding: 15px;
       border-radius: 12px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
     }
 
     .kpi {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
       margin-top: 10px;
     }
 
-    .positive { color: green; }
-    .negative { color: red; }
-    .neutral { color: gray; }
-
     .section {
-      margin-top: 20px;
+      margin-top: 25px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
   </style>
@@ -86,58 +90,26 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <div>🏠</div>
-  <div>📊</div>
-  <div>📰</div>
-  <div>⚠</div>
-  <div>📑</div>
-  <div>⚙️</div>
+  <div onclick="showHome()">🏠</div>
+  <div onclick="showSpain()">🇪🇸</div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
   <div class="header">
-    <div>
-      <h2>📺 Dashboard TV Iberia</h2>
-      <div id="lastUpdate">Última actualización —</div>
-    </div>
-
+    <h2>📺 Dashboard TV Iberia</h2>
     <button class="button" onclick="refreshData()">🔄 Actualizar</button>
   </div>
 
-  <!-- KPIs -->
-  <div class="grid" id="kpis"></div>
-
-  <!-- INSIGHTS -->
-  <div class="section">
-    <div class="card">
-      <h3>🧠 Top Insights</h3>
-      <ul id="insights"></ul>
-    </div>
-  </div>
-
-  <!-- NOTICIAS -->
-  <div class="section">
-    <div class="card">
-      <h3>📰 Noticias & movimientos</h3>
-      <div id="news"></div>
-    </div>
-  </div>
-
-  <!-- ACUERDOS -->
-  <div class="section">
-    <div class="card">
-      <h3>📑 Tracking acuerdos</h3>
-      <div id="agreements"></div>
-    </div>
-  </div>
+  <div id="content"></div>
 
 </div>
 
 <script>
 
 let DATA = null;
+let currentView = "home";
 
 function loadData() {
   fetch('data.json?t=' + new Date().getTime())
@@ -149,53 +121,88 @@ function loadData() {
 }
 
 function refreshData() {
-
-  const btn = document.querySelector(".button");
-  btn.innerText = "⏳ Cargando...";
-
   loadData();
+}
 
-  setTimeout(() => {
-    btn.innerText = "✅ OK";
-    setTimeout(() => btn.innerText = "🔄 Actualizar", 2000);
-  }, 1000);
+function showHome() {
+  currentView = "home";
+  render();
+}
+
+function showSpain() {
+  currentView = "spain";
+  render();
 }
 
 function render() {
 
   if (!DATA) return;
 
-  document.getElementById("lastUpdate").innerText =
-    "Última actualización: " + DATA.lastUpdate;
+  if (currentView === "home") {
 
-  // KPIs
-  document.getElementById("kpis").innerHTML = `
-    <div class="card">
-      <b>España</b>
-      <div class="kpi neutral">${DATA.kpis.spain}</div>
-    </div>
+    document.getElementById("content").innerHTML = `
+      
+      <div class="grid">
+        <div class="card">
+          <b>🇪🇸 España</b>
+          <div class="kpi">${DATA.kpis.spain}</div>
+        </div>
 
-    <div class="card">
-      <b>Portugal</b>
-      <div class="kpi negative">${DATA.kpis.portugal}</div>
-    </div>
-  `;
+        <div class="card">
+          <b>🇵🇹 Portugal</b>
+          <div class="kpi">${DATA.kpis.portugal}</div>
+        </div>
+      </div>
 
-  // Insights
-  document.getElementById("insights").innerHTML =
-    DATA.insights.map(i => `<li>${i}</li>`).join("");
+      <div class="section">
+        <div class="card">
+          <h3>📰 Noticias</h3>
+          ${DATA.news.map(n => `
+            <div>
+              <b>${n.title}</b><br>
+              ${n.summary}<br>
+              <a href="${n.link}" target="_blank">Leer noticia</a>
+              <br><br>
+            </div>
+          `).join("")}
+        </div>
+      </div>
 
-  // Noticias
-  document.getElementById("news").innerHTML =
-    DATA.news.map(n => `<b>${n.title}</b><br>${n.impact}<br><br>`).join("");
+      <div class="section">
+        <div class="card">
+          <h3>🧠 Top Insights</h3>
+          ${DATA.insights.map(i => `
+            <div>
+              ${i.text}<br>
+              <a href="${i.link}" target="_blank">Fuente</a>
+              <br><br>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
 
-  // Acuerdos
-  document.getElementById("agreements").innerHTML =
-    DATA.agreements.map(a => `
-      <b>${a.operator}</b> (${a.status})<br>
-      ${a.notes}<br><br>
-    `).join("");
+  // SECCIÓN ESPAÑA
+  if (currentView === "spain") {
 
+    document.getElementById("content").innerHTML = `
+      
+      <h3>🇪🇸 España - Operadores</h3>
+
+      <div class="grid">
+
+        ${DATA.spainOperators.map(op => `
+          <div class="card">
+            <b>${op.name}</b>
+            <div>${op.desc}</div>
+          </div>
+        `).join("")}
+
+      </div>
+
+    `;
+  }
 }
 
 loadData();
