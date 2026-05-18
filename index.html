@@ -5,75 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    :root{
-      --bg:#f5f7fb; --card:#fff; --ink:#0b1220; --muted:#667085;
-      --navy:#0a2540; --shadow:0 6px 18px rgba(15, 23, 42, .08);
-      --radius:14px;
-      --pos:#16a34a; --neg:#dc2626; --neu:#6b7280;
-      --hi:#ef4444; --med:#f59e0b; --lo:#3b82f6;
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #f5f7fb;
+      display: flex;
     }
 
-    body{margin:0; font-family: Arial; background:var(--bg);}
-
-    header{
-      background:var(--navy);
-      color:white;
-      padding:20px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    /* SIDEBAR */
+    .sidebar {
+      width: 70px;
+      background: #0a2540;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
     }
 
-    .container{max-width:1100px; margin:auto; padding:15px;}
-
-    .card{
-      background:white;
-      padding:15px;
-      border-radius:12px;
-      margin-bottom:15px;
+    .sidebar div {
+      margin: 20px 0;
+      cursor: pointer;
+      font-size: 20px;
     }
 
-    button{
-      padding:8px 12px;
-      border-radius:8px;
-      border:none;
-      background:#2563eb;
-      color:white;
-      cursor:pointer;
+    /* CONTENT */
+    .main {
+      flex: 1;
+      padding: 20px;
     }
 
-    button:hover{
-      background:#1d4ed8;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
+
+    .button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .kpi {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .positive { color: green; }
+    .negative { color: red; }
+    .neutral { color: gray; }
+
+    .section {
+      margin-top: 20px;
+    }
+
   </style>
 </head>
 
 <body>
 
-<header>
-  <div>
-    <h2>📺 Dashboard TV Iberia</h2>
-    <div id="lastUpdate">Última actualización: —</div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div>🏠</div>
+  <div>📊</div>
+  <div>📰</div>
+  <div>⚠</div>
+  <div>📑</div>
+  <div>⚙️</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <div class="header">
+    <div>
+      <h2>📺 Dashboard TV Iberia</h2>
+      <div id="lastUpdate">Última actualización —</div>
+    </div>
+
+    <button class="button" onclick="refreshData()">🔄 Actualizar</button>
   </div>
 
-  <button onclick="refreshData()">🔄 Actualizar</button>
-</header>
+  <!-- KPIs -->
+  <div class="grid" id="kpis"></div>
 
-<div class="container">
-
-  <div class="card">
-    <h3>📊 KPIs</h3>
-    <div id="kpis"></div>
+  <!-- INSIGHTS -->
+  <div class="section">
+    <div class="card">
+      <h3>🧠 Top Insights</h3>
+      <ul id="insights"></ul>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>📰 Noticias</h3>
-    <div id="news"></div>
+  <!-- NOTICIAS -->
+  <div class="section">
+    <div class="card">
+      <h3>📰 Noticias & movimientos</h3>
+      <div id="news"></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>🧠 Insights</h3>
-    <ul id="insights"></ul>
+  <!-- ACUERDOS -->
+  <div class="section">
+    <div class="card">
+      <h3>📑 Tracking acuerdos</h3>
+      <div id="agreements"></div>
+    </div>
   </div>
 
 </div>
@@ -88,20 +145,18 @@ function loadData() {
     .then(data => {
       DATA = data;
       render();
-    })
-    .catch(err => {
-      console.error("Error cargando data.json:", err);
     });
 }
 
 function refreshData() {
-  const btn = document.querySelector("button");
-  btn.innerText = "⏳ Actualizando...";
+
+  const btn = document.querySelector(".button");
+  btn.innerText = "⏳ Cargando...";
 
   loadData();
 
   setTimeout(() => {
-    btn.innerText = "✅ Actualizado";
+    btn.innerText = "✅ OK";
     setTimeout(() => btn.innerText = "🔄 Actualizar", 2000);
   }, 1000);
 }
@@ -115,21 +170,34 @@ function render() {
 
   // KPIs
   document.getElementById("kpis").innerHTML = `
-    España: ${DATA.kpis.spain.subs}<br>
-    Portugal: ${DATA.kpis.portugal.subs}
-  `;
+    <div class="card">
+      <b>España</b>
+      <div class="kpi neutral">${DATA.kpis.spain}</div>
+    </div>
 
-  // Noticias
-  document.getElementById("news").innerHTML =
-    DATA.news.map(n => `<b>${n.title}</b> - ${n.impact}`).join("<br><br>");
+    <div class="card">
+      <b>Portugal</b>
+      <div class="kpi negative">${DATA.kpis.portugal}</div>
+    </div>
+  `;
 
   // Insights
   document.getElementById("insights").innerHTML =
-    DATA.topInsights.map(i => `<li>${i}</li>`).join("");
+    DATA.insights.map(i => `<li>${i}</li>`).join("");
+
+  // Noticias
+  document.getElementById("news").innerHTML =
+    DATA.news.map(n => `<b>${n.title}</b><br>${n.impact}<br><br>`).join("");
+
+  // Acuerdos
+  document.getElementById("agreements").innerHTML =
+    DATA.agreements.map(a => `
+      <b>${a.operator}</b> (${a.status})<br>
+      ${a.notes}<br><br>
+    `).join("");
 
 }
 
-// Carga inicial
 loadData();
 
 </script>
