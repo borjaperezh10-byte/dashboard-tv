@@ -752,7 +752,7 @@ function renderParamountOverview() {
           <div class="card-head">
             <div>
               <div class="card-title">${ch.name}</div>
-              <div class="card-subtitle">${ch.target_age||ch.target||''} · Desde ${ch.launched||'—'}</div>
+              <div class="card-subtitle">${ch.target_short||ch.target_age||ch.target||''} · Desde ${ch.launched||'—'}</div>
             </div>
           </div>
           <div style="font-size:12px; color:var(--text-secondary); margin-bottom:12px">${(ch.description||'').slice(0, 180)}${(ch.description||'').length>180?'…':''}</div>
@@ -785,14 +785,14 @@ function renderParamountChannel(chKey) {
   const available = opKeys.filter(k => ch.operators[k] && ch.operators[k].available).length;
   const dials = opKeys.filter(k => ch.operators[k] && ch.operators[k].available && ch.operators[k].dial && ch.operators[k].dial !== '—');
 
-  const renewal = ch.renewal || {};
+  const renewal = ch.renegotiation || ch.renewal || {};
 
   document.getElementById('content').innerHTML = `
     <div class="op-header" style="background:linear-gradient(135deg, ${ch.color}10, ${ch.color}05)">
       <div class="op-logo" style="background:linear-gradient(135deg, ${ch.color}, ${ch.color}dd); font-size:14px">${ch.name.split(' ').slice(0,2).map(w=>w[0]).join('')}</div>
       <div class="op-info">
         <h1>${ch.name}</h1>
-        <div class="op-parent">Paramount Networks EMEAA · ${ch.target_age||ch.target||''} · Lanzado: ${ch.launched||'—'}</div>
+        <div class="op-parent">Paramount Networks EMEAA · ${ch.target_short||ch.target_age||ch.target||''} · Lanzado: ${ch.launched||'—'}</div>
         <div class="op-tags">
           <span class="op-tag">${available}/${opKeys.length} operadores</span>
           <span class="op-tag">${dials.length} diales</span>
@@ -806,7 +806,7 @@ function renderParamountChannel(chKey) {
     <div class="kpi-grid">
       ${kpi({ label:'Disponible en', value:`${available}/${opKeys.length}`, accent:'movistar', date:market.last_data_date, tipKey:'paramount_avail', fieldId:`pch.${chKey}.av` })}
       ${kpi({ label:'Diales conocidos', value:dials.length, accent:'gold', date:market.last_data_date, tipKey:'paramount_dials', fieldId:`pch.${chKey}.dial` })}
-      ${kpi({ label:'Target', value:(ch.target_age||ch.target||'').split(' ')[0], accent:'pink', subtitle:ch.target_age||ch.target||'', date:'Posicionamiento', fieldId:null })}
+      ${kpi({ label:'Target', value:(ch.target_short||ch.target_age||ch.target||'').split(' ')[0], accent:'pink', subtitle:ch.target_short||ch.target_age||ch.target||'', date:'Posicionamiento', fieldId:null })}
       ${ch.competitors ? kpi({ label:'Competidores directos', value:ch.competitors.length, accent:'vodafone', date:'Análisis propio', fieldId:`pch.${chKey}.comp` }) : ''}
     </div>
 
@@ -816,6 +816,53 @@ function renderParamountChannel(chKey) {
         <p style="font-size:13px; color:var(--text-secondary); line-height:1.6">${ch.target_detail}</p>
       </div>
     ` : ''}
+
+    ${(typeof TARGET_PROFILES !== 'undefined' && TARGET_PROFILES[CURRENT_COUNTRY] && TARGET_PROFILES[CURRENT_COUNTRY][chKey]) ? (() => {
+      const tp = TARGET_PROFILES[CURRENT_COUNTRY][chKey];
+      return `
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Perfil tipo del target</div><div class="card-subtitle">Edad, género, intereses y comportamiento de consumo</div></div></div>
+        <div class="target-profile">
+          <div class="target-row">
+            <div class="target-cell">
+              <div class="target-label">Edad</div>
+              <div class="target-value">${tp.age_range}</div>
+            </div>
+            <div class="target-cell">
+              <div class="target-label">Género</div>
+              <div class="target-value">${tp.gender_split}</div>
+            </div>
+            <div class="target-cell">
+              <div class="target-label">Nivel socioeconómico</div>
+              <div class="target-value">${tp.socioeconomic}</div>
+            </div>
+            <div class="target-cell">
+              <div class="target-label">Decisor de compra</div>
+              <div class="target-value">${tp.decision_maker}</div>
+            </div>
+          </div>
+          <div class="target-block">
+            <div class="target-label">Intereses principales</div>
+            <div class="target-tags">${tp.key_interests.map(i => `<span class="target-tag">${i}</span>`).join('')}</div>
+          </div>
+          <div class="target-block">
+            <div class="target-label">Comportamiento de consumo</div>
+            <ul class="target-list">${tp.consumption_behavior.map(b => `<li>${b}</li>`).join('')}</ul>
+          </div>
+          <div class="target-row">
+            <div class="target-cell" style="flex:1">
+              <div class="target-label">Marcas complementarias</div>
+              <div class="target-value-sub">${tp.complementary_brands}</div>
+            </div>
+            <div class="target-cell" style="flex:1">
+              <div class="target-label">Valor publicitario</div>
+              <div class="target-value-sub">${tp.ad_value}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+    })() : ''}
 
     <div class="card">
       <div class="card-head"><div><div class="card-title">Disponibilidad por operador</div></div></div>
@@ -885,6 +932,42 @@ function renderParamountChannel(chKey) {
         </div>
       </div>
     ` : ''}
+
+    ${(typeof ACTION_PLANS !== 'undefined' && ACTION_PLANS[CURRENT_COUNTRY] && ACTION_PLANS[CURRENT_COUNTRY][chKey]) ? (() => {
+      const plan = ACTION_PLANS[CURRENT_COUNTRY][chKey];
+      const priorityClass = (p) => {
+        const s = (p||'').toLowerCase();
+        if (s.includes('crítico') || s.includes('critico') || s.includes('entrar') || s.includes('recuperar')) return 'priority-critical';
+        if (s.includes('crecer') || s.includes('reentrada')) return 'priority-high';
+        if (s.includes('mantener') || s.includes('consolidar')) return 'priority-stable';
+        return '';
+      };
+      return `
+      <div class="section-anchor">🎯 Plan de acción por operador</div>
+      <div class="action-grid">
+        ${opKeys.filter(k => plan[k]).map(k => {
+          const p = plan[k];
+          return `
+            <div class="action-card" style="border-left:4px solid ${ops[k].color}">
+              <div class="action-head">
+                <div class="action-op" style="color:${ops[k].color}">${ops[k].name}</div>
+                <span class="action-priority ${priorityClass(p.priority)}">${p.priority||'—'}</span>
+              </div>
+              <div class="action-deadline">⏱ ${p.deadline||'—'}</div>
+              <div class="action-block">
+                <div class="action-label">Qué pedir</div>
+                <div class="action-text">${p.ask||''}</div>
+              </div>
+              <div class="action-block">
+                <div class="action-label">Táctica</div>
+                <div class="action-text" style="color:var(--text-secondary)">${p.tactic||''}</div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      `;
+    })() : ''}
 
     ${renderNews('ch_' + chKey)}
   `;

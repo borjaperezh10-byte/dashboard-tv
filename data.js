@@ -1066,3 +1066,313 @@ const NEWS = {
     { source:'MundoPlus.tv', date:'9 ene 2025', title:'Comedy Central permanece en Movistar y MASORANGE', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' }
   ]
 };
+
+
+/* ════════════════════════════════════════════
+   PERFILES DE TARGET (Punto 13)
+   Indexado por país + canal: TARGET_PROFILES[country][channel_key]
+══════════════════════════════════════════════ */
+const TARGET_PROFILES = {
+  es: {
+    nickelodeon: {
+      age_range: '6-12 años (extensión 4-14)',
+      gender_split: '52% niños / 48% niñas',
+      socioeconomic: 'C1-C2 / clase media · familias con hijos en edad escolar',
+      key_interests: ['SpongeBob y franquicias clásicas', 'PAW Patrol (cross con Nick Jr.)', 'Series live-action tween (iCarly, Henry Danger)', 'Animación cómica adventure', 'Gaming infantil (Roblox, Minecraft)'],
+      consumption_behavior: [
+        'Co-viewing con padres en fin de semana mañana',
+        'Visionado lineal en franja 17h-20h (vuelta colegio)',
+        'Alto consumo VOD vía operador (no SVOD propio)',
+        'Multi-screen: TV + tablet personal en paralelo'
+      ],
+      decision_maker: 'Padre/madre (decisor económico) + niño (influenciador alto)',
+      complementary_brands: 'LEGO, Funko, McDonald\'s Happy Meal, parques temáticos',
+      ad_value: 'Premium en kids · CPM mantenido pese a caída lineal'
+    },
+    nickjr: {
+      age_range: '2-6 años (preescolar puro)',
+      gender_split: '50% / 50% (sin sesgo en estos años)',
+      socioeconomic: 'C1-C2 · familias con bebés/preescolares',
+      key_interests: ['PAW Patrol (#1 absoluto)', 'Peppa Pig', 'Bluey', 'Aprendizaje temprano (números, colores, emociones)', 'Música infantil'],
+      consumption_behavior: [
+        'Co-viewing parental 80%+ del tiempo (decisión del adulto)',
+        'Visionado mañana temprano (7h-10h) y tarde post-siesta',
+        'Repetición alta de mismos episodios (efecto familiarización)',
+        'Soporte calmar/entretener en momentos puntuales'
+      ],
+      decision_maker: 'Madre/padre puro (niño aún no decide)',
+      complementary_brands: 'Productos infancia (alimentación, higiene, ropa), juguetería pre-escolar, librerías',
+      ad_value: 'Muy alto en categorías niños 0-5 y maternidad'
+    },
+    mtv: {
+      age_range: '16-34 años (core 18-24)',
+      gender_split: '58% mujeres / 42% hombres',
+      socioeconomic: 'Mix · urbano y joven adulto · estudiantes y primer empleo',
+      key_interests: ['Realities (Geordie Shore, Acapulco Shore, Catfish)', 'Pop, R&B, urbano (Bad Bunny, Rosalía, Aitana)', 'Premios MTV (VMAs, EMAs)', 'Lifestyle juvenil y celebridades', 'K-pop (BTS, BLACKPINK)'],
+      consumption_behavior: [
+        'Consumo lineal en franja noche (22h-1h)',
+        'Backbone para ambient TV en pisos compartidos',
+        'Doble pantalla: TV + Instagram/TikTok',
+        'Bajo consumo de música lineal (todo en Spotify) — los realities mueven la audiencia'
+      ],
+      decision_maker: 'El propio joven adulto',
+      complementary_brands: 'Bebidas (cerveza, RTD), fast fashion, beauty, tecnología, festivales, gaming',
+      ad_value: 'Premium en 18-24 difícil de alcanzar vía TV lineal'
+    },
+    comedycentral: {
+      age_range: '18-45 años (core 25-40)',
+      gender_split: '63% hombres / 37% mujeres',
+      socioeconomic: 'Mix · profesional joven y mid-adulto urbano',
+      key_interests: ['South Park', 'Friends, Big Bang Theory (reposiciones premium)', 'Stand-up comedy (Comedy Central Live!)', 'Sitcoms norteamericanas', 'Comedia satírica adulta'],
+      consumption_behavior: [
+        'Late-night viewing (22h-2h) — el sofá tras el día',
+        'Comedia como "decompresión" tras trabajo',
+        'Doble pantalla con redes (Twitter/X) para comentar memes',
+        'Atraído por comedy specials Netflix → tensión con OTT'
+      ],
+      decision_maker: 'El propio adulto joven (decisor de su tarifa TV)',
+      complementary_brands: 'Cerveza, snacks salados, bebidas energéticas, automoción, fintech, gaming',
+      ad_value: 'Bueno en 25-40 con humor adulto · contexto seguro para anunciantes'
+    }
+  },
+  pt: {
+    nickelodeon: {
+      age_range: '6-12 anos (extensão 4-14)',
+      gender_split: '52% rapazes / 48% raparigas',
+      socioeconomic: 'C1-C2 · famílias com crianças em idade escolar',
+      key_interests: ['SpongeBob (referência geracional PT)', 'PAW Patrol (cross com Nick Jr.)', 'Loud em Casa, Henry Danger', 'Animação cómica e aventura'],
+      consumption_behavior: [
+        'Co-viewing familiar fim de semana',
+        'Visionamento linear 17h-20h (regresso da escola)',
+        'Concorrência forte do Canal Panda (líder local)',
+        'Multi-screen: TV + tablet em simultâneo'
+      ],
+      decision_maker: 'Pai/mãe (decisão económica) + criança (alta influência)',
+      complementary_brands: 'LEGO, Funko, parques temáticos, brinquedos, livros infantis',
+      ad_value: 'Premium mas com pressão de Canal Panda no mercado PT'
+    },
+    nickjr: {
+      age_range: '2-6 anos (pré-escolar)',
+      gender_split: '50% / 50%',
+      socioeconomic: 'C1-C2 · famílias com bebés e pré-escolares',
+      key_interests: ['PAW Patrol', 'Peppa Pig', 'Aprendizagem precoce', 'Música infantil'],
+      consumption_behavior: [
+        'Co-viewing parental obrigatório (decisão do adulto)',
+        'Visionamento manhã e início da tarde',
+        'Repetição alta de mesmos episódios',
+        'Concorrência directa com Panda Kids'
+      ],
+      decision_maker: 'Mãe/pai (criança ainda não decide)',
+      complementary_brands: 'Produtos infância, higiene, brinquedos pré-escolares',
+      ad_value: 'Alto em categorias maternidade e infância 0-5'
+    },
+    mtv: {
+      age_range: '16-34 anos (core 18-24)',
+      gender_split: '58% mulheres / 42% homens',
+      socioeconomic: 'Urbano e jovem adulto',
+      key_interests: ['Reality shows', 'Música pop e urbana', 'Premios MTV EMAs', 'Lifestyle juvenil', 'K-pop'],
+      consumption_behavior: [
+        'Sinal Global (Polónia) sem dobragem PT — experiência reduzida',
+        'Consumo nocturno + ambient TV',
+        'Concorrência das playlists Spotify',
+        'MEO saiu em 2025 (perda de alcance crítica)'
+      ],
+      decision_maker: 'O próprio jovem adulto',
+      complementary_brands: 'Bebidas, moda fast, beauty, tecnologia, festivais (NOS Alive, MEO Sudoeste)',
+      ad_value: 'Reduzido pela perda de MEO e ausência de localização PT'
+    }
+  }
+};
+
+/* ════════════════════════════════════════════
+   PLAN DE ACCIÓN POR OPERADOR (Punto 15)
+   Indexado: ACTION_PLANS[country][channel_key] = { operator_key: { ask, priority, deadline, tactic } }
+══════════════════════════════════════════════ */
+const ACTION_PLANS = {
+  es: {
+    nickelodeon: {
+      movistar: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación 2026-2027',
+        ask: 'Mantener dial 114 + bloque infantil completo (Nick + Nick Jr.) en pack base.',
+        tactic: 'Refuerzo de ARPU vía co-promo Movistar Plus+ Lite. Defender carrying fee sin subidas agresivas — preservar distribución estable es prioritario.'
+      },
+      vodafone: {
+        priority: 'reentrada',
+        deadline: 'Q3-Q4 2026 (negociación post-reorganización Zegona)',
+        ask: 'Reentrada con bundle Nick + Nick Jr. + SkyShowtime como propuesta integrada.',
+        tactic: 'Aprovechar la nueva estrategia Vodafone TV reforzada (sep+dic 2025). Ofrecer fee escalonado (descuento año 1) a cambio de paquete familiar base, no opcional.'
+      },
+      digi: {
+        priority: 'crecer',
+        deadline: '2026 continuo',
+        ask: 'Promoción cruzada: destacar Nick en la oferta DIGI TV durante captación de nuevos hogares.',
+        tactic: 'DIGI tiene 217k subs TV (Q1 2026) y crece +25%/trimestre. Negociar fee por suscriptor escalonado. Aprovechar visibilidad en zonas urbanas con captación intensiva.'
+      },
+      masorange: {
+        priority: 'consolidar OTT',
+        deadline: 'Renovación 2026-2027',
+        ask: 'Garantizar inclusión en Orange TV Libre (OTT independiente) además de Orange TV principal.',
+        tactic: 'Tras integración Orange (Q2 2026), aprovechar consolidación de marcas (Yoigo + Jazztel) para extender distribución. Push para incluirlo en pack OTT Libre sin coste adicional.'
+      }
+    },
+    nickjr: {
+      movistar: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación 2026-2027',
+        ask: 'Bundle Nick Jr. + Nick + Baby TV como pack preescolar completo.',
+        tactic: 'Co-viewing parental = alto ARPU psicológico. Defender posición dial 113 contigua a Nickelodeon. Mantener fee.'
+      },
+      vodafone: {
+        priority: 'reentrada',
+        deadline: 'Q3-Q4 2026',
+        ask: 'Reentrada conjunta con Nickelodeon en pack familiar base.',
+        tactic: 'Bundle inseparable Nick + Nick Jr. para que Vodafone no pueda elegir solo uno. Negociar fee global por los dos.'
+      },
+      digi: {
+        priority: 'crecer',
+        deadline: '2026 continuo',
+        ask: 'Posición consecutiva con Nick (D74-D75) y promoción en captación.',
+        tactic: 'DIGI capta familias jóvenes urbanas — perfil ideal para Nick Jr. Negociar fee por suscriptor escalonado con bonus por crecimiento.'
+      },
+      masorange: {
+        priority: 'consolidar OTT',
+        deadline: 'Renovación 2026-2027',
+        ask: 'Mantener Orange TV + push para Orange TV Libre.',
+        tactic: 'Tras consolidación Orange, asegurar parrilla unificada con Yoigo TV. Probar pack preescolar (Nick Jr. + Baby TV + Disney Junior) como opcional premium.'
+      }
+    },
+    mtv: {
+      movistar: {
+        priority: 'mantener cluster',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener cluster MTV España + MTV 00s + opcionalmente MTV Live.',
+        tactic: 'Pivot narrativo: vender MTV no como música lineal (perdida vs Spotify) sino como propiedad cross-media (festivales, EMAs, realities). Defender fee por cluster, no canal a canal.'
+      },
+      vodafone: {
+        priority: 'reentrada',
+        deadline: 'Q4 2026',
+        ask: 'Reentrada de MTV España junto a Nickelodeon como pack Paramount completo.',
+        tactic: 'No vender MTV solo: empaquetar siempre con Nick + Comedy Central. Si Vodafone solo quiere infantil, MTV out.'
+      },
+      digi: {
+        priority: 'crecer',
+        deadline: '2026',
+        ask: 'Mantener dial 120 y promover MTV 00s como secundario.',
+        tactic: 'Target 16-34 alineado con base joven de DIGI. Posicionar como "música que tu familia conoce" — atractivo para hogares low-cost.'
+      },
+      masorange: {
+        priority: 'mantener cluster',
+        deadline: 'Renovación 2026-2027',
+        ask: 'Mantener los 3 feeds (MTV España, MTV 00s, MTV Live).',
+        tactic: 'MASORANGE es el único que distribuye los 3 feeds. Defender esta exclusividad. Negociar co-branding en festivales españoles patrocinados por Orange.'
+      }
+    },
+    comedycentral: {
+      movistar: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 128 y posición en pack base.',
+        tactic: 'Backbone de oferta adulta-noche. South Park es retención de cartera. Defender fee actual, no abrir negociación a la baja.'
+      },
+      vodafone: {
+        priority: 'reentrada',
+        deadline: 'Q4 2026',
+        ask: 'Reentrada con bundle MTV + Comedy Central como pack entretenimiento adulto-joven.',
+        tactic: 'Vender ambos canales empaquetados. Comedy Central solo = bajo valor; con MTV se construye cluster coherente.'
+      },
+      digi: {
+        priority: 'ENTRAR (no presente)',
+        deadline: 'Q3 2026 — clave',
+        ask: 'Primera distribución en DIGI con fee promocional año 1.',
+        tactic: 'DIGI necesita engrosar oferta adulta. Comedy Central + South Park = gancho para hogares jóvenes urbanos. Fee escalonado con bonus por suscriptores TV >300k.'
+      },
+      masorange: {
+        priority: 'mantener',
+        deadline: 'Renovación 2026-2027',
+        ask: 'Mantener dial 41 y posición en cine y series.',
+        tactic: 'Tras consolidación Orange, asegurar Comedy Central en parrilla unificada Orange + Yoigo + Jazztel. Defender fee.'
+      }
+    }
+  },
+  pt: {
+    nickelodeon: {
+      meo: {
+        priority: 'CRÍTICO mantener',
+        deadline: 'Renovación cerrada dic 2025 — próxima 2026-2027',
+        ask: 'Mantener dial 44 y compromiso multianual (3 años) tras la renovación de dic 2025.',
+        tactic: 'MEO ya mostró reservas sobre coste Paramount. Defender fee sin subidas — la pérdida sería catastrófica (41,5% del mercado PT). Co-promo con marketing local.'
+      },
+      nos: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 42 y posición en pack base.',
+        tactic: 'NOS es histórico distribuidor (desde 2005). Defender fee con plus por exclusividades de eventos (premiere series).'
+      },
+      vodafone: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 60 — empuje para promover Vodafone TV PT como destino familiar.',
+        tactic: 'Vodafone PT (20,3% cuota) está estable. Sin pretensiones expansivas, pero sí defender disponibilidad sin condiciones.'
+      },
+      digi: {
+        priority: 'CRECER',
+        deadline: '2026 continuo',
+        ask: 'Posición prominente en captación DIGI PT (única ganando cuota).',
+        tactic: 'DIGI PT ganó +0,4pp en Q1 2026 = motor de crecimiento. Negociar fee escalonado por suscriptor + co-marketing en campañas de captación.'
+      }
+    },
+    nickjr: {
+      meo: {
+        priority: 'CRÍTICO mantener',
+        deadline: 'Renovación cerrada dic 2025',
+        ask: 'Mantener dial 53 y bundle con Nickelodeon.',
+        tactic: 'Bundle inseparable Nick + Nick Jr. Co-viewing parental = ARPU psicológico alto. Defender fee.'
+      },
+      nos: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 46 — defender que NOS no priorice Panda Kids sobre Nick Jr.',
+        tactic: 'NOS tiene cerca a Panda Kids (canal local muy fuerte). Posicionar Nick Jr. como complemento internacional, no sustituto.'
+      },
+      vodafone: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener disponibilidad.',
+        tactic: 'Vodafone PT estable, sin pretensiones expansivas.'
+      },
+      digi: {
+        priority: 'CRECER',
+        deadline: '2026',
+        ask: 'Promover Nick Jr. junto a Nick en captación.',
+        tactic: 'DIGI gana familias jóvenes — perfil ideal para Nick Jr. Bundle con Nick.'
+      }
+    },
+    mtv: {
+      meo: {
+        priority: 'RECUPERAR (no renovado 2025)',
+        deadline: 'Q4 2026 — clave',
+        ask: 'Reentrada con MTV Global como canal opcional (no obligatorio en pack base).',
+        tactic: 'MEO no renovó por coste. Negociar fee mínimo + reinclusión en pack opcional. Argumento: pérdida de 41,5% del mercado afecta la marca MTV en PT.'
+      },
+      nos: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 120 (feed Polonia).',
+        tactic: 'Coste de distribución reducido (sin dobraje PT). Defender carrying fee mínimo.'
+      },
+      vodafone: {
+        priority: 'mantener',
+        deadline: 'Próxima renovación',
+        ask: 'Mantener dial 120.',
+        tactic: 'Vodafone PT estable. Sin cambios.'
+      },
+      digi: {
+        priority: 'mantener',
+        deadline: '2026',
+        ask: 'Mantener dial 120 + bundle con Nick.',
+        tactic: 'DIGI crece — MTV es complemento juvenil de la parrilla.'
+      }
+    }
+  }
+};
