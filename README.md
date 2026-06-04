@@ -68,7 +68,7 @@ paramount_renewal  (channel_key, country, swot_category, label, detail)
 Trabajamos por bloques de 3:
 
 - ✅ Bloque 1: óvalos sidebar, tooltip de info, eliminar Speedtest
-- ⏳ Bloque 2: datos actualizados, quitar planes, quitar Highlights
+- ✅ Bloque 2: datos marzo 2026 (CNMC) + Q1 2026 (ANACOM), sin planes, sin Highlights
 - ⏳ Bloque 3: i info en todos los KPIs, NEW al actualizar, rango fechas
 - ⏳ Bloque 4: OTTs libres detalle, noticias por sección, canales con dial
 - ⏳ Bloque 5: Portugal activado, fuentes editables, análisis renovación

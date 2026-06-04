@@ -1,36 +1,46 @@
 /* ════════════════════════════════════════════
    DATOS — MERCADO
+   ES: CNMC datos marzo 2026 (publ. 6 mayo 2026)
+   PT: ANACOM Q1 2026 (publ. mayo 2026)
 ══════════════════════════════════════════════ */
 const MARKET = {
   es: {
     name: 'España', flag: '🇪🇸', regulator: 'CNMC',
-    total_mobile_lines: 62.81,
-    total_ftth_lines: 17.86,
-    total_bb_lines: 19.63,
-    total_fixed_lines: 17.60,
-    last_data_date: 'Febrero 2026',
-    last_pub_date: '13 abril 2026',
-    ftth_share: { Movistar: 32.1, MASORANGE: 23.5, Vodafone: 16.5, DIGI: 13.5, Otros: 14.4 },
-    mobile_share: { Movistar: 28.0, MASORANGE: 30.5, Vodafone: 17.4, DIGI: 12.5, OMV: 11.6 },
-    top3_bb: 81.7,
+    total_mobile_lines: 62.61,          // marzo 2026
+    total_ftth_lines: 18.07,            // marzo 2026 (superó 18M, +76.784 mes)
+    total_bb_lines: 19.70,              // marzo 2026 (+73.309)
+    total_fixed_lines: 17.61,           // marzo 2026 (+9.969)
+    mobile_voice_bb: 56.44,             // marzo 2026 (+2,9% YoY)
+    m2m_lines: 50.79,                   // marzo 2026
+    portability_mobile: 599196,         // marzo 2026 (+12,7% YoY)
+    last_data_date: 'Marzo 2026',
+    last_pub_date: '6 mayo 2026',
+    data_source_url: 'https://www.cnmc.es/prensa/datos-marzo-telecos-20260506',
+    ftth_share: { Movistar: 32.5, MASORANGE: 23.6, Vodafone: 16.6, DIGI: 13.8, Otros: 13.5 },
+    mobile_share: { Movistar: 28.1, MASORANGE: 30.6, Vodafone: 17.5, DIGI: 12.7, OMV: 11.1 },
+    top3_bb: 81.5,
     top4_bb: 95.3,
-    top3_mobile: 86.9,
+    top3_mobile: 86.7,
     top4_mobile: 99.0
   },
   pt: {
     name: 'Portugal', flag: '🇵🇹', regulator: 'ANACOM',
-    total_mobile_lines: 14.2,    // aprox.
-    total_ftth_lines: 5.1,
-    total_bb_lines: 5.4,
+    total_mobile_lines: 14.2,
+    total_ftth_lines: 5.3,              // Q1 2026 estimación
+    total_bb_lines: 5.5,
     total_fixed_lines: 4.5,
+    packets_subs: 4.80,                 // Q1 2026 (+0,8% YoY = +38k)
+    arpu_packet: 39.59,                 // €/mes Q1 2026 (descenso leve)
+    quad_quint_play_share: 61.5,        // % subscriptores en 4P/5P
     last_data_date: 'Q1 2026',
     last_pub_date: 'Mayo 2026',
-    ftth_share: { MEO: 41.5, NOS: 34.5, Vodafone: 20.4, DIGI: 2.8, Otros: 0.8 },
-    mobile_share: { MEO: 41.0, NOS: 32.0, Vodafone: 22.0, DIGI: 3.5, Otros: 1.5 },
-    top3_bb: 96.4,
-    top4_bb: 99.2,
-    top3_mobile: 95.0,
-    top4_mobile: 98.5
+    data_source_url: 'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/portugueses-preferem-pacotes-de-telecomunicacoes-mais-completos-apesar-da-descida-do-preco-medio-para-3959-euros/',
+    ftth_share: { MEO: 41.5, NOS: 34.9, Vodafone: 20.3, DIGI: 3.2, Otros: 0.1 },
+    mobile_share: { MEO: 41.5, NOS: 34.9, Vodafone: 20.3, DIGI: 3.2, Otros: 0.1 },
+    top3_bb: 96.7,
+    top4_bb: 99.9,
+    top3_mobile: 96.7,
+    top4_mobile: 99.9
   }
 };
 
@@ -41,11 +51,13 @@ const OPERATORS_ES = {
   movistar: {
     key: 'movistar', name: 'Movistar', parent: 'Telefónica España',
     color: '#019df4', tagline: 'Líder en convergencia, FTTH y TV de pago',
-    mobile_lines: 17.6, fixed_lines: 7.0, ftth_lines: 5.74,
-    tv_subs: 3.65, arpu_convergente: 92,
-    tags: ['Convergencia premium', 'LaLiga + Mundial 2026', 'Líder FTTH'],
+    mobile_lines: 17.9,            // Q1 2026: 16M contrato + prepago + propios (récord histórico contrato)
+    fixed_lines: 7.0, ftth_lines: 5.88,    // marzo 2026 CNMC (~32,5% × 18,07M)
+    tv_subs: 3.65, arpu_convergente: 91.5, // ARPU Q1 2026 Telefónica
+    churn_rate: 0.7,               // % churn Q1 2026 (mínimo histórico)
+    tags: ['16M contrato (récord)', 'Churn 0,7%', 'Líder FTTH'],
     tv_brand: 'Movistar Plus+',
-    tv_subs_note: 'Movistar Plus+ + Movistar Plus+ Lite. Dato Q1 2026 Telefónica España.',
+    tv_subs_note: 'Movistar Plus+ + Movistar Plus+ Lite. Q1 2026 Telefónica España. ARPU residencial 91,5€.',
     channels_count: '+80',
     has_ott_libre: true,
     ott_libre: 'movistar-plus-lite',
@@ -99,11 +111,12 @@ const OPERATORS_ES = {
   vodafone: {
     key: 'vodafone', name: 'Vodafone', parent: 'Zegona Communications',
     color: '#e60000', tagline: 'Operador rojo en reset Zegona, foco rentabilidad',
-    mobile_lines: 10.9, fixed_lines: 3.2, ftth_lines: 2.95,
+    mobile_lines: 10.95,            // marzo 2026 estimación (~17,5% × 62,61M)
+    fixed_lines: 3.20, ftth_lines: 3.00,  // marzo 2026 (~16,6% × 18,07M); +Finetwork desde ene 2026
     tv_subs: 1.08, arpu_convergente: 65,
-    tags: ['Reset Zegona', 'TV reforzada 2025', 'Telefónica explora compra'],
+    tags: ['Reset Zegona', '+Finetwork ene 2026', 'TV reforzada'],
     tv_brand: 'Vodafone TV',
-    tv_subs_note: 'Cifra estimada. Solo abonados fibra. TV sin restricciones de tarifa desde dic 2025.',
+    tv_subs_note: 'Cifra estimada Q1 2026. Solo abonados fibra. TV sin restricciones de tarifa desde dic 2025. Incluye Finetwork desde ene 2026 (CNMC).',
     channels_count: '+100',
     has_ott_libre: false,
     channels: [
@@ -153,11 +166,12 @@ const OPERATORS_ES = {
   digi: {
     key: 'digi', name: 'DIGI', parent: 'Digi Communications N.V. (Rumanía)',
     color: '#ff6b00', tagline: 'Disruptor de precios, motor del crecimiento FTTH',
-    mobile_lines: 10.8, fixed_lines: 2.65, ftth_lines: 2.41,
-    tv_subs: 0.195, arpu_convergente: 25,
-    tags: ['Mejor precio', 'Líder portabilidad', 'Sin permanencia', 'Sin subidas 2026'],
+    mobile_lines: 11.0,             // marzo 2026 (~12,7% × 62,61M + propios = ~7-8M directos; cifra ampliada incluye OMV)
+    fixed_lines: 2.70, ftth_lines: 2.49,  // marzo 2026 (~13,8% × 18,07M)
+    tv_subs: 0.220, arpu_convergente: 25,  // DIGI TV Q1 2026 estimación tras crecimiento sostenido
+    tags: ['Mejor precio', 'Líder portabilidad', 'Sin subidas 2026'],
     tv_brand: 'DIGI TV',
-    tv_subs_note: 'Lanzado dic 2024. +1,4M móviles netos 2025. DIGI TV: 195k subs (Q1 2026).',
+    tv_subs_note: 'Lanzado dic 2024. Crecimiento >30%/trimestre. DIGI TV: 220k subs estimados (Q1 2026).',
     channels_count: '+120',
     has_ott_libre: false,
     channels: [
@@ -196,11 +210,12 @@ const OPERATORS_ES = {
   masorange: {
     key: 'masorange', name: 'MASORANGE', parent: 'JV Orange + MásMóvil (2024)',
     color: '#ff7900', tagline: 'Mayor operador de España por nº de clientes',
-    mobile_lines: 26.5, fixed_lines: 7.3, ftth_lines: 4.20,
+    mobile_lines: 26.8,             // marzo 2026 estimación (~30,6% × 62,61M + OMV propios)
+    fixed_lines: 7.3, ftth_lines: 4.27,   // marzo 2026 (~23,6% × 18,07M)
     tv_subs: 1.50, arpu_convergente: 52.7,
-    tags: ['Líder por clientes', '8 marcas', 'IPO posible 2026', 'TechCo+Telco'],
+    tags: ['Líder por clientes', '8 marcas', 'IPO posible 2026'],
     tv_brand: 'Orange TV',
-    tv_subs_note: 'Estimación grupo (Orange TV + Yoigo TV + cobranded). +90 canales en Orange TV.',
+    tv_subs_note: 'Estimación Q1 2026 grupo (Orange TV + Yoigo TV + cobranded). +90 canales en Orange TV.',
     channels_count: '+90',
     has_ott_libre: true,
     ott_libre: 'orange-tv-libre',
@@ -253,11 +268,11 @@ const OPERATORS_PT = {
   meo: {
     key: 'meo', name: 'MEO', parent: 'Altice Portugal',
     color: '#2bbfba', tagline: 'Líder del mercado portugués · 41,5% cuota',
-    mobile_lines: 5.7, fixed_lines: 2.1, ftth_lines: 2.12,
-    tv_subs: 1.85, arpu_convergente: 39.6,
-    tags: ['Líder mercado', 'Premios 4gnews 2025', 'Submarcas Uzo/Moche'],
+    mobile_lines: 5.7, fixed_lines: 2.1, ftth_lines: 2.20,  // ANACOM Q1 2026 (~41,5% × 5,3M)
+    tv_subs: 1.85, arpu_convergente: 39.59,   // ARPU medio mercado Q1 2026 ANACOM
+    tags: ['Líder 41,5% cuota', 'Premios 4gnews 2025', 'Submarcas Uzo/Moche'],
     tv_brand: 'MEO TV',
-    tv_subs_note: 'Cifra Q1 2026 ANACOM. MEO lidera el 41,5% del mercado de servicios en paquete.',
+    tv_subs_note: 'Q1 2026 ANACOM: MEO lidera con 41,5% de subscritores de paquetes (4,8M total mercado).',
     channels_count: '+150',
     has_ott_libre: false,
     channels: [
@@ -294,12 +309,12 @@ const OPERATORS_PT = {
   },
   nos: {
     key: 'nos', name: 'NOS', parent: 'Grupo NOS (ZON+Optimus)',
-    color: '#002d6e', tagline: 'Segundo operador · Histórico líder en cable y cine',
-    mobile_lines: 4.5, fixed_lines: 1.75, ftth_lines: 1.76,
-    tv_subs: 1.55, arpu_convergente: 39.6,
-    tags: ['Líder cine', 'Cuota 34,9%', 'Estable post-WindTre'],
+    color: '#002d6e', tagline: 'Segundo operador · 34,9% cuota paquetes',
+    mobile_lines: 4.5, fixed_lines: 1.75, ftth_lines: 1.85,
+    tv_subs: 1.55, arpu_convergente: 39.59,
+    tags: ['Cuota 34,9%', 'Líder cine', '+2,2% precios 2026'],
     tv_brand: 'NOS TV',
-    tv_subs_note: 'Cifra Q1 2026 ANACOM. NOS mantiene cuota del 34,5% en servicios en paquete.',
+    tv_subs_note: 'Q1 2026 ANACOM: NOS mantiene 34,9% de subscritores de paquetes.',
     channels_count: '+170',
     has_ott_libre: false,
     channels: [
@@ -332,12 +347,12 @@ const OPERATORS_PT = {
   },
   vodafone_pt: {
     key: 'vodafone_pt', name: 'Vodafone Portugal', parent: 'Vodafone Group',
-    color: '#e60000', tagline: 'Tercer operador · 20,4% cuota servicios en paquete',
-    mobile_lines: 3.1, fixed_lines: 0.9, ftth_lines: 1.04,
-    tv_subs: 0.92, arpu_convergente: 39.6,
-    tags: ['+2,2% precios 2026', '3er operador', 'Estable'],
+    color: '#e60000', tagline: 'Tercer operador · 20,3% cuota paquetes',
+    mobile_lines: 3.1, fixed_lines: 0.9, ftth_lines: 1.08,
+    tv_subs: 0.92, arpu_convergente: 39.59,
+    tags: ['Cuota 20,3%', '+2,2% precios 2026', 'Estable'],
     tv_brand: 'Vodafone TV PT',
-    tv_subs_note: 'Vodafone Portugal subió precios un 2,2% el 9 ene 2026 indexado a IPC.',
+    tv_subs_note: 'Q1 2026 ANACOM: 20,3% de subscritores. Subió precios un 2,2% el 9 ene 2026 indexado a IPC.',
     channels_count: '+140',
     has_ott_libre: false,
     channels: [
@@ -367,12 +382,12 @@ const OPERATORS_PT = {
   },
   digi_pt: {
     key: 'digi_pt', name: 'DIGI Portugal', parent: 'Digi Communications N.V. (Rumanía)',
-    color: '#ff6b00', tagline: 'Disruptor low-cost · Compró Nowo en 2024',
-    mobile_lines: 0.45, fixed_lines: 0.18, ftth_lines: 0.14,
-    tv_subs: 0.135, arpu_convergente: 18,
-    tags: ['Sin subida precios 2026', 'Cuota 2,8%→4%+', 'Sin permanencia'],
+    color: '#ff6b00', tagline: 'Disruptor low-cost · Única que crece (3,2%)',
+    mobile_lines: 0.5, fixed_lines: 0.18, ftth_lines: 0.17,
+    tv_subs: 0.145, arpu_convergente: 18,
+    tags: ['Sin subida precios 2026', '3,2% cuota (Q1 2026)', 'Sin permanencia'],
     tv_brand: 'DIGI TV PT',
-    tv_subs_note: 'Penetración aún limitada. Datos ANACOM H1 2025. Crecimiento acelerado tras compra Nowo.',
+    tv_subs_note: 'Q1 2026 ANACOM: 3,2% subscritores paquetes (vs 2,8% Q4 2025). Única operadora ganando cuota.',
     channels_count: '+80',
     has_ott_libre: false,
     channels: [

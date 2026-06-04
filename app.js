@@ -453,19 +453,6 @@ function renderOTTLibre(key) {
       ${ott.catalog ? kpi({ label:'Catálogo', value:Array.isArray(ott.catalog)?ott.catalog.length+'+':ott.catalog, accent:'movistar', subtitle:'temas', date:'Actual', fieldId:`ott.${key}.cat` }) : ''}
     </div>
 
-    ${ott.highlights ? `
-      <div class="card">
-        <div class="card-head"><div><div class="card-title">Highlights y diferenciales</div></div></div>
-        <ul style="list-style:none; padding:0">
-          ${ott.highlights.map(h => `
-            <li style="padding:8px 0 8px 22px; border-bottom:1px solid var(--border); font-size:13px; color:var(--text-secondary); position:relative">
-              <span style="position:absolute; left:0; top:8px; color:${ott.color}; font-weight:700">▸</span>${h}
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-    ` : ''}
-
     ${ott.channels_included ? `
       <div class="card">
         <div class="card-head"><div><div class="card-title">Canales destacados incluidos</div></div></div>
