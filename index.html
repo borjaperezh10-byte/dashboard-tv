@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Telco Hub — Operadores Iberia</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" class="login-overlay">
+  <div class="login-card">
+    <div>
+      <span class="login-title">Telco <span style="color:var(--peak-blue)">HUB</span></span>
+      <div class="login-sub">Iberia Operators Intelligence</div>
+    </div>
+    <div class="login-body">
+      <div class="login-label">Acceso restringido</div>
+      <div class="login-desc">Introduce la contraseña para acceder al dashboard.</div>
+      <input type="password" id="login-input" class="login-input" placeholder="Contraseña" autocomplete="off" onkeypress="if(event.key==='Enter')tryLogin()"/>
+      <button class="login-btn" onclick="tryLogin()">Entrar</button>
+      <div id="login-error" class="login-error"></div>
+    </div>
+    <div class="login-foot">© 2026 · Uso interno · Borja Pérez Herraiz</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
