@@ -69,9 +69,9 @@ Trabajamos por bloques de 3:
 
 - ✅ Bloque 1: óvalos sidebar, tooltip de info, eliminar Speedtest
 - ✅ Bloque 2: datos marzo 2026 (CNMC) + Q1 2026 (ANACOM), sin planes, sin Highlights
-- ⏳ Bloque 3: i info en todos los KPIs, NEW al actualizar, rango fechas
-- ⏳ Bloque 4: OTTs libres detalle, noticias por sección, canales con dial
-- ⏳ Bloque 5: Portugal activado, fuentes editables, análisis renovación
+- ✅ Bloque 3: botón "Fuente" junto a icono "i", rango fechas en KPIs, noticias por sección
+- ⏳ Bloque 4: OTTs libres detalle, target en canales Paramount, análisis renovación
+- ⏳ Bloque 5: fuentes editables (sesión), notas/comparativas adicionales, refinos finales
 
 ## Autor
 

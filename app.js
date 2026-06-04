@@ -46,15 +46,19 @@ function getMarket() { return MARKET[CURRENT_COUNTRY]; }
 /* ────────────────────────────────────────────────
    KPI helper
 ──────────────────────────────────────────────── */
-function kpi({ label, value, unit, accent, trend, date, tipKey, fieldId, subtitle }) {
+function kpi({ label, value, unit, accent, trend, date, tipKey, fieldId, subtitle, sourceUrl }) {
   const tip = tipKey && KPI_TOOLTIPS[tipKey] ? KPI_TOOLTIPS[tipKey] : '';
   const isNew = fieldId && NEW_FIELDS.has(fieldId);
+  const hasActions = tip || sourceUrl;
   return `
     <div class="kpi">
       <span class="kpi-accent ${accent||''}"></span>
       <div class="kpi-head">
         <div class="kpi-label">${label}${isNew ? '<span class="new-badge">NEW</span>' : ''}</div>
-        ${tip ? `<span class="kpi-info" data-tip="${tip.replace(/"/g,'&quot;')}">i</span>` : ''}
+        ${hasActions ? `<div class="kpi-actions">
+          ${tip ? `<span class="kpi-info" data-tip="${tip.replace(/"/g,'&quot;')}">i</span>` : ''}
+          ${sourceUrl ? `<a class="kpi-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer" data-tip="Ver fuente original (abre en nueva pestaña)" title="Ver fuente"><svg viewBox="0 0 12 12" fill="none"><path d="M4 2H2v8h8V8M7 2h3v3M5 7l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>` : ''}
+        </div>` : ''}
       </div>
       <div class="kpi-value">${value}${unit ? `<span class="kpi-unit">${unit}</span>` : ''}</div>
       ${trend ? `<span class="kpi-trend ${trend.dir}">${trend.label}</span>` : ''}
@@ -80,6 +84,31 @@ function renderHBarChart(data, colors, unit='%') {
       </div>
     `;
   }).join('');
+}
+
+/* ────────────────────────────────────────────────
+   News block helper
+──────────────────────────────────────────────── */
+function renderNews(sectionKey) {
+  if (typeof NEWS === 'undefined' || !NEWS[sectionKey]) return '';
+  const items = NEWS[sectionKey].slice(0, 6);
+  if (items.length === 0) return '';
+  return `
+    <div class="section-anchor">📰 Últimas noticias relevantes</div>
+    <div class="news-list">
+      ${items.map(n => `
+        <a class="news-card" href="${n.url}" target="_blank" rel="noopener noreferrer">
+          <div class="news-meta">
+            <span class="news-source">${n.source}</span>
+            <span>·</span>
+            <span>${n.date}</span>
+          </div>
+          <div class="news-title">${n.title}</div>
+          <div class="news-link">Leer noticia →</div>
+        </a>
+      `).join('')}
+    </div>
+  `;
 }
 
 /* ────────────────────────────────────────────────
@@ -239,19 +268,19 @@ function renderHome() {
     </div>
 
     <div class="kpi-grid">
-      ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · '+m.regulator, tipKey:'total_mobile_lines', fieldId:'mkt.mob' })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · '+m.regulator, tipKey:'total_ftth_lines', fieldId:'mkt.ftth' })}
-      ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date+' · '+m.regulator, tipKey:'total_bb_lines', fieldId:'mkt.bb' })}
-      ${kpi({ label:'Top 4 cuota móvil', value:fmt(m.top4_mobile), unit:'%', accent:'movistar', subtitle:'Top 3: '+fmt(m.top3_mobile)+'%', date:m.last_data_date, tipKey:'top4_share', fieldId:'mkt.top4' })}
+      ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_mobile_lines', fieldId:'mkt.mob', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mkt.ftth', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_bb_lines', fieldId:'mkt.bb', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Top 4 cuota móvil', value:fmt(m.top4_mobile), unit:'%', accent:'movistar', subtitle:'Top 3: '+fmt(m.top3_mobile)+'%', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'top4_share', fieldId:'mkt.top4', sourceUrl:m.data_source_url })}
     </div>
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota FTTH (% líneas)</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator}</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota FTTH (% líneas)</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.ftth_share, colorMap)}
       </div>
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota líneas móviles</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator}</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota líneas móviles</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.mobile_share, colorMap)}
       </div>
     </div>
@@ -291,6 +320,8 @@ function renderHome() {
         </div>
       `).join('')}
     </div>
+
+    ${renderNews(CURRENT_COUNTRY === 'pt' ? 'home_pt' : 'home_es')}
   `;
 }
 
@@ -318,22 +349,24 @@ function renderMarket() {
     }</div>
 
     <div class="kpi-grid">
-      ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · '+m.regulator, tipKey:'total_mobile_lines', fieldId:'mk.mob' })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · '+m.regulator, tipKey:'total_ftth_lines', fieldId:'mk.ftth' })}
-      ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date, tipKey:'total_bb_lines', fieldId:'mk.bb' })}
-      ${kpi({ label:'Top 3 cuota móvil', value:fmt(m.top3_mobile), unit:'%', accent:'movistar', subtitle:'Top 4 con DIGI: '+fmt(m.top4_mobile)+'%', date:m.last_data_date, tipKey:'top3_share', fieldId:'mk.top3' })}
+      ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_mobile_lines', fieldId:'mk.mob', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mk.ftth', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_bb_lines', fieldId:'mk.bb', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Top 3 cuota móvil', value:fmt(m.top3_mobile), unit:'%', accent:'movistar', subtitle:'Top 4 con DIGI: '+fmt(m.top4_mobile)+'%', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'top3_share', fieldId:'mk.top3', sourceUrl:m.data_source_url })}
     </div>
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota FTTH</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota FTTH</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.ftth_share, colorMap)}
       </div>
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota móvil</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota móvil</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.mobile_share, colorMap)}
       </div>
     </div>
+
+    ${renderNews(CURRENT_COUNTRY === 'pt' ? 'market_pt' : 'market_es')}
   `;
 }
 
@@ -407,11 +440,11 @@ function renderOperator(key) {
     </div>
 
     <div class="kpi-grid">
-      ${kpi({ label:'Líneas móvil', value:fmt(op.mobile_lines), unit:'M', accent:key, subtitle:'incluye OMV propios', date:market.last_data_date+' · '+market.regulator, tipKey:'mobile_lines_op', fieldId:`${key}.mob` })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:'red propia minorista', date:market.last_data_date+' · '+market.regulator, tipKey:'ftth_lines_op', fieldId:`${key}.ftth` })}
-      ${kpi({ label:'Suscriptores TV', value:op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M', accent:key, subtitle:op.tv_brand, date:market.last_data_date, tipKey:'tv_subs_op', fieldId:`${key}.tv` })}
-      ${kpi({ label:'Canales TV', value:op.channels_count, accent:key, subtitle:'parrilla actual', date:market.last_data_date, tipKey:'channels_count_op', fieldId:`${key}.ch` })}
-      ${kpi({ label:'ARPU convergente ~', value:op.arpu_convergente, unit:'€/mes', accent:'pink', subtitle:'estimación pública', date:market.last_data_date, tipKey:'arpu', fieldId:`${key}.arpu` })}
+      ${kpi({ label:'Líneas móvil', value:fmt(op.mobile_lines), unit:'M', accent:key, subtitle:'incluye OMV propios', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'mobile_lines_op', fieldId:`${key}.mob`, sourceUrl:op.data_source_url })}
+      ${kpi({ label:'Líneas FTTH', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:'red propia minorista', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'ftth_lines_op', fieldId:`${key}.ftth`, sourceUrl:op.data_source_url })}
+      ${kpi({ label:'Suscriptores TV', value:op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M', accent:key, subtitle:op.tv_brand, date:op.data_period||market.last_data_date, tipKey:'tv_subs_op', fieldId:`${key}.tv`, sourceUrl:op.data_source_url })}
+      ${kpi({ label:'Canales TV', value:op.channels_count, accent:key, subtitle:'parrilla actual', date:op.data_period||market.last_data_date, tipKey:'channels_count_op', fieldId:`${key}.ch` })}
+      ${kpi({ label:'ARPU convergente ~', value:op.arpu_convergente, unit:'€/mes', accent:'pink', subtitle:'estimación pública', date:op.data_period||market.last_data_date, tipKey:'arpu', fieldId:`${key}.arpu`, sourceUrl:op.data_source_url })}
     </div>
 
     ${ottHTML}
@@ -421,6 +454,8 @@ function renderOperator(key) {
       <div class="card-head"><div><div class="card-title">Parrilla por categoría</div><div class="card-subtitle">${op.tv_subs_note}</div></div></div>
       ${channelHTML}
     </div>
+
+    ${renderNews(key)}
   `;
 }
 
@@ -529,6 +564,8 @@ function renderCompare() {
       <div class="card-head"><div><div class="card-title">Suscriptores TV (M)</div></div></div>
       ${renderHBarChart(Object.fromEntries(ops.map(op => [op.tv_brand, op.tv_subs])), Object.fromEntries(ops.map(op => [op.tv_brand, op.color])), 'M')}
     </div>
+
+    ${renderNews('compare')}
   `;
 }
 
@@ -601,6 +638,8 @@ function renderChannelsMatrix() {
         </tbody>
       </table>
     </div>
+
+    ${renderNews('channels')}
   `;
 }
 
@@ -657,6 +696,8 @@ function renderGroups() {
         </table>
       </div>
     `).join('')}
+
+    ${renderNews('groups')}
   `;
 }
 
@@ -726,6 +767,8 @@ function renderParamountOverview() {
         </div>
       `).join('')}
     </div>
+
+    ${renderNews('paramount_overview')}
   `;
 }
 
@@ -842,6 +885,8 @@ function renderParamountChannel(chKey) {
         </div>
       </div>
     ` : ''}
+
+    ${renderNews('ch_' + chKey)}
   `;
 }
 

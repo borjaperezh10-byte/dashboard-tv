@@ -61,6 +61,8 @@ const OPERATORS_ES = {
     channels_count: '+80',
     has_ott_libre: true,
     ott_libre: 'movistar-plus-lite',
+    data_source_url: 'https://www.telefonica.com/es/sala-comunicacion/prensa/telefonica-eleva-ingresos-hasta-8127-millones-euros-primer-trimestre-confirma-objetivos-financieros-2026/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 14 may 2026',
     channels: [
       { cat:'Generalistas', items:[
         { name:'La 1', dial:'1' },{ name:'La 2', dial:'2' },{ name:'Antena 3', dial:'3' },
@@ -119,6 +121,8 @@ const OPERATORS_ES = {
     tv_subs_note: 'Cifra estimada Q1 2026. Solo abonados fibra. TV sin restricciones de tarifa desde dic 2025. Incluye Finetwork desde ene 2026 (CNMC).',
     channels_count: '+100',
     has_ott_libre: false,
+    data_source_url: 'https://www.saladeprensa.vodafone.es/c/notas-prensa/np-resultadosfy25q126/',
+    data_period: 'Q1 FY2026 (al 30 jun 2025) · pub. jul 2025 + CNMC mar 2026',
     channels: [
       { cat:'Generalistas TDT', items:[
         { name:'La 1', dial:'1' },{ name:'La 2', dial:'2' },{ name:'Antena 3', dial:'3' },
@@ -166,14 +170,19 @@ const OPERATORS_ES = {
   digi: {
     key: 'digi', name: 'DIGI', parent: 'Digi Communications N.V. (Rumanía)',
     color: '#ff6b00', tagline: 'Disruptor de precios, motor del crecimiento FTTH',
-    mobile_lines: 11.0,             // marzo 2026 (~12,7% × 62,61M + propios = ~7-8M directos; cifra ampliada incluye OMV)
-    fixed_lines: 2.70, ftth_lines: 2.49,  // marzo 2026 (~13,8% × 18,07M)
-    tv_subs: 0.220, arpu_convergente: 25,  // DIGI TV Q1 2026 estimación tras crecimiento sostenido
-    tags: ['Mejor precio', 'Líder portabilidad', 'Sin subidas 2026'],
+    mobile_lines: 7.58,             // Q1 2026 reporte propio (líneas móvil)
+    fixed_lines: 0.867,             // Q1 2026: 867k telefonía fija
+    ftth_lines: 2.75,               // Q1 2026 reporte propio (fibra)
+    tv_subs: 0.217,                 // Q1 2026 reporte propio (217k TV)
+    total_clients: 11.4,            // Q1 2026: 11,4M clientes totales
+    arpu_convergente: 25,
+    tags: ['11,4M clientes (Q1 2026)', '492k portabilidades Q1', 'Sin subidas 2026'],
     tv_brand: 'DIGI TV',
-    tv_subs_note: 'Lanzado dic 2024. Crecimiento >30%/trimestre. DIGI TV: 220k subs estimados (Q1 2026).',
+    tv_subs_note: 'Q1 2026: 217k subs TV (+25% vs Q4 2025). Mejor inicio de año histórico con 492k portabilidades.',
     channels_count: '+120',
     has_ott_libre: false,
+    data_source_url: 'https://www.democrata.es/economia/digi-rebasa-las-776-000-portabilidades-hasta-mayo-y-crece-un-16/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 29 may 2026',
     channels: [
       { cat:'Cine y Series', items:[
         { name:'Warner Bros TV', dial:'10' },{ name:'AXN', dial:'11' },{ name:'AXN Movies', dial:'12' },
@@ -209,16 +218,20 @@ const OPERATORS_ES = {
   },
   masorange: {
     key: 'masorange', name: 'MASORANGE', parent: 'JV Orange + MásMóvil (2024)',
-    color: '#ff7900', tagline: 'Mayor operador de España por nº de clientes',
-    mobile_lines: 26.8,             // marzo 2026 estimación (~30,6% × 62,61M + OMV propios)
-    fixed_lines: 7.3, ftth_lines: 4.27,   // marzo 2026 (~23,6% × 18,07M)
-    tv_subs: 1.50, arpu_convergente: 52.7,
-    tags: ['Líder por clientes', '8 marcas', 'IPO posible 2026'],
+    color: '#ff7900', tagline: 'Líder por clientes · ~47M líneas (incl. M2M)',
+    mobile_lines: 26.8,             // Q1 2026 estimación móvil propio sin M2M
+    fixed_lines: 7.3,
+    ftth_lines: 4.27,               // marzo 2026 (~23,6% × 18,07M CNMC)
+    tv_subs: 1.50, arpu_convergente: 54.1,    // ARPU Q1 2026 oficial (no 52,7)
+    total_lines_incl_m2m: 47.0,     // Q1 2026: ~47M total grupo
+    tags: ['47M líneas (M2M incl.)', 'Q1 2026 ARPU 54,1€', 'Orange consolidación Q2 2026'],
     tv_brand: 'Orange TV',
-    tv_subs_note: 'Estimación Q1 2026 grupo (Orange TV + Yoigo TV + cobranded). +90 canales en Orange TV.',
+    tv_subs_note: 'Q1 2026: ingresos 1.869M€ (+1,2%), 400k+ postpago netos 12m. ARPU convergente 54,1€.',
     channels_count: '+90',
     has_ott_libre: true,
     ott_libre: 'orange-tv-libre',
+    data_source_url: 'https://blog.masorange.es/masorange/masorange-aumenta-sus-ingresos-totales-un-12-hasta-los-1-869me-en-el-primer-trimestre-de-2026/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 23 abr 2026',
     channels: [
       { cat:'Cine y Series', items:[
         { name:'Star Channel', dial:'30' },{ name:'AMC', dial:'31' },{ name:'Warner TV', dial:'32' },
@@ -275,6 +288,8 @@ const OPERATORS_PT = {
     tv_subs_note: 'Q1 2026 ANACOM: MEO lidera con 41,5% de subscritores de paquetes (4,8M total mercado).',
     channels_count: '+150',
     has_ott_libre: false,
+    data_source_url: 'https://4gnews.pt/meo-deixa-para-tras-nos-vodafone-e-digi-e-ha-boas-noticias-para-os-portugueses/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 26 may 2026 ANACOM',
     channels: [
       { cat:'Generalistas Portugal', items:[
         { name:'RTP1', dial:'1' },{ name:'RTP2', dial:'2' },{ name:'SIC', dial:'3' },
@@ -317,6 +332,8 @@ const OPERATORS_PT = {
     tv_subs_note: 'Q1 2026 ANACOM: NOS mantiene 34,9% de subscritores de paquetes.',
     channels_count: '+170',
     has_ott_libre: false,
+    data_source_url: 'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 26 may 2026 ANACOM',
     channels: [
       { cat:'Generalistas Portugal', items:[
         { name:'RTP1', dial:'1' },{ name:'RTP2', dial:'2' },{ name:'SIC', dial:'3' },
@@ -355,6 +372,8 @@ const OPERATORS_PT = {
     tv_subs_note: 'Q1 2026 ANACOM: 20,3% de subscritores. Subió precios un 2,2% el 9 ene 2026 indexado a IPC.',
     channels_count: '+140',
     has_ott_libre: false,
+    data_source_url: 'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/meo-nos-e-vodafone-aumentam-precos-em-2026-mas-ha-excecoes/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 26 may 2026 ANACOM',
     channels: [
       { cat:'Generalistas Portugal', items:[
         { name:'RTP1', dial:'1' },{ name:'RTP2', dial:'2' },{ name:'SIC', dial:'3' },
@@ -390,6 +409,8 @@ const OPERATORS_PT = {
     tv_subs_note: 'Q1 2026 ANACOM: 3,2% subscritores paquetes (vs 2,8% Q4 2025). Única operadora ganando cuota.',
     channels_count: '+80',
     has_ott_libre: false,
+    data_source_url: 'https://4gnews.pt/digi-comeca-2026-a-mostrar-a-meo-nos-e-vodafone-como-se-faz/',
+    data_period: 'Q1 2026 (al 31 mar 2026) · pub. 26 may 2026 ANACOM',
     channels: [
       { cat:'Generalistas Portugal', items:[
         { name:'RTP1', dial:'1' },{ name:'RTP2', dial:'2' },{ name:'SIC', dial:'3' },{ name:'TVI', dial:'4' }
@@ -887,4 +908,161 @@ const PARAMOUNT_CHANNELS_PT = {
       key_message: 'El plan en Portugal pasa por consolidar presencia con MEO, NOS y Vodafone PT (defensiva: sostener fee) y abrir DIGI PT (ofensiva: distribución con fee escalonado). Cluster múltiple es la propuesta de valor.'
     }
   }
+};
+
+
+/* ════════════════════════════════════════════
+   NOTICIAS POR SECCIÓN
+   Curadas con enlaces reales y fechas verificadas.
+   Estructura: NEWS[sectionKey] = [{source, date, title, url}]
+══════════════════════════════════════════════ */
+const NEWS = {
+  // ─── ESPAÑA ─────────────────────────────────
+  home_es: [
+    { source:'CNMC', date:'6 may 2026', title:'Las líneas FTTH superan los 18 millones en España (datos marzo 2026)', url:'https://www.cnmc.es/prensa/datos-marzo-telecos-20260506' },
+    { source:'CASADOMO', date:'7 may 2026', title:'CNMC confirma crecimiento de la fibra con +18M líneas en marzo', url:'https://www.casadomo.com/2026/05/07/cnmc-confirma-crecimiento-fibra-optica-mas-18-millones-lineas-marzo' },
+    { source:'CNMC', date:'26 mar 2026', title:'Telecos cierran 2025 con leve aumento en ingresos minoristas y fuerte tráfico móvil', url:'https://www.cnmc.es/prensa/estadisticas-telecos-4T-2025-20260327' },
+    { source:'CNMC', date:'13 abr 2026', title:'FTTH roza los 18 millones en febrero 2026 con Movistar líder', url:'https://www.cnmc.es/prensa/datos-febrero-telecos-20260413' },
+    { source:'ADSLZone', date:'25 may 2026', title:'Telefónica acelera: 16M clientes móviles y bajas en mínimos históricos', url:'https://www.adslzone.net/noticias/operadores/resultados-telefonica-primer-trimestre-2026-espana/' },
+    { source:'Mobile World Live', date:'19 ene 2026', title:'Zegona triplica el valor de Vodafone España en año y medio', url:'https://www.mobileworldlive.com/spanish/zegona-triplica-el-valor-de-vodafone-espana-en-ano-y-medio/' }
+  ],
+
+  market_es: [
+    { source:'CNMC', date:'6 may 2026', title:'Estadísticas oficiales de telecomunicaciones · marzo 2026', url:'https://www.cnmc.es/prensa/datos-marzo-telecos-20260506' },
+    { source:'CNMC', date:'5 mar 2026', title:'La competencia en banda ancha fija se intensifica en municipios pequeños', url:'https://www.cnmc.es/prensa/geografico-banda-ancha-fija-20260305' },
+    { source:'CNMC', date:'5 nov 2025', title:'La fibra óptica alcanzó 17,5M líneas en agosto', url:'https://www.cnmc.es/prensa/datos-agosto-telecos-20251105' },
+    { source:'CNMC Data', date:'continuo', title:'Datos abiertos de telecomunicaciones · serie histórica', url:'https://data.cnmc.es/telecomunicaciones-y-sector-audiovisual/conjuntos-de-datos/datos-mensuales/telecomunicaciones' },
+    { source:'CASADOMO', date:'7 may 2026', title:'18M líneas FTTH y portabilidad récord de 599k en marzo', url:'https://www.casadomo.com/2026/05/07/cnmc-confirma-crecimiento-fibra-optica-mas-18-millones-lineas-marzo' }
+  ],
+
+  movistar: [
+    { source:'Telefónica', date:'14 may 2026', title:'Telefónica eleva sus ingresos a 8.127M€ en Q1 2026 y confirma objetivos', url:'https://www.telefonica.com/es/sala-comunicacion/prensa/telefonica-eleva-ingresos-hasta-8127-millones-euros-primer-trimestre-confirma-objetivos-financieros-2026/' },
+    { source:'Roams', date:'15 may 2026', title:'Telefónica supera 16M contratos móviles y ARPU de 91,5€', url:'https://roams.es/actualidad/telefonia/telefonica-supera-16-millones-contratos-sube-ingreso-medio-cliente-91-5-euros/' },
+    { source:'ADSLZone', date:'25 may 2026', title:'Telefónica acelera en España: 16M móvil y bajas mínimas', url:'https://www.adslzone.net/noticias/operadores/resultados-telefonica-primer-trimestre-2026-espana/' },
+    { source:'Merca2', date:'14 may 2026', title:'Acción Telefónica sube 5% en mayo impulsada por Brasil y menor competencia ES', url:'https://www.merca2.es/2026/05/14/resultados-telefonica-mayo-2026-bolsa-2380029/' },
+    { source:'CapitalMadrid', date:'24 feb 2026', title:'Telefónica obtiene beneficio neto de 2.122M€ (-19%) en 2025', url:'https://www.capitalmadrid.com/2026/2/24/71231/telefonica-obtiene-un-beneficio-neto-de-2122-millones-19-en-2025-despues-de-desinversiones.html' },
+    { source:'Telefónica', date:'continuo', title:'Resultados trimestrales 2026 · Telefónica Investor Relations', url:'https://www.telefonica.com/es/accionistas-inversores/informacion-financiera/resultados-trimestrales/2026/' }
+  ],
+
+  vodafone: [
+    { source:'Vodafone España', date:'16 jul 2025', title:'Vodafone España culmina su primer año bajo Zegona con mejora operativa', url:'https://www.saladeprensa.vodafone.es/c/notas-prensa/np-resultadosfy25q126/' },
+    { source:'El Español', date:'26 feb 2026', title:'Vodafone España aumenta ingresos 1,1% hasta 923M€ en Q4', url:'https://www.elespanol.com/invertia/empresas/tecnologia/20260226/vodafone-espana-aumenta-ingresos-millones-cuarto-trimestre/1003744146317_0.html' },
+    { source:'Merca2', date:'20 may 2026', title:'Vodafone España bajo Zegona: menos guerra de precios, más cliente rentable', url:'https://www.merca2.es/2026/05/20/vodafone-espana-zegona-precios-rentable-2377889/' },
+    { source:'Mobile World Live', date:'19 ene 2026', title:'Zegona triplica el valor de Vodafone España en año y medio', url:'https://www.mobileworldlive.com/spanish/zegona-triplica-el-valor-de-vodafone-espana-en-ano-y-medio/' },
+    { source:'Benzinga', date:'24 feb 2025', title:'Vodafone España aumenta ingresos: la estrategia de Zegona da resultados', url:'https://es.benzinga.com/news/global/europe/vodafone-espana-aumenta-ingresos-la-estrategia-de-zegona-da-resultados/' },
+    { source:'TipRanks', date:'2024', title:'Zegona anuncia nuevo contrato de fibra mayorista en España', url:'https://www.tipranks.com/news/company-announcements/zegona-announces-new-fibre-contract-in-spain' }
+  ],
+
+  digi: [
+    { source:'Democrata', date:'29 may 2026', title:'DIGI rebasa las 776.000 portabilidades hasta mayo y crece 16%', url:'https://www.democrata.es/economia/digi-rebasa-las-776-000-portabilidades-hasta-mayo-y-crece-un-16/' },
+    { source:'El Independiente', date:'29 may 2026', title:'DIGI dispara 16% las portabilidades y supera 776k hasta mayo', url:'https://www.elindependiente.com/economia/2026/05/29/digi-dispara-portabilidades-mayo/' },
+    { source:'Roams', date:'24 abr 2026', title:'DIGI: no vende fibra a pérdidas; cómo puede ofrecer 500Mbps a 10€', url:'https://roams.es/actualidad/telefonia/digi-asegura-no-vender-fibra-perdidas-por-que-ofrecer-500mbps-10-euros/' },
+    { source:'Xataka Móvil', date:'1 abr 2026', title:'DIGI logra mejor dato histórico mensual en portabilidades fijas (marzo)', url:'https://www.xatakamovil.com/digi/agresiva-estrategia-precios-digi-tiene-su-efecto-ha-logrado-mejor-dato-su-historia-portabilidades-netas-fijas' },
+    { source:'ADSLZone', date:'5 mar 2026', title:'DIGI anuncia 400M€ inversión 2026 y gran expansión fibra', url:'https://www.adslzone.net/noticias/operadores/digi-anuncia-400-millones-inversion-espana/' },
+    { source:'Xataka Móvil', date:'24 feb 2026', title:'DIGI 2025: 33M€ pérdidas pero 1.673k portabilidades récord', url:'https://www.xatakamovil.com/digi/digi-tiene-fibra-10-gbps-barata-su-musculo-esta-otro-servicio-lineas-moviles' }
+  ],
+
+  masorange: [
+    { source:'MASORANGE', date:'23 abr 2026', title:'MASORANGE aumenta ingresos 1,2% hasta 1.869M€ en Q1 2026', url:'https://blog.masorange.es/masorange/masorange-aumenta-sus-ingresos-totales-un-12-hasta-los-1-869me-en-el-primer-trimestre-de-2026/' },
+    { source:'Mobile World Live', date:'24 abr 2026', title:'MasOrange facturó 1,2% más en Q1 2026 (1.869M€)', url:'https://www.mobileworldlive.com/spanish/masorange-facturo-un-12-mas-en-el-primer-trimestre-de-2026' },
+    { source:'El Español', date:'23 abr 2026', title:'MasOrange ingresa 1.869M€ a la espera de que Orange tome el control', url:'https://www.elespanol.com/invertia/empresas/tecnologia/20260423/masorange-gana-millones-primer-trimestre-espera-orange-tome-control/1003744218334_0.html' },
+    { source:'La Ecuación Digital', date:'23 abr 2026', title:'MASORANGE eleva ingresos: ARPU 54,1€ y sinergias 394M€', url:'https://www.laecuaciondigital.com/destacadas/masorange-ingresos-resultados-trimestrales-2026/' },
+    { source:'Wikipedia', date:'jun 2026', title:'MasOrange · evolución 2024-2026 y cifras Q1', url:'https://es.wikipedia.org/wiki/MasOrange' },
+    { source:'Zonamovilidad', date:'23 abr 2026', title:'MasOrange crece 1,2% y avanza en integración con Orange', url:'https://www.zonamovilidad.es/resultados-masorange-primer-trimestre-2026-crece-ingresos-avanza-integracion-orange' }
+  ],
+
+  // ─── PORTUGAL ───────────────────────────────
+  home_pt: [
+    { source:'4gnews', date:'26 may 2026', title:'MEO deja atrás a NOS, Vodafone y DIGI en Q1 2026 (41,5%)', url:'https://4gnews.pt/meo-deixa-para-tras-nos-vodafone-e-digi-e-ha-boas-noticias-para-os-portugueses/' },
+    { source:'Tek Sapo', date:'26 may 2026', title:'Portugueses prefieren paquetes más completos · ARPU 39,59€', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/portugueses-preferem-pacotes-de-telecomunicacoes-mais-completos-apesar-da-descida-do-preco-medio-para-3959-euros/' },
+    { source:'4gnews', date:'29 may 2026', title:'Precios de operadoras PT caen en abril 2026 (-0,9%)', url:'https://4gnews.pt/o-preco-das-operadoras-em-portugal-ficou-mais-barato-e-o-culpado-todos-sabemos-quem-e/' },
+    { source:'Tek Sapo', date:'29 may 2026', title:'Precios telecos PT bajan 0,9% en abril · DIGI sigue líder en mínimos', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/precos-das-telecomunicacoes-descem-09-em-abril-qual-e-a-operadora-com-as-mensalidades-mais-baixas/' },
+    { source:'4gnews', date:'27 feb 2026', title:'DIGI, MEO, NOS o Vodafone: la operadora que lidera PT en 2025', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' },
+    { source:'Magazine HD', date:'10 ene 2026', title:'DIGI mantém preços enquanto MEO, NOS e Vodafone aumentam 2026', url:'https://www.magazine-hd.com/apps/wp/operadora-low-cost-comeca-2026-grande-concorrencia-nos-meo-vodafone/' }
+  ],
+
+  market_pt: [
+    { source:'ANACOM Consumidor', date:'mar 2026', title:'Precios de telecomunicaciones sin alteraciones en marzo', url:'https://www.anacom-consumidor.pt/-/precos-das-telecomunicacoes-sem-alteracoes-em-marco' },
+    { source:'ANACOM', date:'continuo', title:'Pacotes de serviços de comunicações eletrónicas · informes', url:'https://www.anacom.pt/render.jsp?categoryId=337754' },
+    { source:'Tek Sapo', date:'26 may 2026', title:'4P/5P son ya 61,5% subscritores y 70,5% receitas en Q1 2026', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/portugueses-preferem-pacotes-de-telecomunicacoes-mais-completos-apesar-da-descida-do-preco-medio-para-3959-euros/' },
+    { source:'4gnews', date:'27 feb 2026', title:'Mercado paquetes PT: cuotas oficiales ANACOM', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' },
+    { source:'PCAssiste', date:'8 ene 2026', title:'DIGI congela precios mientras trío histórico sube en 2026', url:'https://www.pcassiste.com/2026/01/08/telecomunicacoes-2026-digi-congela-precos-enquanto-meo-nos-e-vodafone-avancam-com-aumentos/' }
+  ],
+
+  meo: [
+    { source:'4gnews', date:'26 may 2026', title:'MEO líder en Portugal con 41,5% subscritores en Q1 2026', url:'https://4gnews.pt/meo-deixa-para-tras-nos-vodafone-e-digi-e-ha-boas-noticias-para-os-portugueses/' },
+    { source:'4gnews', date:'27 feb 2026', title:'MEO domina mercado PT al final de 2025 con 41,6%', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' },
+    { source:'Tek Sapo', date:'3 dic 2025', title:'MEO, NOS y Vodafone aumentan precios en 2026 (excepto DIGI)', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/meo-nos-e-vodafone-aumentam-precos-em-2026-mas-ha-excecoes/' },
+    { source:'Tek Sapo', date:'26 may 2026', title:'ANACOM Q1 2026: MEO 41,5%, ARPU 39,59€', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/portugueses-preferem-pacotes-de-telecomunicacoes-mais-completos-apesar-da-descida-do-preco-medio-para-3959-euros/' }
+  ],
+
+  nos: [
+    { source:'4gnews', date:'26 may 2026', title:'NOS segundo operador PT con 34,9% en Q1 2026', url:'https://4gnews.pt/meo-deixa-para-tras-nos-vodafone-e-digi-e-ha-boas-noticias-para-os-portugueses/' },
+    { source:'4gnews', date:'27 feb 2026', title:'NOS y operadoras PT cierran 2025 según ANACOM', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' },
+    { source:'Tek Sapo', date:'3 dic 2025', title:'NOS confirma aumentos de precios para 2026', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/meo-nos-e-vodafone-aumentam-precos-em-2026-mas-ha-excecoes/' }
+  ],
+
+  vodafone_pt: [
+    { source:'Tek Sapo', date:'3 dic 2025', title:'Vodafone PT aumenta precios indexados a IPC en 2026 (+2,2%)', url:'https://tek.sapo.pt/noticias/telecomunicacoes/artigos/meo-nos-e-vodafone-aumentam-precos-em-2026-mas-ha-excecoes/' },
+    { source:'4gnews', date:'26 may 2026', title:'Vodafone PT mantiene 20,3% cuota paquetes (Q1 2026)', url:'https://4gnews.pt/meo-deixa-para-tras-nos-vodafone-e-digi-e-ha-boas-noticias-para-os-portugueses/' },
+    { source:'4gnews', date:'27 feb 2026', title:'Vodafone PT pierde cuota frente al avance de DIGI', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' }
+  ],
+
+  digi_pt: [
+    { source:'4gnews', date:'7 ene 2026', title:'DIGI empieza 2026 sin subir precios mientras trío histórico sube', url:'https://4gnews.pt/digi-comeca-2026-a-mostrar-a-meo-nos-e-vodafone-como-se-faz/' },
+    { source:'Magazine HD', date:'10 ene 2026', title:'DIGI mantiene tabla inalterada en 2026 para ganar cuota', url:'https://www.magazine-hd.com/apps/wp/operadora-low-cost-comeca-2026-grande-concorrencia-nos-meo-vodafone/' },
+    { source:'PCAssiste', date:'8 ene 2026', title:'DIGI congela precios en PT, MEO/NOS/Vodafone suben 2,2%', url:'https://www.pcassiste.com/2026/01/08/telecomunicacoes-2026-digi-congela-precos-enquanto-meo-nos-e-vodafone-avancam-com-aumentos/' },
+    { source:'4gnews', date:'27 feb 2026', title:'DIGI única operadora PT que gana cuota en 2025 (2,8%)', url:'https://4gnews.pt/digi-meo-nos-ou-vodafone-conhece-a-operadora-que-lidera-o-mercado-em-portugal/' }
+  ],
+
+  // ─── ANÁLISIS ───────────────────────────────
+  compare: [
+    { source:'CNMC', date:'6 may 2026', title:'Cuotas oficiales de mercado · marzo 2026', url:'https://www.cnmc.es/prensa/datos-marzo-telecos-20260506' },
+    { source:'Kompara', date:'22 abr 2026', title:'Comparativa de tarifas fibra y móvil 2026: todas las operadoras', url:'https://kompara.es/internet-movil/tarifas' },
+    { source:'Roams', date:'24 abr 2026', title:'DIGI vs Movistar vs Orange: análisis comparativo Q1 2026', url:'https://roams.es/actualidad/telefonia/digi-asegura-no-vender-fibra-perdidas-por-que-ofrecer-500mbps-10-euros/' }
+  ],
+
+  channels: [
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'Nuevo dial Movistar Plus+ tras pérdida AMC Networks', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' },
+    { source:'Bandaancha', date:'21 ago 2025', title:'Vodafone elimina 7 canales SkyShowtime: MTV, Comedy, Nick…', url:'https://bandaancha.eu/foros/vodafone-eliminara-7-canales-pago-1757554' },
+    { source:'MundoPlus.tv', date:'21 ago 2025', title:'Calle 13, SyFy, Comedy Central y otros 4 canales abandonan Vodafone', url:'https://www.mundoplus.tv/tv-digital/calle-13-syfy-comedy-central-y-otros-4-canales-abandonan-vodafone-tv/' },
+    { source:'Xataka Home', date:'2 nov 2024', title:'Nuevos canales gratis llegados a Movistar, Orange y Vodafone', url:'https://www.xatakahome.com/servicios-de-smart-tv/quiza-no-te-has-dado-cuenta-canales-gratis-que-han-llegado-a-movistar-plus-orange-tv-vodafone-tv-ultimos-meses' }
+  ],
+
+  groups: [
+    { source:'Bandaancha', date:'21 ago 2025', title:'Paramount perdió Vodafone en agosto 2025 por desacuerdo SkyShowtime', url:'https://bandaancha.eu/foros/vodafone-eliminara-7-canales-pago-1757554' },
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'AMC sale de Movistar: 14 canales menos en la parrilla', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' },
+    { source:'MEO Forum', date:'19 dic 2025', title:'MEO renueva Nickelodeon con Paramount Portugal', url:'https://forum.meo.pt/tv-e-pacotes-9/canais-tv-boa-noticia-165975' },
+    { source:'MEO Forum', date:'31 dic 2025', title:'MTV Portugal cesa: MEO no renueva con Paramount', url:'https://forum.meo.pt/tv-e-pacotes-9/mtv-portugal-166050' }
+  ],
+
+  // ─── PARAMOUNT ──────────────────────────────
+  paramount_overview: [
+    { source:'Bandaancha', date:'21 ago 2025', title:'Vodafone elimina Nick, Nick Jr., MTV y Comedy Central', url:'https://bandaancha.eu/foros/vodafone-eliminara-7-canales-pago-1757554' },
+    { source:'MEO Forum', date:'19 dic 2025', title:'MEO renueva Nickelodeon + Nick Jr. en Portugal', url:'https://forum.meo.pt/tv-e-pacotes-9/canais-tv-boa-noticia-165975' },
+    { source:'Wikipedia', date:'29 ene 2026', title:'Nickelodeon Iberia: cierre feed ibérico, integración Global Unlimited', url:'https://pt.wikipedia.org/wiki/Nickelodeon_(Portugal)' },
+    { source:'Selectra', date:'5 may 2026', title:'Dónde ver Nickelodeon: diales actualizados', url:'https://tv.selectra.com/es-ES/canales/nickelodeon' }
+  ],
+
+  ch_nickelodeon: [
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'Dial 114 Movistar: Nickelodeon estable tras reorganización', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' },
+    { source:'Selectra', date:'5 may 2026', title:'Nickelodeon: diales por operador en España y Portugal', url:'https://tv.selectra.com/es-ES/canales/nickelodeon' },
+    { source:'Wikipedia', date:'9 feb 2026', title:'Nickelodeon Portugal: feed Global Unlimited desde 29 ene 2026', url:'https://pt.wikipedia.org/wiki/Nickelodeon_(Portugal)' }
+  ],
+
+  ch_nickjr: [
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'Nick Jr. en dial 113 Movistar Plus+', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' },
+    { source:'MEO Forum', date:'19 dic 2025', title:'Nick Jr. renovado por MEO con Paramount', url:'https://forum.meo.pt/tv-e-pacotes-9/canais-tv-boa-noticia-165975' }
+  ],
+
+  ch_mtv: [
+    { source:'MEO Forum', date:'31 dic 2025', title:'MTV Portugal sustituida por MTV Global tras no renovación MEO', url:'https://forum.meo.pt/tv-e-pacotes-9/mtv-portugal-166050' },
+    { source:'Bandaancha', date:'21 ago 2025', title:'MTV España fuera de Vodafone TV desde agosto 2025', url:'https://bandaancha.eu/foros/vodafone-eliminara-7-canales-pago-1757554' },
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'MTV España dial 120 + MTV 00s dial 121 en Movistar', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' }
+  ],
+
+  ch_comedycentral: [
+    { source:'Bandaancha', date:'21 ago 2025', title:'Comedy Central abandona Vodafone en agosto 2025', url:'https://www.mundoplus.tv/tv-digital/calle-13-syfy-comedy-central-y-otros-4-canales-abandonan-vodafone-tv/' },
+    { source:'MundoPlus.tv', date:'9 ene 2025', title:'Comedy Central permanece en Movistar y MASORANGE', url:'https://www.mundoplus.tv/tv-digital/este-es-el-nuevo-dial-de-movistar-plus/' }
+  ]
 };
