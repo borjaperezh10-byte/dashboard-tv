@@ -314,3 +314,65 @@ td.right,th.right{text-align:right}
 .scenario-kpi{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .scenario-kpi-label{font-size:10px;color:var(--text-muted);text-transform:capitalize;font-weight:600;flex-shrink:0;letter-spacing:0.3px}
 .scenario-kpi-value{font-size:11.5px;color:var(--text-primary);font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+
+/* Canales: chip FAST y grupo audiovisual (Punto 5) */
+.channel-pill{flex-wrap:wrap; gap:6px}
+.channel-pill .ch-name{flex:1 1 auto; min-width:60px}
+.ch-fast{font-size:9px;font-weight:800;background:#0064ff;color:#fff;padding:1px 5px;border-radius:3px;letter-spacing:0.4px;flex-shrink:0}
+.ch-group{font-size:10px;color:var(--text-muted);font-style:italic;flex:0 0 100%;padding-top:2px;border-top:1px dotted var(--border);margin-top:2px}
+
+/* Evolución page - chart styling (Punto 2) */
+.chart-card{padding-bottom:24px}
+.chart-wrap{margin-top:14px; min-height:220px}
+
+/* Target sources (Punto 7) */
+.target-sources{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:11px;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+.target-sources-label{font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);font-size:10px;margin-right:6px}
+.target-sources-list{display:inline-flex;flex-wrap:wrap;gap:4px}
+.target-source-item{font-size:11px;color:var(--text-secondary)}
+.target-source-item a{color:var(--peak-blue);text-decoration:none;border-bottom:1px dotted var(--peak-blue)}
+.target-source-item a:hover{border-bottom-style:solid}
+
+/* OTT tiers (Punto 4) */
+.ott-tiers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.ott-tier-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:transform 0.15s, box-shadow 0.15s}
+.ott-tier-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,10,60,0.08)}
+.ott-tier-label{font-size:10.5px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.ott-tier-price{font-size:22px;font-weight:900;line-height:1.1;letter-spacing:-0.6px;margin-bottom:8px}
+.ott-tier-detail{font-size:12px;color:var(--text-secondary);line-height:1.45}
+
+/* Renovaciones — nav-btn-renew (Bloque 7) */
+.nav-btn-renew{background:rgba(255,184,77,0.12); color:#ffb84d; border:1px solid rgba(255,184,77,0.25)}
+.nav-btn-renew:hover{background:rgba(255,184,77,0.22); color:#ffd99d}
+.nav-btn-renew.active{background:#ffb84d; color:#1a1f3d; border-color:#ffb84d}
+
+/* Renovaciones — Matriz operador × canal */
+.renov-matrix{width:100%; border-collapse:separate; border-spacing:0; font-size:12.5px}
+.renov-matrix th{background:var(--surface-2); padding:10px 14px; text-align:center; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); border-bottom:2px solid var(--border)}
+.renov-matrix td{padding:12px 14px; border-bottom:1px solid var(--border); transition:background 0.15s}
+.renov-matrix td:hover{background:var(--surface-2)}
+.renov-matrix tbody tr:last-child td{border-bottom:none}
+
+/* Renovaciones — Tabs por canal */
+.renov-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; padding:6px; background:var(--surface-2); border-radius:10px}
+.renov-tab{display:flex; flex-direction:column; align-items:flex-start; gap:6px; padding:10px 14px; background:transparent; border:none; border-radius:7px; cursor:pointer; flex:1 1 140px; min-width:120px; transition:all 0.15s; font-family:inherit}
+.renov-tab:hover{background:var(--white)}
+.renov-tab.active{background:var(--white); box-shadow:0 2px 8px rgba(0,10,60,0.06)}
+.renov-tab-name{font-size:13px; font-weight:700; color:var(--text-primary); text-align:left}
+.renov-tab.active .renov-tab-name{color:var(--peak-blue)}
+
+/* Renovaciones — Plan card detallado */
+.renov-plan-card{background:var(--white); border:1px solid var(--border); border-radius:12px; padding:24px 26px; box-shadow:0 4px 16px rgba(0,10,60,0.05)}
+.renov-plan-header{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; flex-wrap:wrap; border-bottom:1px solid var(--border); padding-bottom:16px}
+.renov-plan-channel{font-size:22px; font-weight:800; letter-spacing:-0.5px; color:var(--text-primary)}
+.renov-plan-subtitle{font-size:12.5px; color:var(--text-muted); margin-top:4px}
+.renov-plan-meta{display:flex; gap:24px; flex-wrap:wrap; margin-bottom:6px; padding:10px 14px; background:var(--surface-2); border-radius:8px}
+
+/* Renovaciones — Resumen corto en ficha de canal */
+.renov-summary-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:20px}
+.renov-summary-card{background:var(--white); border:1px solid var(--border); border-radius:10px; padding:14px 16px; cursor:pointer; transition:all 0.15s}
+.renov-summary-card:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,10,60,0.08)}
+.renov-summary-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px}
+.renov-summary-op{font-size:15px; font-weight:800}
+.renov-summary-deadline{font-size:11px; color:var(--text-muted); font-style:italic; margin-bottom:10px}
+.renov-summary-link{font-size:11.5px; font-weight:700}

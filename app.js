@@ -152,9 +152,9 @@ function renderSidebar() {
         <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 18v-6h6v6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         <span class="label">Visión general</span>
       </a>
-      <a class="nav-item ${CURRENT_PAGE==='market'?'active':''}" onclick="navigate('market')">
-        <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M3 17h14M5 14V8M9 14V5M13 14V10M17 14V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span class="label">Mercado · ${market.regulator}</span>
+      <a class="nav-item ${CURRENT_PAGE==='evolution'?'active':''}" onclick="navigate('evolution')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M3 17l5-5 4 4 5-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3" cy="17" r="1.5" fill="currentColor"/><circle cx="8" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="16" r="1.5" fill="currentColor"/><circle cx="17" cy="9" r="1.5" fill="currentColor"/></svg>
+        <span class="label">Evolución</span>
       </a>
 
       <div class="nav-section-label" style="margin-top:1.25rem">Operadores</div>
@@ -186,6 +186,17 @@ function renderSidebar() {
       <div class="nav-btn-grid">
         ${Object.keys(channels).map(k => `
           <button class="nav-btn nav-btn-accent ${CURRENT_PAGE==='ch-'+k?'active':''}" onclick="navigate('ch-${k}')">${channels[k].name}</button>
+        `).join('')}
+      </div>
+
+      <div class="nav-section-label" style="margin-top:1.25rem; color:#ffb84d">Renovaciones</div>
+      <a class="nav-item ${CURRENT_PAGE==='renovaciones'?'active':''}" onclick="navigate('renovaciones')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M3 10a7 7 0 0112-4.9M17 10a7 7 0 01-12 4.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 2v4h-4M5 18v-4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="label">Visión global</span>
+      </a>
+      <div class="nav-btn-grid">
+        ${Object.keys(ops).map(k => `
+          <button class="nav-btn nav-btn-renew ${CURRENT_PAGE==='renov-'+k?'active':''}" onclick="navigate('renov-${k}')">${ops[k].name}</button>
         `).join('')}
       </div>
     </nav>
@@ -224,7 +235,10 @@ function navigate(page) {
 
   if (page === 'home') renderHome();
   else if (page === 'market') renderMarket();
+  else if (page === 'evolution') renderEvolution();
   else if (page === 'compare') renderCompare();
+  else if (page === 'renovaciones') renderRenovacionesHub();
+  else if (page.startsWith('renov-') && ops[page.slice(6)]) renderRenovacionesOperador(page.slice(6));
   else if (page === 'channels') renderChannelsMatrix();
   else if (page === 'groups') renderGroups();
   else if (page === 'paramount-overview') renderParamountOverview();
@@ -270,7 +284,7 @@ function renderHome() {
     <div class="kpi-grid">
       ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_mobile_lines', fieldId:'mkt.mob', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mkt.ftth', sourceUrl:m.data_source_url })}
-      ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_bb_lines', fieldId:'mkt.bb', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Clientes TV (4 operadores foco)', value:fmt(opsList.reduce((s,o)=>s+(o.tv_subs||0),0), 2), unit:'M', accent:'pink', subtitle:'Suma de clientes TV pago', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'tv_clients', fieldId:'mkt.tv', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Top 4 cuota móvil', value:fmt(m.top4_mobile), unit:'%', accent:'movistar', subtitle:'Top 3: '+fmt(m.top3_mobile)+'%', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'top4_share', fieldId:'mkt.top4', sourceUrl:m.data_source_url })}
     </div>
 
@@ -322,6 +336,171 @@ function renderHome() {
     </div>
 
     ${renderNews(CURRENT_COUNTRY === 'pt' ? 'home_pt' : 'home_es')}
+  `;
+}
+
+/* ────────────────────────────────────────────────
+   RENDER: EVOLUCIÓN (Punto 2 - 10 años, 4 gráficos)
+──────────────────────────────────────────────── */
+function renderEvolution() {
+  const histKey = CURRENT_COUNTRY;
+  if (typeof HISTORICAL_DATA === 'undefined' || !HISTORICAL_DATA[histKey]) {
+    document.getElementById('content').innerHTML = '<div class="card">Datos históricos no disponibles para este país.</div>';
+    return;
+  }
+  const h = HISTORICAL_DATA[histKey];
+  const m = getMarket();
+  const countryName = CURRENT_COUNTRY === 'es' ? 'España' : 'Portugal';
+  const opColors = CURRENT_COUNTRY === 'es'
+    ? { Movistar:'#019df4', MASORANGE:'#ff7900', Vodafone:'#e60000', DIGI:'#ff6b00' }
+    : { MEO:'#2bbfba', NOS:'#002d6e', Vodafone:'#e60000', DIGI:'#ff6b00' };
+
+  // Helper: single-series line chart
+  const lineChart = (data, color, unit) => {
+    const W = 580, H = 220, padL = 50, padR = 25, padT = 18, padB = 32;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const max = Math.max(...data) * 1.08;
+    const min = Math.min(...data) * 0.92;
+    const range = max - min || 1;
+    const xStep = innerW / (data.length - 1);
+    const points = data.map((v, i) => ({
+      x: padL + i * xStep,
+      y: padT + innerH - ((v - min) / range) * innerH,
+      val: v
+    }));
+    const path = points.map((p, i) => (i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+    const area = path + ` L ${points[points.length-1].x.toFixed(1)},${padT+innerH} L ${padL},${padT+innerH} Z`;
+    const yTicks = 4;
+    const yLabels = Array.from({length:yTicks+1}, (_,i) => {
+      const val = min + (range * i / yTicks);
+      const y = padT + innerH - (i / yTicks) * innerH;
+      return { val: val.toFixed(1), y };
+    });
+    return `
+      <svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="overflow:visible">
+        ${yLabels.map(t => `
+          <line x1="${padL}" y1="${t.y}" x2="${W-padR}" y2="${t.y}" stroke="#e9eaf2" stroke-width="1"/>
+          <text x="${padL-8}" y="${t.y+3}" font-size="10" fill="#7a80a8" text-anchor="end">${t.val}${unit}</text>
+        `).join('')}
+        ${h.years.map((y, i) => `
+          <text x="${padL+i*xStep}" y="${H-padB+14}" font-size="9.5" fill="#7a80a8" text-anchor="middle">${y}</text>
+        `).join('')}
+        <path d="${area}" fill="${color}" fill-opacity="0.12"/>
+        <path d="${path}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+        ${points.map(p => `
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="${color}" stroke="#fff" stroke-width="1.5"/>
+        `).join('')}
+        <text x="${points[points.length-1].x - 38}" y="${points[points.length-1].y - 10}" font-size="11" fill="${color}" font-weight="800">${data[data.length-1].toFixed(1)}${unit}</text>
+      </svg>
+    `;
+  };
+
+  // Multi-line chart for TV share by operator
+  const multiLineChart = (series, colors, unit) => {
+    const W = 580, H = 260, padL = 45, padR = 110, padT = 18, padB = 32;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const allValues = Object.values(series).flat();
+    const max = Math.max(...allValues) * 1.05;
+    const min = 0;
+    const range = max - min || 1;
+    const xStep = innerW / (h.years.length - 1);
+    const yTicks = 5;
+    const yLabels = Array.from({length:yTicks+1}, (_,i) => {
+      const val = min + (range * i / yTicks);
+      const y = padT + innerH - (i / yTicks) * innerH;
+      return { val: val.toFixed(0), y };
+    });
+    return `
+      <svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="overflow:visible">
+        ${yLabels.map(t => `
+          <line x1="${padL}" y1="${t.y}" x2="${W-padR}" y2="${t.y}" stroke="#e9eaf2" stroke-width="1"/>
+          <text x="${padL-8}" y="${t.y+3}" font-size="10" fill="#7a80a8" text-anchor="end">${t.val}${unit}</text>
+        `).join('')}
+        ${h.years.map((y, i) => `
+          <text x="${padL+i*xStep}" y="${H-padB+14}" font-size="9.5" fill="#7a80a8" text-anchor="middle">${y}</text>
+        `).join('')}
+        ${Object.entries(series).map(([op, data]) => {
+          const color = colors[op] || '#999';
+          const points = data.map((v, i) => ({
+            x: padL + i * xStep,
+            y: padT + innerH - ((v - min) / range) * innerH
+          }));
+          const firstNonZero = data.findIndex(v => v > 0);
+          const validPoints = firstNonZero >= 0 ? points.slice(firstNonZero) : points;
+          if (validPoints.length === 0) return '';
+          const path = validPoints.map((p, i) => (i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+          const last = validPoints[validPoints.length-1];
+          return `
+            <path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>
+            ${validPoints.map(p => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="${color}"/>`).join('')}
+            <text x="${last.x + 6}" y="${last.y + 3}" font-size="10.5" fill="${color}" font-weight="700">${op} ${data[data.length-1].toFixed(1)}${unit}</text>
+          `;
+        }).join('')}
+      </svg>
+    `;
+  };
+
+  document.getElementById('content').innerHTML = `
+    <div class="page-header">
+      <div class="page-title-block">
+        <h1>Evolución — ${countryName}</h1>
+        <div class="page-desc">Series anuales 2016–2026 de líneas móviles, FTTH, clientes TV pago y cuota TV por operador. Fuente: ${m.regulator} (informes anuales).</div>
+      </div>
+      <div class="page-meta"><span class="page-meta-dot"></span> 10 años · ${m.regulator}</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Líneas móviles totales</div>
+          <div class="card-subtitle">Evolución 2016-2026 · ${m.regulator}</div>
+        </div></div>
+        <div class="chart-wrap">${lineChart(h.mobile_lines, '#0064ff', 'M')}</div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Líneas FTTH</div>
+          <div class="card-subtitle">Evolución 2016-2026 · crecimiento explosivo de fibra</div>
+        </div></div>
+        <div class="chart-wrap">${lineChart(h.ftth_lines, '#ffa600', 'M')}</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Clientes TV pago</div>
+          <div class="card-subtitle">Evolución 2016-2026 · ${CURRENT_COUNTRY==='es' ? 'pico ~7,3M en 2019, declive por canibalización OTT' : 'crecimiento sostenido, 4,8M hoy'}</div>
+        </div></div>
+        <div class="chart-wrap">${lineChart(h.tv_subs, '#ec3c8d', 'M')}</div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Cuota TV por operador (%)</div>
+          <div class="card-subtitle">Evolución 2016-2026 · operadores foco</div>
+        </div></div>
+        <div class="chart-wrap">${multiLineChart(h.tv_share_by_op, opColors, '%')}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Lectura estratégica · 10 años</div></div></div>
+      <div style="font-size:13px; line-height:1.6; color:var(--text-secondary)">
+        ${CURRENT_COUNTRY === 'es' ? `
+          <p><strong style="color:var(--text-primary)">Móvil:</strong> España añadió +10,9M líneas en una década (51,7M → 62,6M), saturación con penetración >126%/100hab por crecimiento de doble línea y M2M.</p>
+          <p><strong style="color:var(--text-primary)">FTTH:</strong> Cuadruplicó parque (4,3M → 18,1M). España es líder europeo de fibra. Telefónica cerró su red de cobre en 2024.</p>
+          <p><strong style="color:var(--text-primary)">TV pago:</strong> Pico 7,3M en 2019; declive a 6,5M por canibalización de OTT (Netflix, Disney+, HBO Max, SkyShowtime). Movistar Plus+ se reinventó como OTT abierto en 2023 y ha vuelto a crecer.</p>
+          <p><strong style="color:var(--text-primary)">Cuota TV:</strong> Movistar mantiene liderazgo ~60%. Vodafone pierde cuota bajo Zegona. MASORANGE consolidó +10pp vía fusiones. DIGI emerge desde fin 2023 con crecimiento +25%/trimestre.</p>
+        ` : `
+          <p><strong style="color:var(--text-primary)">Móvel:</strong> Portugal aumentou +2,2M linhas (11,6M → 13,8M). Mercado maduro com penetração estável.</p>
+          <p><strong style="color:var(--text-primary)">FTTH:</strong> Mais que duplicou (2,1M → 5,3M). Portugal lidera cobertura de fibra na UE.</p>
+          <p><strong style="color:var(--text-primary)">TV paga:</strong> Crescimento sostenido (3,6M → 4,8M) graças à força dos pacotes 4P/5P. Modelo diferente do ES, sem perda por OTT.</p>
+          <p><strong style="color:var(--text-primary)">Quota TV:</strong> MEO estável ~42%, NOS ~35%, Vodafone ~21%. DIGI entrou em 2024 e já ganhou 3,2pp em ano e meio.</p>
+        `}
+      </div>
+    </div>
   `;
 }
 
@@ -391,15 +570,32 @@ function renderOperator(key) {
     'Locales y autonómicos':'intl', 'Romenos':'intl'
   };
 
+  const getChannelInfo = (chName) => {
+    if (typeof CHANNEL_INFO === 'undefined') return null;
+    // lookup directo
+    if (CHANNEL_INFO[chName]) return CHANNEL_INFO[chName];
+    // fuzzy: quitar HD, FHD, +, etc
+    const normalized = chName.replace(/\s*(HD|FHD|UHD|4K|\+)\s*$/i, '').trim();
+    if (CHANNEL_INFO[normalized]) return CHANNEL_INFO[normalized];
+    return null;
+  };
+
   const channelHTML = op.channels && Array.isArray(op.channels) ? op.channels.map((catObj, i) => `
     <div class="channel-cat-title ${i===0?'first':''}">${catObj.cat} <span style="font-weight:500; color:var(--text-muted); font-size:11px">· ${catObj.items.length} canales</span></div>
     <div class="channel-grid">
-      ${catObj.items.map(ch => `
-        <div class="channel-pill ${catClass[catObj.cat]||''}">
+      ${catObj.items.map(ch => {
+        const info = getChannelInfo(ch.name);
+        const group = info ? info.group : null;
+        const isFast = info && info.fast;
+        const fastOn = info && info.fastOn ? info.fastOn : '';
+        return `
+        <div class="channel-pill ${catClass[catObj.cat]||''}" ${group ? `data-tip="${group}${fastOn?' · FAST en '+fastOn.replace(/"/g,'&quot;'):''}"` : ''}>
           ${ch.dial ? `<span class="dial">${ch.dial}</span>` : ''}
           <span class="ch-name">${ch.name}</span>
+          ${isFast ? `<span class="ch-fast" title="Disponible en FAST">FAST</span>` : ''}
+          ${group ? `<span class="ch-group">${group.length > 22 ? group.slice(0,21)+'…' : group}</span>` : ''}
         </div>
-      `).join('')}
+      `}).join('')}
     </div>
   `).join('') : '<div style="color:var(--text-muted)">Sin parrilla configurada</div>';
 
@@ -440,11 +636,23 @@ function renderOperator(key) {
     </div>
 
     <div class="kpi-grid">
-      ${kpi({ label:'Líneas móvil', value:fmt(op.mobile_lines), unit:'M', accent:key, subtitle:'incluye OMV propios', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'mobile_lines_op', fieldId:`${key}.mob`, sourceUrl:op.data_source_url })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:'red propia minorista', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'ftth_lines_op', fieldId:`${key}.ftth`, sourceUrl:op.data_source_url })}
-      ${kpi({ label:'Suscriptores TV', value:op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M', accent:key, subtitle:op.tv_brand, date:op.data_period||market.last_data_date, tipKey:'tv_subs_op', fieldId:`${key}.tv`, sourceUrl:op.data_source_url })}
-      ${kpi({ label:'Canales TV', value:op.channels_count, accent:key, subtitle:'parrilla actual', date:op.data_period||market.last_data_date, tipKey:'channels_count_op', fieldId:`${key}.ch` })}
-      ${kpi({ label:'ARPU convergente ~', value:op.arpu_convergente, unit:'€/mes', accent:'pink', subtitle:'estimación pública', date:op.data_period||market.last_data_date, tipKey:'arpu', fieldId:`${key}.arpu`, sourceUrl:op.data_source_url })}
+      ${(() => {
+        // Calcula totales sobre los 4 operadores foco
+        const allOps = getOperators();
+        const totMob = Object.values(allOps).reduce((s,o)=>s+(o.mobile_lines||0),0);
+        const totFTTH = Object.values(allOps).reduce((s,o)=>s+(o.ftth_lines||0),0);
+        const totTV = Object.values(allOps).reduce((s,o)=>s+(o.tv_subs||0),0);
+        const pctMob  = totMob>0  ? (op.mobile_lines / totMob * 100).toFixed(1) : '—';
+        const pctFTTH = totFTTH>0 ? (op.ftth_lines / totFTTH * 100).toFixed(1) : '—';
+        const pctTV   = totTV>0   ? (op.tv_subs / totTV * 100).toFixed(1) : '—';
+        return `
+          ${kpi({ label:'Líneas móvil', value:fmt(op.mobile_lines), unit:'M', accent:key, subtitle:pctMob+'% sobre 4 ops foco', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'mobile_lines_op', fieldId:`${key}.mob`, sourceUrl:op.data_source_url })}
+          ${kpi({ label:'Líneas FTTH', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:pctFTTH+'% sobre 4 ops foco', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'ftth_lines_op', fieldId:`${key}.ftth`, sourceUrl:op.data_source_url })}
+          ${kpi({ label:'Clientes TV', value:op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M', accent:key, subtitle:pctTV+'% sobre 4 ops foco · '+op.tv_brand, date:op.data_period||market.last_data_date, tipKey:'tv_subs_op', fieldId:`${key}.tv`, sourceUrl:op.data_source_url })}
+          ${kpi({ label:'Canales TV', value:op.channels_count, accent:key, subtitle:'parrilla actual', date:op.data_period||market.last_data_date, tipKey:'channels_count_op', fieldId:`${key}.ch` })}
+          ${kpi({ label:'ARPU convergente ~', value:op.arpu_convergente, unit:'€/mes', accent:'pink', subtitle:'estimación pública', date:op.data_period||market.last_data_date, tipKey:'arpu', fieldId:`${key}.arpu`, sourceUrl:op.data_source_url })}
+        `;
+      })()}
     </div>
 
     ${ottHTML}
@@ -462,47 +670,428 @@ function renderOperator(key) {
 /* ────────────────────────────────────────────────
    RENDER: OTT LIBRE
 ──────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────
+   RENDER: RENOVACIONES — HUB (Visión global)
+──────────────────────────────────────────────── */
+function renderRenovacionesHub() {
+  if (typeof ACTION_PLANS === 'undefined' || !ACTION_PLANS[CURRENT_COUNTRY]) {
+    document.getElementById('content').innerHTML = '<div class="card">Sin planes de renovación cargados.</div>';
+    return;
+  }
+  const plans = ACTION_PLANS[CURRENT_COUNTRY];
+  const ops = getOperators();
+  const channels = getParamountChannels();
+  const chKeys = Object.keys(channels);
+  const opKeys = Object.keys(ops);
+  const countryName = CURRENT_COUNTRY === 'es' ? 'España' : 'Portugal';
+
+  const priorityClass = (p) => {
+    const s = (p||'').toLowerCase();
+    if (s.includes('crítico') || s.includes('critico') || s.includes('entrar') || s.includes('recuperar')) return 'priority-critical';
+    if (s.includes('crecer') || s.includes('reentrada')) return 'priority-high';
+    if (s.includes('mantener') || s.includes('consolidar')) return 'priority-stable';
+    return '';
+  };
+
+  // Matriz de prioridades operador × canal
+  const matrix = opKeys.map(opK => {
+    const row = { op: ops[opK], opKey: opK, cells: [] };
+    chKeys.forEach(chK => {
+      const plan = plans[chK] && plans[chK][opK];
+      row.cells.push({ chKey: chK, chName: channels[chK].name, plan });
+    });
+    return row;
+  });
+
+  document.getElementById('content').innerHTML = `
+    <div class="page-header">
+      <div class="page-title-block">
+        <h1>Renovaciones — ${countryName}</h1>
+        <div class="page-desc">Visión global de los planes de acción y renovación de contratos con cada operador. Selecciona un operador en el menú para ver el detalle por canal.</div>
+      </div>
+      <div class="page-meta"><span class="page-meta-dot"></span> ${opKeys.length} operadores × ${chKeys.length} canales</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div>
+        <div class="card-title">Matriz de prioridades · Operador × Canal</div>
+        <div class="card-subtitle">Click en cada celda para ir al plan detallado del operador</div>
+      </div></div>
+      <div style="overflow-x:auto">
+        <table class="renov-matrix">
+          <thead>
+            <tr>
+              <th style="text-align:left">Operador</th>
+              ${chKeys.map(k => `<th>${channels[k].name}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${matrix.map(row => `
+              <tr>
+                <td style="cursor:pointer" onclick="navigate('renov-${row.opKey}')">
+                  <div style="display:flex; align-items:center; gap:10px">
+                    <span class="dot-op" style="background:${row.op.color}; width:10px; height:10px"></span>
+                    <strong>${row.op.name}</strong>
+                  </div>
+                </td>
+                ${row.cells.map(cell => `
+                  <td onclick="navigate('renov-${row.opKey}')" style="cursor:pointer; text-align:center">
+                    ${cell.plan ? `
+                      <span class="action-priority ${priorityClass(cell.plan.priority)}" style="font-size:9.5px">${cell.plan.priority||'—'}</span>
+                      <div style="font-size:10px; color:var(--text-muted); margin-top:4px">${cell.plan.deadline ? (cell.plan.deadline.length > 28 ? cell.plan.deadline.slice(0,27)+'…' : cell.plan.deadline) : ''}</div>
+                    ` : '<span style="color:var(--text-muted); font-size:11px">—</span>'}
+                  </td>
+                `).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      ${opKeys.map(opK => {
+        const op = ops[opK];
+        const planCount = chKeys.filter(chK => plans[chK] && plans[chK][opK]).length;
+        const critical = chKeys.filter(chK => {
+          const p = plans[chK] && plans[chK][opK];
+          if (!p) return false;
+          const s = (p.priority||'').toLowerCase();
+          return s.includes('crítico') || s.includes('critico') || s.includes('entrar') || s.includes('recuperar');
+        }).length;
+        return `
+          <div class="card" style="cursor:pointer; border-top:4px solid ${op.color}" onclick="navigate('renov-${opK}')">
+            <div class="card-head"><div>
+              <div class="card-title" style="color:${op.color}">${op.name}</div>
+              <div class="card-subtitle">${planCount} planes · ${critical > 0 ? `<span style="color:#c0392b; font-weight:700">${critical} críticos</span>` : 'sin críticos'}</div>
+            </div></div>
+            <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px">
+              ${chKeys.map(chK => {
+                const p = plans[chK] && plans[chK][opK];
+                if (!p) return '';
+                return `
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; background:var(--surface-2); border-radius:6px">
+                    <span style="font-size:12px; font-weight:600">${channels[chK].name}</span>
+                    <span class="action-priority ${priorityClass(p.priority)}" style="font-size:9px">${p.priority||'—'}</span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            <div style="margin-top:14px; font-size:11.5px; color:${op.color}; font-weight:600">Ver detalle completo →</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+/* ────────────────────────────────────────────────
+   RENDER: RENOVACIONES — DETALLE POR OPERADOR (con tabs por canal)
+──────────────────────────────────────────────── */
+function renderRenovacionesOperador(opKey) {
+  if (typeof ACTION_PLANS === 'undefined' || !ACTION_PLANS[CURRENT_COUNTRY]) {
+    document.getElementById('content').innerHTML = '<div class="card">Sin planes de renovación cargados.</div>';
+    return;
+  }
+  const plans = ACTION_PLANS[CURRENT_COUNTRY];
+  const ops = getOperators();
+  const channels = getParamountChannels();
+  const op = ops[opKey];
+  if (!op) { renderHome(); return; }
+
+  // Canales con plan para este operador
+  const chKeys = Object.keys(channels).filter(chK => plans[chK] && plans[chK][opKey]);
+  if (chKeys.length === 0) {
+    document.getElementById('content').innerHTML = `<div class="card">No hay planes para ${op.name} en este país.</div>`;
+    return;
+  }
+
+  // Determinar canal activo (default: primero)
+  const activeCh = (typeof CURRENT_RENOV_CH !== 'undefined' && chKeys.includes(CURRENT_RENOV_CH))
+    ? CURRENT_RENOV_CH
+    : chKeys[0];
+
+  const priorityClass = (p) => {
+    const s = (p||'').toLowerCase();
+    if (s.includes('crítico') || s.includes('critico') || s.includes('entrar') || s.includes('recuperar')) return 'priority-critical';
+    if (s.includes('crecer') || s.includes('reentrada')) return 'priority-high';
+    if (s.includes('mantener') || s.includes('consolidar')) return 'priority-stable';
+    return '';
+  };
+
+  // Función para renderizar el plan de un canal
+  const renderPlan = (chK) => {
+    const p = plans[chK][opKey];
+    if (!p) return '<div class="card">Sin plan para este canal.</div>';
+    const sc = p.scenarios || {};
+    const ch = channels[chK];
+
+    return `
+      <div class="renov-plan-card" style="border-left:5px solid ${op.color}">
+        <div class="renov-plan-header">
+          <div>
+            <div class="renov-plan-channel">${ch.name}</div>
+            <div class="renov-plan-subtitle">${ch.target_short||ch.target_age||''} · Plan de acción para ${op.name}</div>
+          </div>
+          <span class="action-priority ${priorityClass(p.priority)}" style="font-size:11px; padding:5px 12px">${p.priority||'—'}</span>
+        </div>
+
+        <div class="renov-plan-meta">
+          <div class="action-meta-item">
+            <span class="action-meta-label">Deadline</span>
+            <span class="action-meta-value">${p.deadline||'—'}</span>
+          </div>
+          ${p.fee_estimate ? `<div class="action-meta-item">
+            <span class="action-meta-label">Fee estimado</span>
+            <span class="action-meta-value">${p.fee_estimate}</span>
+          </div>` : ''}
+        </div>
+
+        <div class="action-section">
+          <div class="action-section-title">📌 Qué pedir a ${op.name}</div>
+          <div class="action-section-text">${p.ask||''}</div>
+        </div>
+
+        <div class="action-section">
+          <div class="action-section-title">🧭 Táctica recomendada</div>
+          <div class="action-section-text muted">${p.tactic||''}</div>
+        </div>
+
+        ${p.offers && p.offers.length ? `
+        <div class="action-section">
+          <div class="action-section-title">💼 Ofertas concretas para llevar a la mesa</div>
+          <ul class="action-offers">
+            ${p.offers.map(o => `<li>${o}</li>`).join('')}
+          </ul>
+        </div>` : ''}
+
+        ${p.competitor_deals && p.competitor_deals.length ? `
+        <div class="action-section">
+          <div class="action-section-title">🏢 Deals de competidores (benchmarking)</div>
+          <ul class="action-competitors">
+            ${p.competitor_deals.map(c => `<li>${c}</li>`).join('')}
+          </ul>
+        </div>` : ''}
+
+        ${(sc.worst || sc.base || sc.best) ? `
+        <div class="action-section">
+          <div class="action-section-title">📊 Escenarios proyectados</div>
+          <div class="scenario-grid">
+            ${sc.worst ? `
+              <div class="scenario-card scenario-worst">
+                <div class="scenario-head">⬇️ ${sc.worst.label||'Worst'}</div>
+                <div class="scenario-desc">${sc.worst.description||''}</div>
+                ${sc.worst.kpis ? `<div class="scenario-kpis">
+                  ${Object.entries(sc.worst.kpis).map(([key,val]) => `
+                    <div class="scenario-kpi">
+                      <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                      <span class="scenario-kpi-value">${val}</span>
+                    </div>
+                  `).join('')}
+                </div>` : ''}
+              </div>` : ''}
+            ${sc.base ? `
+              <div class="scenario-card scenario-base">
+                <div class="scenario-head">➡️ ${sc.base.label||'Base'}</div>
+                <div class="scenario-desc">${sc.base.description||''}</div>
+                ${sc.base.kpis ? `<div class="scenario-kpis">
+                  ${Object.entries(sc.base.kpis).map(([key,val]) => `
+                    <div class="scenario-kpi">
+                      <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                      <span class="scenario-kpi-value">${val}</span>
+                    </div>
+                  `).join('')}
+                </div>` : ''}
+              </div>` : ''}
+            ${sc.best ? `
+              <div class="scenario-card scenario-best">
+                <div class="scenario-head">⬆️ ${sc.best.label||'Best'}</div>
+                <div class="scenario-desc">${sc.best.description||''}</div>
+                ${sc.best.kpis ? `<div class="scenario-kpis">
+                  ${Object.entries(sc.best.kpis).map(([key,val]) => `
+                    <div class="scenario-kpi">
+                      <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                      <span class="scenario-kpi-value">${val}</span>
+                    </div>
+                  `).join('')}
+                </div>` : ''}
+              </div>` : ''}
+          </div>
+        </div>` : ''}
+      </div>
+    `;
+  };
+
+  document.getElementById('content').innerHTML = `
+    <div class="op-header" style="background:linear-gradient(135deg, ${op.color}15, ${op.color}05); border-left:6px solid ${op.color}">
+      <div class="op-logo ${opKey}" style="background:${op.color}; color:#fff">${op.name.slice(0,3).toUpperCase()}</div>
+      <div class="op-info">
+        <h1>Renovaciones · ${op.name}</h1>
+        <div class="op-parent">${op.parent} · ${chKeys.length} canales Paramount con plan de acción</div>
+        <div class="op-tags">
+          <span class="op-tag" style="cursor:pointer" onclick="navigate('${opKey}')">📊 Ver ficha operador</span>
+          <span class="op-tag" style="cursor:pointer" onclick="navigate('renovaciones')">↩ Volver a Renovaciones</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="renov-tabs">
+      ${chKeys.map(chK => {
+        const p = plans[chK][opKey];
+        return `
+          <button class="renov-tab ${chK===activeCh?'active':''}" onclick="setRenovChannel('${opKey}','${chK}')">
+            <span class="renov-tab-name">${channels[chK].name}</span>
+            <span class="action-priority ${priorityClass(p.priority)}" style="font-size:8.5px; padding:2px 6px">${(p.priority||'').replace(/\s.*$/,'').slice(0,12)}</span>
+          </button>
+        `;
+      }).join('')}
+    </div>
+
+    <div id="renov-plan-container">
+      ${renderPlan(activeCh)}
+    </div>
+
+    ${renderNews && typeof renderNews === 'function' ? renderNews(opKey) : ''}
+  `;
+}
+
+// Estado activo del tab de renovaciones
+let CURRENT_RENOV_CH = null;
+function setRenovChannel(opKey, chK) {
+  CURRENT_RENOV_CH = chK;
+  renderRenovacionesOperador(opKey);
+  document.querySelector('.main').scrollTop = 0;
+}
+
+
+/* ────────────────────────────────────────────────
+   RENDER: OTT LIBRE
+──────────────────────────────────────────────── */
 function renderOTTLibre(key) {
   const ott = OTT_LIBRE[key];
   if (!ott) { renderHome(); return; }
+
+  // Helper para enriquecer canales destacados con grupo + FAST
+  const enrichChannel = (chName) => {
+    if (typeof CHANNEL_INFO === 'undefined') return { name: chName };
+    if (CHANNEL_INFO[chName]) return { name: chName, ...CHANNEL_INFO[chName] };
+    const normalized = chName.replace(/\s*(HD|FHD|UHD|4K|\+)\s*$/i, '').trim();
+    if (CHANNEL_INFO[normalized]) return { name: chName, ...CHANNEL_INFO[normalized] };
+    return { name: chName };
+  };
 
   document.getElementById('content').innerHTML = `
     <div class="op-header" style="background:linear-gradient(135deg, ${ott.color}10, ${ott.color}05)">
       <div class="op-logo" style="background:linear-gradient(135deg, ${ott.color}, ${ott.color})">${ott.name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase()}</div>
       <div class="op-info">
         <h1>${ott.name}</h1>
-        <div class="op-parent">${ott.parent} · OTT contratable sin fibra</div>
+        <div class="op-parent">${ott.parent} · OTT contratable sin fibra del operador</div>
         <div class="op-tags">
-          ${ott.launched?`<span class="op-tag">Desde ${ott.launched}</span>`:''}
-          ${ott.permanence?`<span class="op-tag">${ott.permanence}</span>`:''}
+          ${ott.launched?`<span class="op-tag">${ott.launched}</span>`:''}
           ${ott.devices?`<span class="op-tag">${ott.devices}</span>`:''}
+          ${ott.quality?`<span class="op-tag">${ott.quality}</span>`:''}
+          <span class="op-tag">Sin permanencia</span>
         </div>
       </div>
     </div>
 
-    <div class="infobox"><b>Sobre el servicio.</b> ${ott.description}</div>
+    <div class="infobox"><b>Sobre ${ott.name}.</b> ${ott.description}</div>
 
     <div class="kpi-grid">
-      ${kpi({ label:'Precio mensual', value:ott.price_monthly, unit:'€/mes', accent:'pink', subtitle:ott.promo||'', date:'Vigente', tipKey:'ott_price', fieldId:`ott.${key}.price` })}
-      ${ott.subscribers_est ? kpi({ label:'Suscriptores estimados', value:fmtInt(ott.subscribers_est*1000), unit:'k', accent:'gold', subtitle:ott.subs_note||'', date:'Estim. Q1 2026', tipKey:'ott_subs', fieldId:`ott.${key}.subs` }) : ''}
-      ${ott.catalog ? kpi({ label:'Catálogo', value:Array.isArray(ott.catalog)?ott.catalog.length+'+':ott.catalog, accent:'movistar', subtitle:'temas', date:'Actual', fieldId:`ott.${key}.cat` }) : ''}
+      ${kpi({ label:'Precio desde', value:ott.price_from||'—', accent:'pink', subtitle:'sin permanencia', date:'Vigente', fieldId:`ott.${key}.price`, sourceUrl:ott.source_url })}
+      ${kpi({ label:'Suscriptores', value:ott.subs_estimate||'—', accent:'gold', subtitle:'reportado / estimado', date:'Q1 2026', fieldId:`ott.${key}.subs`, sourceUrl:ott.source_url })}
+      ${kpi({ label:'Canales incluidos', value:(ott.channels_included && ott.channels_included.length) || '—', accent:'movistar', subtitle:'destacados en parrilla', date:'Actual', fieldId:`ott.${key}.cat` })}
+      ${kpi({ label:'Competidores directos', value:(ott.competitors && ott.competitors.length) || '—', accent:'vodafone', subtitle:'OTT comparables', date:'Análisis propio', fieldId:`ott.${key}.comp` })}
     </div>
 
-    ${ott.channels_included ? `
+    ${ott.subs_note ? `
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Canales destacados incluidos</div></div></div>
-        <div class="channel-grid">
-          ${ott.channels_included.map(ch => `<div class="channel-pill"><span class="ch-name">${ch}</span></div>`).join('')}
+        <div class="card-head"><div><div class="card-title">Detalle de suscriptores</div></div></div>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6; margin:0">${ott.subs_note}</p>
+      </div>
+    ` : ''}
+
+    ${ott.pricing_tiers && ott.pricing_tiers.length ? `
+      <div class="section-anchor">Planes y precios</div>
+      <div class="ott-tiers-grid">
+        ${ott.pricing_tiers.map(t => `
+          <div class="ott-tier-card" style="border-top:3px solid ${ott.color}">
+            <div class="ott-tier-label">${t.label}</div>
+            <div class="ott-tier-price" style="color:${ott.color}">${t.price}</div>
+            <div class="ott-tier-detail">${t.detail||''}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+
+    ${(ott.sports && ott.sports.length) || ott.extras ? `
+      <div class="grid-2">
+        ${ott.sports && ott.sports.length ? `
+          <div class="card">
+            <div class="card-head"><div><div class="card-title">⚽ Fútbol y deportes incluidos</div></div></div>
+            <ul style="margin:0; padding-left:18px; font-size:12.5px; color:var(--text-primary); line-height:1.7">
+              ${ott.sports.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
+        ${ott.extras ? `
+          <div class="card">
+            <div class="card-head"><div><div class="card-title">⚙️ Funcionalidades</div></div></div>
+            <div style="font-size:12.5px; color:var(--text-primary); line-height:1.6">${ott.extras}</div>
+          </div>
+        ` : ''}
+      </div>
+    ` : ''}
+
+    ${ott.paramount_presence ? `
+      <div class="card" style="border-left:4px solid #0064ff">
+        <div class="card-head"><div><div class="card-title" style="color:#0064ff">🎬 Presencia Paramount en este OTT</div></div></div>
+        <p style="font-size:13px; color:var(--text-primary); line-height:1.6; margin:0">${ott.paramount_presence}</p>
+      </div>
+    ` : ''}
+
+    ${ott.catalog && ott.catalog.length ? `
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Catálogo destacado</div></div></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          ${ott.catalog.map(c => `<span class="op-tag" style="font-size:11.5px">${c}</span>`).join('')}
         </div>
       </div>
     ` : ''}
 
-    ${ott.competitors ? `
+    ${ott.channels_included && ott.channels_included.length ? `
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Competencia directa</div></div></div>
+        <div class="card-head"><div>
+          <div class="card-title">Canales destacados incluidos</div>
+          <div class="card-subtitle">Con grupo audiovisual y disponibilidad FAST</div>
+        </div></div>
+        <div class="channel-grid">
+          ${ott.channels_included.map(ch => {
+            const info = enrichChannel(ch);
+            return `
+              <div class="channel-pill" ${info.group ? `data-tip="${info.group}${info.fastOn?' · FAST en '+info.fastOn.replace(/"/g,'&quot;'):''}"` : ''}>
+                <span class="ch-name">${info.name}</span>
+                ${info.fast ? `<span class="ch-fast" title="Disponible en FAST">FAST</span>` : ''}
+                ${info.group ? `<span class="ch-group">${info.group.length > 22 ? info.group.slice(0,21)+'…' : info.group}</span>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    ${ott.competitors && ott.competitors.length ? `
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Competencia directa (benchmarking)</div></div></div>
         <div style="display:flex; gap:8px; flex-wrap:wrap">
           ${ott.competitors.map(c => `<span class="op-tag">${c}</span>`).join('')}
         </div>
+      </div>
+    ` : ''}
+
+    ${ott.source_url ? `
+      <div style="margin-top:14px; font-size:11.5px; color:var(--text-muted); text-align:center">
+        Fuente oficial: <a href="${ott.source_url}" target="_blank" rel="noopener noreferrer" style="color:var(--peak-blue); text-decoration:none; border-bottom:1px dotted var(--peak-blue)">${ott.source_url}</a>
       </div>
     ` : ''}
   `;
@@ -805,7 +1394,6 @@ function renderParamountChannel(chKey) {
 
     <div class="kpi-grid">
       ${kpi({ label:'Disponible en', value:`${available}/${opKeys.length}`, accent:'movistar', date:market.last_data_date, tipKey:'paramount_avail', fieldId:`pch.${chKey}.av` })}
-      ${kpi({ label:'Diales conocidos', value:dials.length, accent:'gold', date:market.last_data_date, tipKey:'paramount_dials', fieldId:`pch.${chKey}.dial` })}
       ${kpi({ label:'Target', value:(ch.target_short||ch.target_age||ch.target||'').split(' ')[0], accent:'pink', subtitle:ch.target_short||ch.target_age||ch.target||'', date:'Posicionamiento', fieldId:null })}
       ${ch.competitors ? kpi({ label:'Competidores directos', value:ch.competitors.length, accent:'vodafone', date:'Análisis propio', fieldId:`pch.${chKey}.comp` }) : ''}
     </div>
@@ -859,6 +1447,16 @@ function renderParamountChannel(chKey) {
               <div class="target-value-sub">${tp.ad_value}</div>
             </div>
           </div>
+          ${tp.sources && tp.sources.length ? `
+            <div class="target-sources">
+              <span class="target-sources-label">Fuentes</span>
+              <span class="target-sources-list">
+                ${tp.sources.map((s,idx) => `
+                  <span class="target-source-item">${s.url ? `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.label}</a>` : s.label}${idx < tp.sources.length-1 ? ' ·' : ''}</span>
+                `).join('')}
+              </span>
+            </div>
+          ` : ''}
         </div>
       </div>
       `;
@@ -943,105 +1541,22 @@ function renderParamountChannel(chKey) {
         return '';
       };
       return `
-      <div class="section-anchor">🎯 Plan de acción por operador</div>
+      <div class="section-anchor">🎯 Renovaciones por operador (resumen)</div>
       <div class="action-intro">
-        Análisis estratégico de la renovación con cada operador: qué pedir, qué ofrecer a cambio,
-        contexto competitivo (deals de otros grupos audiovisuales) y proyección de impacto en 3 escenarios.
+        Vista rápida de la prioridad y deadline en cada operador.
+        El plan detallado (ofertas, deals de competidores, escenarios worst/base/best) está en la nueva sección <strong>Renovaciones</strong> del menú lateral.
       </div>
-      <div class="action-list">
+      <div class="renov-summary-grid">
         ${opKeys.filter(k => plan[k]).map(k => {
           const p = plan[k];
-          const sc = p.scenarios || {};
           return `
-            <div class="action-card-full" style="border-left:5px solid ${ops[k].color}">
-              <div class="action-head-full">
-                <div class="action-head-main">
-                  <div class="action-op-full" style="color:${ops[k].color}">${ops[k].name}</div>
-                  <span class="action-priority ${priorityClass(p.priority)}">${p.priority||'—'}</span>
-                </div>
-                <div class="action-meta">
-                  <div class="action-meta-item">
-                    <span class="action-meta-label">Deadline</span>
-                    <span class="action-meta-value">${p.deadline||'—'}</span>
-                  </div>
-                  ${p.fee_estimate ? `<div class="action-meta-item">
-                    <span class="action-meta-label">Fee estimado</span>
-                    <span class="action-meta-value">${p.fee_estimate}</span>
-                  </div>` : ''}
-                </div>
+            <div class="renov-summary-card" style="border-left:4px solid ${ops[k].color}" onclick="setRenovChannel('${k}','${chKey}')">
+              <div class="renov-summary-head">
+                <div class="renov-summary-op" style="color:${ops[k].color}">${ops[k].name}</div>
+                <span class="action-priority ${priorityClass(p.priority)}" style="font-size:9.5px">${p.priority||'—'}</span>
               </div>
-
-              <div class="action-section">
-                <div class="action-section-title">📌 Qué pedir</div>
-                <div class="action-section-text">${p.ask||''}</div>
-              </div>
-
-              <div class="action-section">
-                <div class="action-section-title">🧭 Táctica</div>
-                <div class="action-section-text muted">${p.tactic||''}</div>
-              </div>
-
-              ${p.offers && p.offers.length ? `
-              <div class="action-section">
-                <div class="action-section-title">💼 Ofertas concretas para llevar a la mesa</div>
-                <ul class="action-offers">
-                  ${p.offers.map(o => `<li>${o}</li>`).join('')}
-                </ul>
-              </div>` : ''}
-
-              ${p.competitor_deals && p.competitor_deals.length ? `
-              <div class="action-section">
-                <div class="action-section-title">🏢 Deals de competidores (benchmarking)</div>
-                <ul class="action-competitors">
-                  ${p.competitor_deals.map(c => `<li>${c}</li>`).join('')}
-                </ul>
-              </div>` : ''}
-
-              ${(sc.worst || sc.base || sc.best) ? `
-              <div class="action-section">
-                <div class="action-section-title">📊 Escenarios proyectados</div>
-                <div class="scenario-grid">
-                  ${sc.worst ? `
-                    <div class="scenario-card scenario-worst">
-                      <div class="scenario-head">⬇️ ${sc.worst.label||'Worst'}</div>
-                      <div class="scenario-desc">${sc.worst.description||''}</div>
-                      ${sc.worst.kpis ? `<div class="scenario-kpis">
-                        ${Object.entries(sc.worst.kpis).map(([key,val]) => `
-                          <div class="scenario-kpi">
-                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
-                            <span class="scenario-kpi-value">${val}</span>
-                          </div>
-                        `).join('')}
-                      </div>` : ''}
-                    </div>` : ''}
-                  ${sc.base ? `
-                    <div class="scenario-card scenario-base">
-                      <div class="scenario-head">➡️ ${sc.base.label||'Base'}</div>
-                      <div class="scenario-desc">${sc.base.description||''}</div>
-                      ${sc.base.kpis ? `<div class="scenario-kpis">
-                        ${Object.entries(sc.base.kpis).map(([key,val]) => `
-                          <div class="scenario-kpi">
-                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
-                            <span class="scenario-kpi-value">${val}</span>
-                          </div>
-                        `).join('')}
-                      </div>` : ''}
-                    </div>` : ''}
-                  ${sc.best ? `
-                    <div class="scenario-card scenario-best">
-                      <div class="scenario-head">⬆️ ${sc.best.label||'Best'}</div>
-                      <div class="scenario-desc">${sc.best.description||''}</div>
-                      ${sc.best.kpis ? `<div class="scenario-kpis">
-                        ${Object.entries(sc.best.kpis).map(([key,val]) => `
-                          <div class="scenario-kpi">
-                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
-                            <span class="scenario-kpi-value">${val}</span>
-                          </div>
-                        `).join('')}
-                      </div>` : ''}
-                    </div>` : ''}
-                </div>
-              </div>` : ''}
+              <div class="renov-summary-deadline">⏱ ${p.deadline||'—'}</div>
+              <div class="renov-summary-link" style="color:${ops[k].color}">Ver plan completo →</div>
             </div>
           `;
         }).join('')}

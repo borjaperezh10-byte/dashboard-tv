@@ -53,11 +53,11 @@ const OPERATORS_ES = {
     color: '#019df4', tagline: 'Líder en convergencia, FTTH y TV de pago',
     mobile_lines: 17.9,            // Q1 2026: 16M contrato + prepago + propios (récord histórico contrato)
     fixed_lines: 7.0, ftth_lines: 5.88,    // marzo 2026 CNMC (~32,5% × 18,07M)
-    tv_subs: 3.65, arpu_convergente: 91.5, // ARPU Q1 2026 Telefónica
+    tv_subs: 3.90, arpu_convergente: 91.5, // Q1 2026 oficial: 3,9M Movistar Plus+ (IPTV+OTT)
     churn_rate: 0.7,               // % churn Q1 2026 (mínimo histórico)
-    tags: ['16M contrato (récord)', 'Churn 0,7%', 'Líder FTTH'],
+    tags: ['16M contrato (récord)', 'Churn 0,7%', '3,9M Movistar Plus+'],
     tv_brand: 'Movistar Plus+',
-    tv_subs_note: 'Movistar Plus+ + Movistar Plus+ Lite. Q1 2026 Telefónica España. ARPU residencial 91,5€.',
+    tv_subs_note: 'Q1 2026: 3,9M suscriptores Movistar Plus+ (IPTV + OTT consolidados a 31 mar 2026). +86k netos Q1 2026 (crec. interanual 8,3%). En 2025 récord histórico +278k netos. ARPU residencial 91,5€.',
     channels_count: '+80',
     has_ott_libre: true,
     ott_libre: 'movistar-plus-lite',
@@ -440,24 +440,45 @@ const OPERATORS_PT = {
 ══════════════════════════════════════════════ */
 const OTT_LIBRE = {
   'movistar-plus-lite': {
-    name: 'Movistar Plus+ Lite', parent: 'Telefónica España', color: '#019df4',
-    launched: '2019', price_from: '14€/mes',
-    description: 'OTT contratable sin ser cliente de fibra/móvil de Movistar. Acceso a Movistar Plus+ vía app y web sin descodificador.',
-    subs_estimate: '290k',
-    subs_note: 'Estimación a Q1 2026. Movistar Plus+ Lite no se desglosa públicamente; va consolidado en TV pago Telefónica.',
-    catalog: ['Series Movistar Plus+', 'Cine original Movistar', 'Documentales 0', 'LaLiga (con add-on)', 'Champions (con add-on)'],
-    channels_included: ['#Vamos', '#0', 'Movistar Cine', 'Movistar Series', 'Movistar Drama', 'Movistar Comedia', 'Movistar Acción'],
-    competitors: ['Vodafone TV Stream (descontinuado)', 'Orange TV Libre', 'SkyShowtime', 'Filmin']
+    name: 'Movistar Plus+ (OTT)', parent: 'Telefónica España', color: '#019df4',
+    launched: '1 ago 2023 (reemplazó Movistar Plus+ Lite)', price_from: '9,99€/mes',
+    description: 'Plataforma OTT de Telefónica contratable sin ser cliente de fibra/móvil de Movistar. Acceso a 80+ canales (36 premium reales) vía app y web sin decodificador físico. Sin permanencia.',
+    subs_estimate: '3,9M IPTV+OTT (Q1 2026)',
+    subs_note: 'Telefónica reportó 3,9M suscriptores Movistar Plus+ (IPTV + OTT consolidados) a cierre marzo 2026. +86k netos Q1 2026. Crecimiento interanual 8,3%. En 2025 sumó +278k netos (récord). El OTT independiente es el motor de crecimiento.',
+    pricing_tiers: [
+      { label:'Plan Gratuito', price:'0€', detail:'Lanzado 26 mar 2026. Solo registro. Canal Cero! 24h + primeros episodios series + programas entretenimiento/deporte (sin partidos)' },
+      { label:'Plan Libre Cine y Series', price:'4,99€/mes', detail:'Lanzado may 2026. +70 canales (Discovery, AXN, Warner TV, TCM, NatGeo, CNN, BBC News). Sin fútbol' },
+      { label:'Plan completo', price:'9,99€/mes', detail:'80+ canales (36 premium), 700+ títulos VOD, 1 partido LaLiga EA + 1 Champions + 3 LaLiga Hypermotion (vía M+ Vamos) por jornada' },
+      { label:'Anual', price:'99,9€/año (8,33€/mes)', detail:'Equivalente al plan completo con descuento por pago anticipado' }
+    ],
+    devices: '2 dispositivos simultáneos',
+    quality: 'Hasta 4K',
+    catalog: ['Series originales Movistar Plus+ (Yakarta, Poquita Fe, Querer, Anatomía de un instante)', 'Cine original Movistar', '#0 (canal propio entretenimiento)', '#Vamos (deporte)', 'LaLiga EA + Champions + LaLiga Hypermotion', 'BBC, Warner TV, TCM, NatGeo'],
+    channels_included: ['#Vamos', '#0', 'Movistar Cine', 'Movistar Series', 'Movistar Drama', 'Movistar Comedia', 'Movistar Acción', 'AXN', 'AXN Movies', 'TNT', 'Warner TV', 'TCM', 'Calle 13', 'COSMO', 'Sundance', 'Canal Hollywood', 'BBC Drama', 'BBC Food', 'BBC Top Gear', 'NatGeo', 'NatGeo Wild', 'Discovery', 'Historia', 'MTV España', 'MTV 00s', 'Nick Jr.', 'Nickelodeon'],
+    paramount_presence: 'Nickelodeon (dial 114), Nick Jr. (dial 113), MTV España (dial 120), MTV 00s (dial 121), Comedy Central, SkyShowtime 1 (dial 29 desde ene 2025) en Ficción Total',
+    competitors: ['Orange TV Libre (7,99€/mes)', 'SkyShowtime (5,99€/mes)', 'HBO Max', 'Netflix Estándar (12,99€/mes)', 'Disney+ Estándar (10,99€/mes)', 'Filmin (7,99€/mes)'],
+    source_url: 'https://www.movistarplus.es/planes/gratuito'
   },
   'orange-tv-libre': {
     name: 'Orange TV Libre', parent: 'MASORANGE', color: '#ff7900',
-    launched: '2024', price_from: '9,99€/mes',
-    description: 'OTT abierta. Permite acceder a Orange TV sin ser cliente Orange/Yoigo, vía app, Smart TV y web.',
-    subs_estimate: '150k',
-    subs_note: 'Cifra estimada a Q1 2026. Lanzada para captar usuarios no convergentes y reducir churn de TV.',
-    catalog: ['Star Channel', 'AMC originales', 'SkyShowtime', 'Series LaLiga', 'Documentales NatGeo', 'Música MTV'],
-    channels_included: ['Star Channel', 'AMC', 'Comedy Central', 'MTV España', 'SkyShowtime', 'AXN', 'Calle 13', 'COSMO'],
-    competitors: ['Movistar Plus+ Lite', 'SkyShowtime', 'Filmin', 'Atresplayer Premium']
+    launched: '3 oct 2024 (inicial Jazztel) · may 2025 abierto a todos los operadores', price_from: '7,99€/mes (3,99€ promo 3 meses)',
+    description: 'OTT abierta de MASORANGE contratable seas o no cliente Orange/Jazztel. Más de 90 canales, 50.000+ contenidos VOD, fútbol y SkyShowtime sin coste adicional. Vía app móvil/tablet/Smart TV/PC sin decodificador. Sin permanencia.',
+    subs_estimate: 'No desglosado',
+    subs_note: 'MASORANGE no desglosa públicamente suscriptores de Orange TV Libre. Está integrado en cifras agregadas Orange TV (1,50M TV subs grupo Q1 2026). Lanzado oct 2024, abierto a todos en may 2025.',
+    pricing_tiers: [
+      { label:'Promoción de bienvenida', price:'3,99€/mes', detail:'Primeros 3 meses con 50% descuento' },
+      { label:'Tarifa estándar', price:'7,99€/mes', detail:'Más de 90 canales + 50.000 contenidos VOD + SkyShowtime + fútbol selecto. Sin permanencia' },
+      { label:'Incluida en tarifas Orange', price:'incluido', detail:'Incluida en Fibra 600Mb/1Gb/10Gbps + TV, Home TV Inicial y Home TV Supra de Orange' }
+    ],
+    devices: '5 dispositivos registrados / 2 simultáneos (mismo contenido)',
+    sports: ['1 partido LaLiga EA Sports/jornada', '3 partidos LaLiga Hypermotion/jornada', '1 partido UEFA Champions League/jornada', '1 partido Serie A/jornada', '1 partido Bundesliga/jornada', '10 partidos Primera Federación/jornada', '1 partido Copa del Rey MAPFRE por eliminatoria', 'Tenis Grand Slam (Roland Garros, Open Australia)', 'Ciclismo, UFC, Eurosport completo'],
+    quality: 'Hasta 4K (con decodificador) / FullHD en app',
+    extras: '350 horas grabaciones en nube · Últimos 7 días · Control directo · Multiaudio/subtítulos · Búsqueda por voz · Descarga offline',
+    catalog: ['SkyShowtime completo incluido (Yellowstone, Misión Imposible, Star Trek, Regreso al Futuro, Top Gun Maverick, Tulsa King)', 'Cine recientes mayores estudios', 'Series Eurosport', 'Documentales NatGeo, BBC', '50.000+ contenidos VOD'],
+    channels_included: ['90+ canales generalistas, cine, series, infantil, documentales, noticias, deportes', 'SkyShowtime 1 (dial 10)', 'Eurosport 1 y 2', 'NatGeo', 'Discovery', 'AMC', 'AXN', 'Comedy Central', 'MTV España'],
+    paramount_presence: 'SkyShowtime incluido sin coste extra (dial 10) · catálogo Paramount: Universal, Paramount Pictures, Nickelodeon, DreamWorks, Sky Studios, Peacock, SHOWTIME, Paramount+',
+    competitors: ['Movistar Plus+ OTT (9,99€/mes)', 'SkyShowtime independiente (5,99€/mes)', 'DAZN (24,99€/mes)', 'HBO Max', 'Netflix', 'Filmin'],
+    source_url: 'https://orangetv.es/orange-tv-libre'
   }
 };
 
@@ -1087,7 +1108,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'Padre/madre (decisor económico) + niño (influenciador alto)',
       complementary_brands: 'LEGO, Funko, McDonald\'s Happy Meal, parques temáticos',
-      ad_value: 'Premium en kids · CPM mantenido pese a caída lineal'
+      ad_value: 'Premium en kids · CPM mantenido pese a caída lineal',
+      sources: [
+        { label:'Barlovento Comunicación', url:'https://www.barloventocomunicacion.es/audiencias-mensuales/' },
+        { label:'Kantar Media (audímetros TV)', url:'https://www.kantarmedia.com/es' },
+        { label:'AIMC EGM (consumo medios)', url:'https://www.aimc.es/' },
+        { label:'Análisis interno Paramount EMEAA' }
+      ]
     },
     nickjr: {
       age_range: '2-6 años (preescolar puro)',
@@ -1102,7 +1129,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'Madre/padre puro (niño aún no decide)',
       complementary_brands: 'Productos infancia (alimentación, higiene, ropa), juguetería pre-escolar, librerías',
-      ad_value: 'Muy alto en categorías niños 0-5 y maternidad'
+      ad_value: 'Muy alto en categorías niños 0-5 y maternidad',
+      sources: [
+        { label:'Barlovento Comunicación', url:'https://www.barloventocomunicacion.es/audiencias-mensuales/' },
+        { label:'Kantar Media (audímetros TV)', url:'https://www.kantarmedia.com/es' },
+        { label:'CIS Barómetro Familia con hijos 0-6' },
+        { label:'Análisis interno Paramount EMEAA' }
+      ]
     },
     mtv: {
       age_range: '16-34 años (core 18-24)',
@@ -1117,7 +1150,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'El propio joven adulto',
       complementary_brands: 'Bebidas (cerveza, RTD), fast fashion, beauty, tecnología, festivales, gaming',
-      ad_value: 'Premium en 18-24 difícil de alcanzar vía TV lineal'
+      ad_value: 'Premium en 18-24 difícil de alcanzar vía TV lineal',
+      sources: [
+        { label:'Barlovento Comunicación', url:'https://www.barloventocomunicacion.es/audiencias-mensuales/' },
+        { label:'GfK DAM (audiencia digital)', url:'https://www.gfk.com/insights' },
+        { label:'IAB Spain TV Connected', url:'https://iabspain.es/' },
+        { label:'Análisis interno Paramount EMEAA' }
+      ]
     },
     comedycentral: {
       age_range: '18-45 años (core 25-40)',
@@ -1132,7 +1171,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'El propio adulto joven (decisor de su tarifa TV)',
       complementary_brands: 'Cerveza, snacks salados, bebidas energéticas, automoción, fintech, gaming',
-      ad_value: 'Bueno en 25-40 con humor adulto · contexto seguro para anunciantes'
+      ad_value: 'Bueno en 25-40 con humor adulto · contexto seguro para anunciantes',
+      sources: [
+        { label:'Barlovento Comunicación', url:'https://www.barloventocomunicacion.es/audiencias-mensuales/' },
+        { label:'AIMC EGM (consumo TV/digital)', url:'https://www.aimc.es/' },
+        { label:'IAB Spain Estudio Anual Vídeo', url:'https://iabspain.es/' },
+        { label:'Análisis interno Paramount EMEAA' }
+      ]
     }
   },
   pt: {
@@ -1149,7 +1194,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'Pai/mãe (decisão económica) + criança (alta influência)',
       complementary_brands: 'LEGO, Funko, parques temáticos, brinquedos, livros infantis',
-      ad_value: 'Premium mas com pressão de Canal Panda no mercado PT'
+      ad_value: 'Premium mas com pressão de Canal Panda no mercado PT',
+      sources: [
+        { label:'GfK Portugal (audiências TV)', url:'https://www.gfk.com/insights' },
+        { label:'CAEM (Comissão de Análise de Estudos de Meios)', url:'https://www.caem.pt/' },
+        { label:'Marktest Audimetria', url:'https://www.marktest.com/' },
+        { label:'Análise interna Paramount EMEAA' }
+      ]
     },
     nickjr: {
       age_range: '2-6 anos (pré-escolar)',
@@ -1164,7 +1215,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'Mãe/pai (criança ainda não decide)',
       complementary_brands: 'Produtos infância, higiene, brinquedos pré-escolares',
-      ad_value: 'Alto em categorias maternidade e infância 0-5'
+      ad_value: 'Alto em categorias maternidade e infância 0-5',
+      sources: [
+        { label:'GfK Portugal (audiências TV)', url:'https://www.gfk.com/insights' },
+        { label:'CAEM (Comissão de Análise de Estudos de Meios)', url:'https://www.caem.pt/' },
+        { label:'INE Portugal demografia 0-6', url:'https://www.ine.pt/' },
+        { label:'Análise interna Paramount EMEAA' }
+      ]
     },
     mtv: {
       age_range: '16-34 anos (core 18-24)',
@@ -1179,7 +1236,13 @@ const TARGET_PROFILES = {
       ],
       decision_maker: 'O próprio jovem adulto',
       complementary_brands: 'Bebidas, moda fast, beauty, tecnologia, festivais (NOS Alive, MEO Sudoeste)',
-      ad_value: 'Reduzido pela perda de MEO e ausência de localização PT'
+      ad_value: 'Reduzido pela perda de MEO e ausência de localização PT',
+      sources: [
+        { label:'GfK Portugal (audiências TV)', url:'https://www.gfk.com/insights' },
+        { label:'Marktest Audimetria', url:'https://www.marktest.com/' },
+        { label:'IAB Portugal estudos digitais', url:'https://iab.pt/' },
+        { label:'Análise interna Paramount EMEAA' }
+      ]
     }
   }
 };
@@ -1844,7 +1907,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      vodafone: {
+      vodafone_pt: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
         ask: 'Mantener dial 60 — Vodafone TV PT estable como destino familiar.',
@@ -1880,7 +1943,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      digi: {
+      digi_pt: {
         priority: 'CRECER',
         deadline: '2026 continuo',
         ask: 'Posición prominente en captación DIGI PT (única ganando cuota Q1 2026 con 3,2%).',
@@ -1989,7 +2052,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      vodafone: {
+      vodafone_pt: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
         ask: 'Mantener disponibilidad dial 56.',
@@ -2023,7 +2086,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      digi: {
+      digi_pt: {
         priority: 'CRECER',
         deadline: '2026',
         ask: 'Promover Nick Jr. junto a Nick en captación DIGI PT.',
@@ -2130,7 +2193,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      vodafone: {
+      vodafone_pt: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
         ask: 'Mantener dial 120 feed Polonia.',
@@ -2163,7 +2226,7 @@ const ACTION_PLANS = {
           }
         }
       },
-      digi: {
+      digi_pt: {
         priority: 'mantener',
         deadline: '2026',
         ask: 'Mantener dial 120 + bundle con Nick.',
@@ -2195,6 +2258,213 @@ const ACTION_PLANS = {
           }
         }
       }
+    }
+  }
+};
+
+
+/* ════════════════════════════════════════════
+   DICCIONARIO MAESTRO DE CANALES (Punto 5)
+   Para cada canal: grupo audiovisual y si está en FAST
+   FAST = Free Ad-Supported Streaming TV (Pluto TV, Samsung TV Plus, etc.)
+   Lookup case-insensitive normalizado en app.js
+══════════════════════════════════════════════ */
+const CHANNEL_INFO = {
+  // ─── Generalistas TDT ES ────────────────
+  'La 1':            { group:'RTVE',                       fast:true,  fastOn:'Samsung TV Plus, Pluto TV' },
+  'La 2':            { group:'RTVE',                       fast:true,  fastOn:'Samsung TV Plus, Pluto TV' },
+  'Antena 3':        { group:'Atresmedia',                 fast:true,  fastOn:'Samsung TV Plus' },
+  'Cuatro':          { group:'Mediaset España (MFE)',      fast:true,  fastOn:'Samsung TV Plus' },
+  'Telecinco':       { group:'Mediaset España (MFE)',      fast:true,  fastOn:'Samsung TV Plus' },
+  'laSexta':         { group:'Atresmedia',                 fast:true,  fastOn:'Samsung TV Plus' },
+  '#Vamos':          { group:'Movistar Plus+ (Telefónica)', fast:false },
+  '#0':              { group:'Movistar Plus+ (Telefónica)', fast:false },
+
+  // ─── Generalistas TDT PT ────────────────
+  'RTP1':            { group:'RTP',                        fast:false },
+  'RTP2':            { group:'RTP',                        fast:false },
+  'RTP3':            { group:'RTP',                        fast:false },
+  'SIC':             { group:'Impresa',                    fast:false },
+  'SIC Notícias':    { group:'Impresa',                    fast:false },
+  'TVI':             { group:'Media Capital',              fast:false },
+  'TVI Reality':     { group:'Media Capital',              fast:false },
+  'CMTV':            { group:'Cofina',                     fast:false },
+
+  // ─── Cine y Series Movistar ─────────────
+  'Movistar Cine':       { group:'Movistar Plus+ (Telefónica)', fast:false },
+  'Movistar Drama':      { group:'Movistar Plus+ (Telefónica)', fast:false },
+  'Movistar Acción':     { group:'Movistar Plus+ (Telefónica)', fast:false },
+  'Movistar Comedia':    { group:'Movistar Plus+ (Telefónica)', fast:false },
+  'Movistar Series':     { group:'Movistar Plus+ (Telefónica)', fast:false },
+  'AXN':                 { group:'Sony Pictures Television',     fast:false },
+  'AXN Movies':          { group:'Sony Pictures Television',     fast:false },
+  'AXN White':           { group:'Sony Pictures Television',     fast:false },
+  'AXN Black':           { group:'Sony Pictures Television',     fast:false },
+  'TNT':                 { group:'Warner Bros. Discovery',       fast:false },
+  'Warner TV':           { group:'Warner Bros. Discovery',       fast:true,  fastOn:'Pluto TV' },
+  'TCM':                 { group:'Warner Bros. Discovery',       fast:false },
+  'Calle 13':            { group:'NBCUniversal',                 fast:false },
+  'COSMO':               { group:'NBCUniversal',                 fast:false },
+  'Sundance':            { group:'AMC Networks',                 fast:false },
+  'Sundance TV':         { group:'AMC Networks',                 fast:false },
+  'Canal Hollywood':     { group:'AMC Networks (Dreamia en PT)', fast:false },
+  'Somos':               { group:'AMC Networks',                 fast:false },
+  'XTRM':                { group:'AMC Networks',                 fast:false },
+  'AMC':                 { group:'AMC Networks',                 fast:false },
+  'AMC+ Connect':        { group:'AMC Networks',                 fast:false },
+  'DARK':                { group:'AMC Networks',                 fast:false },
+  'Max Avances':         { group:'Warner Bros. Discovery',       fast:false },
+  'HBO Max':             { group:'Warner Bros. Discovery',       fast:false },
+  'SkyShowtime 1':       { group:'Paramount Skydance + Comcast (JV)', fast:false },
+  'SkyShowtime':         { group:'Paramount Skydance + Comcast (JV)', fast:false },
+  'Star Channel':        { group:'Disney (FOX legacy)',          fast:false },
+  'FOX':                 { group:'Disney (FOX legacy)',          fast:false },
+  'FX':                  { group:'Disney',                       fast:false },
+  'Squirrel':            { group:'Squirrel Media (Net TV)',      fast:false },
+  'Squirrel 2':          { group:'Squirrel Media (Net TV)',      fast:false },
+
+  // ─── Deportes ───────────────────────────
+  'LaLiga TV':           { group:'LaLiga / Telefónica',          fast:false },
+  'LaLiga Hypermotion':  { group:'LaLiga / Telefónica',          fast:false },
+  'M+ LaLiga TV':        { group:'LaLiga / Telefónica',          fast:false },
+  'M+ Vamos':            { group:'Movistar Plus+ (Telefónica)',  fast:false },
+  'DAZN Mundial':        { group:'DAZN',                          fast:false },
+  'DAZN Mundial 2':      { group:'DAZN',                          fast:false },
+  'DAZN F1':             { group:'DAZN',                          fast:false },
+  'DAZN':                { group:'DAZN',                          fast:false },
+  'Fanzone por M+':      { group:'Movistar Plus+ (Telefónica)',  fast:false },
+  'Champions League':    { group:'UEFA / Movistar',              fast:false },
+  'Eurosport 1':         { group:'Warner Bros. Discovery',       fast:false },
+  'Eurosport 2':         { group:'Warner Bros. Discovery',       fast:false },
+  'Real Madrid TV':      { group:'Real Madrid C.F.',             fast:true,  fastOn:'Samsung TV Plus, Pluto TV' },
+  'Barça TV':            { group:'FC Barcelona',                 fast:false },
+  'GOL Play':            { group:'MEDIAPRO',                     fast:false },
+
+  // ─── Infantil ───────────────────────────
+  'BabyTV':              { group:'Disney',                       fast:false },
+  'Disney Junior':       { group:'Disney',                       fast:false },
+  'Disney Junior HD':    { group:'Disney',                       fast:false },
+  'Disney Channel':      { group:'Disney',                       fast:false },
+  'Nick Jr.':            { group:'Paramount Skydance',           fast:false },
+  'Nick Jr. HD':         { group:'Paramount Skydance',           fast:false },
+  'Nickelodeon':         { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV (algunos shows)' },
+  'Nickelodeon HD':      { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV (algunos shows)' },
+  'DreamWorks':          { group:'Universal (NBCUniversal)',     fast:false },
+  'DreamWorks HD':       { group:'Universal (NBCUniversal)',     fast:false },
+  'Boing':               { group:'Mediaset España (MFE)',        fast:false },
+  'Boing HD':            { group:'Mediaset España (MFE)',        fast:false },
+  'Clan TVE':            { group:'RTVE',                          fast:false },
+  'Clan TVE HD':         { group:'RTVE',                          fast:false },
+  'Canal Panda':         { group:'Dreamia (NOS 50% + AMC 50%)',  fast:false },
+  'Panda Kids':          { group:'Dreamia (NOS 50% + AMC 50%)',  fast:false },
+  'Biggs':               { group:'Dreamia (NOS 50% + AMC 50%)',  fast:false },
+  'Cartoon Network':     { group:'Warner Bros. Discovery',       fast:false },
+  'Cartoonito':          { group:'Warner Bros. Discovery',       fast:false },
+  'JimJam':              { group:'AMC Networks',                 fast:false },
+
+  // ─── Documentales ───────────────────────
+  'Discovery':           { group:'Warner Bros. Discovery',       fast:true,  fastOn:'Pluto TV, Samsung TV Plus' },
+  'Discovery Channel':   { group:'Warner Bros. Discovery',       fast:true,  fastOn:'Pluto TV, Samsung TV Plus' },
+  'NatGeo':              { group:'Disney (National Geographic)', fast:false },
+  'National Geographic': { group:'Disney (National Geographic)', fast:false },
+  'NatGeo Wild':         { group:'Disney (National Geographic)', fast:false },
+  'Crime+Investigation': { group:'A+E Networks',                 fast:false },
+  'Crime+Investigation HD': { group:'A+E Networks',              fast:false },
+  'Historia':            { group:'A+E Networks',                 fast:true,  fastOn:'Pluto TV (Historia + segmentos)' },
+  'História':            { group:'A+E Networks',                 fast:false },
+  'Canal Historia':      { group:'A+E Networks',                 fast:false },
+  'Odisea':              { group:'AMC Networks',                 fast:false },
+  'Odisseia':            { group:'AMC Networks',                 fast:false },
+  'Caza y Pesca':        { group:'AMC Networks',                 fast:false },
+  'BBC Top Gear':        { group:'BBC Studios',                  fast:false },
+  'BBC Drama':           { group:'BBC Studios',                  fast:false },
+  'BBC Food':            { group:'BBC Studios',                  fast:false },
+  'BBC History':         { group:'BBC Studios',                  fast:false },
+  'BBC Earth':           { group:'BBC Studios',                  fast:true,  fastOn:'Samsung TV Plus' },
+  'BBC Series':          { group:'BBC Studios',                  fast:true,  fastOn:'Pluto TV (desde feb 2026)' },
+  'Canal Cocina':        { group:'AMC Networks',                 fast:false },
+  'Casa e Cozinha':      { group:'Dreamia (NOS 50% + AMC 50%)',  fast:false },
+  'DMAX':                { group:'Warner Bros. Discovery',       fast:false },
+
+  // ─── Música ─────────────────────────────
+  'MTV España':          { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV (MTV varios canales)' },
+  'MTV 00s':             { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'MTV Live':            { group:'Paramount Skydance',           fast:false },
+  'MTV':                 { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'MTV Global':          { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'MTV Hits':            { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'MTV Tattoo a dos':    { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'MTV Catfish':         { group:'Paramount Skydance',           fast:true,  fastOn:'Samsung TV Plus' },
+  'Comedy Central':      { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'Comedy Central HD':   { group:'Paramount Skydance',           fast:true,  fastOn:'Pluto TV' },
+  'Mezzo':               { group:'Les Échos-Le Parisien',        fast:false },
+  'Mezzo HD':            { group:'Les Échos-Le Parisien',        fast:false },
+  'Mezzo Live':          { group:'Les Échos-Le Parisien',        fast:false },
+  'Mezzo Live HD':       { group:'Les Échos-Le Parisien',        fast:false },
+  'Stingray Classica':   { group:'Stingray Group',               fast:false },
+  'Sol Música':          { group:'Atresmedia',                   fast:true,  fastOn:'Samsung TV Plus' },
+  'VH1':                 { group:'Paramount Skydance',           fast:false },
+  'Movie Music':         { group:'Operador (white-label)',       fast:false },
+  'VinTV':               { group:'Squirrel Media',               fast:false },
+
+  // ─── Internacional ──────────────────────
+  'BBC World':           { group:'BBC News',                     fast:false },
+  'CNN':                 { group:'Warner Bros. Discovery',       fast:true,  fastOn:'Samsung TV Plus' },
+  'CNN International':   { group:'Warner Bros. Discovery',       fast:true,  fastOn:'Samsung TV Plus' },
+  'TV5 Monde':           { group:'TV5 Monde (consorcio público)', fast:false },
+  'RAI 1':               { group:'RAI (Italia)',                 fast:false },
+  'Deutsche Welle':      { group:'Deutsche Welle (Alemania)',    fast:false },
+  'France 24':           { group:'France Médias Monde',          fast:false },
+  'Euronews':            { group:'Euronews',                     fast:true,  fastOn:'Pluto TV, Samsung TV Plus' },
+  'Bloomberg':           { group:'Bloomberg L.P.',               fast:true,  fastOn:'Samsung TV Plus' },
+
+  // ─── OTT integradas ─────────────────────
+  'Netflix (add-on)':    { group:'Netflix',                      fast:false },
+  'Disney+ (add-on)':    { group:'Disney',                       fast:false },
+  'HBO Max (add-on)':    { group:'Warner Bros. Discovery',       fast:false },
+  'Max (add-on)':        { group:'Warner Bros. Discovery',       fast:false },
+  'Prime Video (add-on)':{ group:'Amazon',                       fast:false },
+  'Apple TV+ (add-on)':  { group:'Apple',                        fast:false },
+  'Pluto TV (app)':      { group:'Paramount Skydance',           fast:true,  fastOn:'(es la propia FAST)' }
+};
+
+
+/* ════════════════════════════════════════════
+   DATOS HISTÓRICOS 10 AÑOS (Punto 2: Evolución)
+   Series anuales para gráficos de evolución
+   Datos basados en CNMC (ES) y ANACOM (PT) - histórico publicado anualmente
+══════════════════════════════════════════════ */
+const HISTORICAL_DATA = {
+  es: {
+    years: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+    // Líneas móviles totales (M) - CNMC informes anuales
+    mobile_lines: [51.7, 52.8, 54.1, 55.4, 56.1, 56.9, 58.1, 59.5, 60.8, 61.9, 62.6],
+    // Líneas FTTH (M) - CNMC. Crecimiento explosivo desde 2017
+    ftth_lines: [4.3, 6.5, 8.7, 10.7, 11.9, 13.1, 14.5, 15.8, 16.8, 17.7, 18.1],
+    // Clientes TV pago (M) - CNMC. Pico ~7M en 2022, declive hacia 6,5M por canibalización OTT
+    tv_subs: [6.3, 6.8, 7.2, 7.3, 7.1, 7.2, 7.0, 6.8, 6.6, 6.5, 6.45],
+    // Cuota % TV por operador (4 ops foco) - histórica
+    tv_share_by_op: {
+      Movistar:  [58.3, 60.2, 61.0, 61.8, 60.5, 59.0, 58.5, 58.0, 56.8, 57.5, 60.5],  // pierde algo pero sigue líder
+      MASORANGE: [13.0, 13.5, 14.0, 14.5, 15.0, 16.0, 18.0, 19.5, 21.0, 22.5, 23.3],  // crece con consolidación
+      Vodafone:  [27.0, 25.0, 23.0, 22.0, 22.5, 22.5, 21.0, 19.5, 18.5, 17.5, 16.7],  // pierde Zegona
+      DIGI:      [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  1.5,  2.5,  3.4]   // emerge fin 2023, crece rápido
+    }
+  },
+  pt: {
+    years: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+    // Líneas móviles totales (M) - ANACOM
+    mobile_lines: [11.6, 11.8, 12.0, 12.3, 12.6, 12.7, 13.1, 13.4, 13.6, 13.7, 13.8],
+    // Líneas FTTH (M) - ANACOM (crecimiento sostenido)
+    ftth_lines: [2.1, 2.4, 2.8, 3.2, 3.6, 4.1, 4.5, 4.8, 5.0, 5.2, 5.3],
+    // Clientes TV pago (M) - ANACOM. Estable ~4,5M
+    tv_subs: [3.6, 3.7, 3.8, 3.9, 4.0, 4.2, 4.4, 4.5, 4.6, 4.7, 4.8],
+    // Cuota % TV por operador (4 ops foco) - histórica ANACOM
+    tv_share_by_op: {
+      MEO:        [42.0, 42.5, 42.5, 42.8, 43.0, 43.2, 42.8, 42.5, 42.2, 41.8, 41.5],
+      NOS:        [36.5, 36.0, 36.0, 35.8, 35.5, 35.3, 35.0, 35.0, 35.0, 34.9, 34.9],
+      Vodafone:   [21.0, 21.0, 21.0, 21.0, 21.0, 21.0, 21.5, 21.5, 21.2, 20.8, 20.3],
+      DIGI:       [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0,  2.0,  3.2]   // entra 2024
     }
   }
 };

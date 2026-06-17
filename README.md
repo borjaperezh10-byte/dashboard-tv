@@ -72,6 +72,8 @@ Trabajamos por bloques de 3:
 - ✅ Bloque 3: botón "Fuente" junto a icono "i", rango fechas en KPIs, noticias por sección
 - ✅ Bloque 4: perfil tipo del target (edad, género, intereses, consumo) y plan de acción por operador en canales Paramount
 - ✅ Bloque 5: planes de acción enriquecidos con ofertas concretas, deals de competidores (SkyShowtime, Disney+, Warner/Max, AMC, BBC, Canal Panda) y 3 escenarios (worst/base/best) con KPIs numéricos por operador
+- ✅ Bloque 6: Home KPIs (Clientes TV), nueva página Evolución 10 años con 4 gráficos SVG, KPIs operador con % sobre 4 ops foco, OTTs (Movistar Plus+ y Orange TV Libre) con datos oficiales completos (tiers, suscriptores, fútbol, fuentes), canales con grupo audiovisual + chip FAST, target con fuentes (Barlovento, Kantar, GfK…), eliminado KPI "Diales conocidos" de canales Paramount
+- ✅ Bloque 7: nueva sección sidebar "Renovaciones" con vista hub (matriz operador × canal) + ficha detallada por operador con tabs por canal (4 ES + 3 PT). El plan completo (ofertas, deals competidores, escenarios) vive ahora en Renovaciones; en cada canal Paramount queda un resumen corto con link directo al plan del operador. Fix: claves PT (vodafone_pt/digi_pt) alineadas en ACTION_PLANS
 
 ## Autor
 
