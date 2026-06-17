@@ -71,7 +71,7 @@ Trabajamos por bloques de 3:
 - ✅ Bloque 2: datos marzo 2026 (CNMC) + Q1 2026 (ANACOM), sin planes, sin Highlights
 - ✅ Bloque 3: botón "Fuente" junto a icono "i", rango fechas en KPIs, noticias por sección
 - ✅ Bloque 4: perfil tipo del target (edad, género, intereses, consumo) y plan de acción por operador en canales Paramount
-- ⏳ Bloque 5: fuentes editables (sesión), refinos finales
+- ✅ Bloque 5: planes de acción enriquecidos con ofertas concretas, deals de competidores (SkyShowtime, Disney+, Warner/Max, AMC, BBC, Canal Panda) y 3 escenarios (worst/base/best) con KPIs numéricos por operador
 
 ## Autor
 

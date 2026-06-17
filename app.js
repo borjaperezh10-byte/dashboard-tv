@@ -944,24 +944,104 @@ function renderParamountChannel(chKey) {
       };
       return `
       <div class="section-anchor">🎯 Plan de acción por operador</div>
-      <div class="action-grid">
+      <div class="action-intro">
+        Análisis estratégico de la renovación con cada operador: qué pedir, qué ofrecer a cambio,
+        contexto competitivo (deals de otros grupos audiovisuales) y proyección de impacto en 3 escenarios.
+      </div>
+      <div class="action-list">
         ${opKeys.filter(k => plan[k]).map(k => {
           const p = plan[k];
+          const sc = p.scenarios || {};
           return `
-            <div class="action-card" style="border-left:4px solid ${ops[k].color}">
-              <div class="action-head">
-                <div class="action-op" style="color:${ops[k].color}">${ops[k].name}</div>
-                <span class="action-priority ${priorityClass(p.priority)}">${p.priority||'—'}</span>
+            <div class="action-card-full" style="border-left:5px solid ${ops[k].color}">
+              <div class="action-head-full">
+                <div class="action-head-main">
+                  <div class="action-op-full" style="color:${ops[k].color}">${ops[k].name}</div>
+                  <span class="action-priority ${priorityClass(p.priority)}">${p.priority||'—'}</span>
+                </div>
+                <div class="action-meta">
+                  <div class="action-meta-item">
+                    <span class="action-meta-label">Deadline</span>
+                    <span class="action-meta-value">${p.deadline||'—'}</span>
+                  </div>
+                  ${p.fee_estimate ? `<div class="action-meta-item">
+                    <span class="action-meta-label">Fee estimado</span>
+                    <span class="action-meta-value">${p.fee_estimate}</span>
+                  </div>` : ''}
+                </div>
               </div>
-              <div class="action-deadline">⏱ ${p.deadline||'—'}</div>
-              <div class="action-block">
-                <div class="action-label">Qué pedir</div>
-                <div class="action-text">${p.ask||''}</div>
+
+              <div class="action-section">
+                <div class="action-section-title">📌 Qué pedir</div>
+                <div class="action-section-text">${p.ask||''}</div>
               </div>
-              <div class="action-block">
-                <div class="action-label">Táctica</div>
-                <div class="action-text" style="color:var(--text-secondary)">${p.tactic||''}</div>
+
+              <div class="action-section">
+                <div class="action-section-title">🧭 Táctica</div>
+                <div class="action-section-text muted">${p.tactic||''}</div>
               </div>
+
+              ${p.offers && p.offers.length ? `
+              <div class="action-section">
+                <div class="action-section-title">💼 Ofertas concretas para llevar a la mesa</div>
+                <ul class="action-offers">
+                  ${p.offers.map(o => `<li>${o}</li>`).join('')}
+                </ul>
+              </div>` : ''}
+
+              ${p.competitor_deals && p.competitor_deals.length ? `
+              <div class="action-section">
+                <div class="action-section-title">🏢 Deals de competidores (benchmarking)</div>
+                <ul class="action-competitors">
+                  ${p.competitor_deals.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+              </div>` : ''}
+
+              ${(sc.worst || sc.base || sc.best) ? `
+              <div class="action-section">
+                <div class="action-section-title">📊 Escenarios proyectados</div>
+                <div class="scenario-grid">
+                  ${sc.worst ? `
+                    <div class="scenario-card scenario-worst">
+                      <div class="scenario-head">⬇️ ${sc.worst.label||'Worst'}</div>
+                      <div class="scenario-desc">${sc.worst.description||''}</div>
+                      ${sc.worst.kpis ? `<div class="scenario-kpis">
+                        ${Object.entries(sc.worst.kpis).map(([key,val]) => `
+                          <div class="scenario-kpi">
+                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                            <span class="scenario-kpi-value">${val}</span>
+                          </div>
+                        `).join('')}
+                      </div>` : ''}
+                    </div>` : ''}
+                  ${sc.base ? `
+                    <div class="scenario-card scenario-base">
+                      <div class="scenario-head">➡️ ${sc.base.label||'Base'}</div>
+                      <div class="scenario-desc">${sc.base.description||''}</div>
+                      ${sc.base.kpis ? `<div class="scenario-kpis">
+                        ${Object.entries(sc.base.kpis).map(([key,val]) => `
+                          <div class="scenario-kpi">
+                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                            <span class="scenario-kpi-value">${val}</span>
+                          </div>
+                        `).join('')}
+                      </div>` : ''}
+                    </div>` : ''}
+                  ${sc.best ? `
+                    <div class="scenario-card scenario-best">
+                      <div class="scenario-head">⬆️ ${sc.best.label||'Best'}</div>
+                      <div class="scenario-desc">${sc.best.description||''}</div>
+                      ${sc.best.kpis ? `<div class="scenario-kpis">
+                        ${Object.entries(sc.best.kpis).map(([key,val]) => `
+                          <div class="scenario-kpi">
+                            <span class="scenario-kpi-label">${key.replace(/_/g,' ')}</span>
+                            <span class="scenario-kpi-value">${val}</span>
+                          </div>
+                        `).join('')}
+                      </div>` : ''}
+                    </div>` : ''}
+                </div>
+              </div>` : ''}
             </div>
           `;
         }).join('')}

@@ -1185,8 +1185,14 @@ const TARGET_PROFILES = {
 };
 
 /* ════════════════════════════════════════════
-   PLAN DE ACCIÓN POR OPERADOR (Punto 15)
-   Indexado: ACTION_PLANS[country][channel_key] = { operator_key: { ask, priority, deadline, tactic } }
+   PLAN DE ACCIÓN POR OPERADOR (Punto 15 — Expandido)
+   Estructura por operador:
+   {
+     priority, deadline, ask, tactic, fee_estimate,
+     offers: [propuestas concretas para llevar a la mesa],
+     competitor_deals: [acuerdos públicos de otros groups para benchmarking],
+     scenarios: { worst, base, best } con KPIs numéricos
+   }
 ══════════════════════════════════════════════ */
 const ACTION_PLANS = {
   es: {
@@ -1194,104 +1200,573 @@ const ACTION_PLANS = {
       movistar: {
         priority: 'mantener',
         deadline: 'Próxima renovación 2026-2027',
-        ask: 'Mantener dial 114 + bloque infantil completo (Nick + Nick Jr.) en pack base.',
-        tactic: 'Refuerzo de ARPU vía co-promo Movistar Plus+ Lite. Defender carrying fee sin subidas agresivas — preservar distribución estable es prioritario.'
+        ask: 'Mantener dial 114 + bloque infantil completo (Nick + Nick Jr.) en pack base de Movistar Plus+. Renovación a 3 años con cláusula anti-sustitución por Disney Channel relanzado.',
+        tactic: 'Movistar es el ancla más estable de la cartera Paramount en España. Telefónica acaba de reportar 16M contratos móvil (récord histórico) y ARPU 91,5€ Q1 2026 — momento óptimo para defender fee actual sin abrir negociación a la baja. Apalancar valor de SkyShowtime ya integrado en Ficción Total (dial 29) como argumento de paquete Paramount completo.',
+        fee_estimate: '0,18-0,24 €/sub/mes (carrying fee estimado para canal infantil premium en España)',
+        offers: [
+          'Renovación 3 años con incremento IPC limitado (+1,5% anual) a cambio de garantía dial 114 y pack base',
+          'Pack co-branded Nick + Nick Jr. + Comedy Central como "Universo Paramount Familia" con descuento 8% sobre fee individual',
+          'Activación premium en vacaciones escolares (maratones SpongeBob, especiales PAW Patrol) con co-marketing Movistar Plus+',
+          'Inclusión sin coste adicional en Movistar Plus+ Lite (OTT) durante los 3 años — anclaje en cliente no-fibra'
+        ],
+        competitor_deals: [
+          'Disney+ con Movistar: integración total en Ficción Total + dial dedicado tras cierre Disney Channel TDT (ene 2025). Modelo agresivo de OTT',
+          'Warner/Max: integrado en miMovistar Fusión desde mar 2024, plan Estándar incluido sin coste extra en paquetes Ficción Total',
+          'SkyShowtime (Paramount JV con Comcast): dial 29 en Movistar desde ene 2025, en Ficción Total a 16€/mes incluido. Demuestra apetito del operador por Paramount Group',
+          'AMC perdió Movistar ene 2025 con sus 14 canales — alerta: Movistar consolida hacia menos canales premium con más valor'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Movistar incluye Disney Channel relanzado (abr 2026) en pack base y degrada Nickelodeon a dial 200+ o lo saca del pack base.',
+            kpis: { reach: '-65% (de 17M a ~6M hogares)', fee_impact: '-40% fee revenue ES', arpu_loss: '~3,8M€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación a 3 años con dial 114 mantenido y fee con incremento IPC. Nickelodeon sigue como ancla infantil junto a Disney Junior.',
+            kpis: { reach: '17,9M subs Movistar', fee_impact: '+4,5% YoY (IPC)', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Renovación 3 años + pack premium Paramount Familia (Nick + Nick Jr. + Comedy) integrado en Movistar Plus+ Lite. Co-marketing eventos escolares.',
+            kpis: { reach: '17,9M Movistar + 350k Plus+ Lite', fee_impact: '+12% fee revenue', arpu_loss: '+750k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'reentrada',
         deadline: 'Q3-Q4 2026 (negociación post-reorganización Zegona)',
-        ask: 'Reentrada con bundle Nick + Nick Jr. + SkyShowtime como propuesta integrada.',
-        tactic: 'Aprovechar la nueva estrategia Vodafone TV reforzada (sep+dic 2025). Ofrecer fee escalonado (descuento año 1) a cambio de paquete familiar base, no opcional.'
+        ask: 'Reentrada con bundle Nick + Nick Jr. + SkyShowtime como propuesta integrada. Dial doble dígito (60-70) y pack base, no opcional.',
+        tactic: 'Vodafone TV se reforzó en sep+dic 2025 con +35 canales nuevos pero salió de la cartera Paramount en ago 2025 al no renovar SkyShowtime. Zegona está enfocada en cliente rentable (ARPU 65€ vs 91€ Movistar). Aprovechar la ventana de renegociación tras el primer año de Zegona-only — están abiertos a paquetes diferenciales. Argumento clave: Vodafone perdió 1,1M hogares con TV potenciales sin Paramount.',
+        fee_estimate: '0,12-0,18 €/sub/mes (rebaja año 1, escalado IPC desde año 2)',
+        offers: [
+          'Año 1 con fee 30% descuento (0,12€/sub) → garantizar entrada en pack base con dial doble dígito',
+          'Bundle "Familia Paramount" Nick + Nick Jr. + Comedy Central como pack opcional a 2,99€/mes para suscriptores Vodafone',
+          'Inclusión sin coste extra en cualquier futura OTT independiente Vodafone (anticipándose a posible OTT Vodafone Libre)',
+          'Cláusula MFN (Most Favored Nation) con Vodafone para que cualquier mejora en otro operador les llegue automáticamente'
+        ],
+        competitor_deals: [
+          'Vodafone+HBO: histórico exclusivo desde 2016, renovado hasta 2026 sin exclusividad. Modelo de plataforma incluida en pack',
+          'Vodafone+AMC: salió de Movistar ene 2025 y reforzó Vodafone con AMC+ Connect canal exclusivo desde sep 2025. Demuestra apetito de Vodafone por catálogo premium tras pérdida Paramount',
+          'Vodafone+BBC: paquete completo BBC añadido tras reorganización Zegona en sep 2025. Indica que están abiertos a nuevos catálogos',
+          'Disney+ con Vodafone: integrado en pack premium Familyfans desde 2024'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone no abre negociación y consolida con AMC+ y BBC como alternativa al universo Paramount. Nick + Nick Jr. quedan fuera 3 años más.',
+            kpis: { reach: '0 (sigue ausente)', fee_impact: '-1,1M hogares potenciales', arpu_loss: '~2,8M€/año perdidos vs base 2024' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Reentrada Nick + Nick Jr. en pack opcional a 2,99€/mes para suscriptores Vodafone, dial 60-70. Fee promocional año 1.',
+            kpis: { reach: '1,1M hogares (penetración ~40%)', fee_impact: '+0,8M€/año fee revenue', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack Paramount completo (Nick + Nick Jr. + MTV + Comedy) integrado en pack base Vodafone TV con dial premium. Co-marketing kids.',
+            kpis: { reach: '1,1M hogares (100%)', fee_impact: '+2,4M€/año fee revenue', arpu_loss: '+1,9M€/año vs ausencia actual' }
+          }
+        }
       },
       digi: {
         priority: 'crecer',
-        deadline: '2026 continuo',
-        ask: 'Promoción cruzada: destacar Nick en la oferta DIGI TV durante captación de nuevos hogares.',
-        tactic: 'DIGI tiene 217k subs TV (Q1 2026) y crece +25%/trimestre. Negociar fee por suscriptor escalonado. Aprovechar visibilidad en zonas urbanas con captación intensiva.'
+        deadline: '2026 continuo · revisión Q4 2026',
+        ask: 'Mantener dial 65 + push para promoción cruzada Nick en captación. Fee escalonado con bonus por crecimiento DIGI TV (>300k subs en 2027).',
+        tactic: 'DIGI cerró Q1 2026 con 217k DIGI TV (+25% vs Q4 2025) y 11,4M clientes totales. Es el motor del crecimiento en España. Negociar fee variable atado al crecimiento — alinear incentivos. Apuntar a familias jóvenes urbanas low-cost (target ideal para Nick).',
+        fee_estimate: '0,14-0,20 €/sub/mes (escalonado por hitos de crecimiento)',
+        offers: [
+          'Fee escalonado: 0,14€ para los primeros 250k subs, 0,17€ para 250-500k, 0,20€ para >500k',
+          'Bundle Nick + Nick Jr. con descuento 10% vs fee individual + posición consecutiva dial 65-66',
+          'Co-marketing en campañas de captación DIGI: promo "primer mes gratis Nick" para nuevos suscriptores TV',
+          'Cláusula de exclusividad geográfica en zonas DIGI con cobertura fibra propia (incentivo de captación)'
+        ],
+        competitor_deals: [
+          'DIGI+SkyShowtime: integrado en parrilla básica DIGI TV desde lanzamiento. Modelo de plataforma incluida',
+          'DIGI+AMC: añadió los 14 canales AMC tras salida Movistar ene 2025 — apetito demostrado por catálogo premium',
+          'DIGI+Warner: dispone del paquete BBC y catálogo Warner desde 2024 vía acuerdo distribución',
+          'AMC SELEKT en Prime Video: alternativa OTT que demuestra estrategia AMC multi-canal post-Movistar'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI prioriza coste sobre catálogo infantil premium. Sustituye Nick por Cartoon Network low-cost o decide salir del segmento infantil.',
+            kpis: { reach: '0 (cierra distribución)', fee_impact: '-217k subs', arpu_loss: '~400k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación con fee escalonado, dial 65 mantenido. DIGI TV crece a 350k subs fin 2026.',
+            kpis: { reach: '350k subs DIGI TV', fee_impact: '+15% fee revenue YoY', arpu_loss: '+220k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI TV alcanza 500k+ subs en 2027 con Nick destacado en captación. Bundle Nick + Nick Jr. en todas las altas.',
+            kpis: { reach: '500k+ subs', fee_impact: '+45% fee revenue vs 2025', arpu_loss: '+880k€/año' }
+          }
+        }
       },
       masorange: {
         priority: 'consolidar OTT',
-        deadline: 'Renovación 2026-2027',
-        ask: 'Garantizar inclusión en Orange TV Libre (OTT independiente) además de Orange TV principal.',
-        tactic: 'Tras integración Orange (Q2 2026), aprovechar consolidación de marcas (Yoigo + Jazztel) para extender distribución. Push para incluirlo en pack OTT Libre sin coste adicional.'
+        deadline: 'Renovación 2026-2027 · consolidación Orange Q2 2026',
+        ask: 'Garantizar inclusión en Orange TV Libre (OTT independiente) además de Orange TV principal tras consolidación Orange (Q2 2026). Pack Paramount familia en parrilla unificada.',
+        tactic: 'MASORANGE alcanzó 47M líneas y ARPU 54,1€ en Q1 2026 con consolidación Orange inminente. Orange TV Libre (7,99€) integra ya SkyShowtime sin coste — abrir vía para incluir Nick + Nick Jr. con mismo modelo. Argumento: ampliar valor percibido del OTT independiente frente a Movistar Plus+ Lite (12€).',
+        fee_estimate: '0,16-0,22 €/sub/mes (mayor en Orange TV principal, menor en OTT Libre)',
+        offers: [
+          'Inclusión Nick + Nick Jr. en Orange TV Libre sin coste extra para el cliente (paga Paramount fee al operador) — clavar diferenciación vs Movistar Plus+ Lite',
+          'Renovación 3 años parrilla unificada Orange + Yoigo + Jazztel post-consolidación',
+          'Activaciones cruzadas con SkyShowtime (mismo grupo Paramount JV) — pack "Familia Paramount" en Orange TV Libre',
+          'Co-marketing en festivales infantiles patrocinados por Orange (Fiesta del Cine Kids, parques temáticos)'
+        ],
+        competitor_deals: [
+          'MASORANGE+SkyShowtime: integrado en Orange TV Libre sin coste desde dic 2024 — modelo de referencia para Nick',
+          'Disney+ con Orange: add-on integrado opcional, no en pack base',
+          'Warner/Max con Orange: integrado desde may 2024 en Cine y Series Total',
+          'AMC con MASORANGE: canales AMC mantenidos en parrilla tras salida Movistar (DIGI también los tiene)'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Tras consolidación Orange, racionalización de parrilla deja fuera Nick o Nick Jr. priorizando exclusivos Orange (deportes, SkyShowtime).',
+            kpis: { reach: '-50% (de 26,8M a ~13M)', fee_impact: '-30% fee revenue', arpu_loss: '~2,1M€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación 3 años con dial 67 mantenido en Orange TV principal y inclusión opcional en Orange TV Libre (3,99€ add-on familiar).',
+            kpis: { reach: '26,8M Orange + 250k Orange TV Libre', fee_impact: '+5% IPC', arpu_loss: '+180k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Inclusión sin coste en Orange TV Libre + pack Paramount Familia destacado en captación post-consolidación. Visibilidad en 8 marcas Orange.',
+            kpis: { reach: '26,8M Orange + 800k OTT Libre', fee_impact: '+18% fee revenue YoY', arpu_loss: '+1,3M€/año' }
+          }
+        }
       }
     },
     nickjr: {
       movistar: {
         priority: 'mantener',
         deadline: 'Próxima renovación 2026-2027',
-        ask: 'Bundle Nick Jr. + Nick + Baby TV como pack preescolar completo.',
-        tactic: 'Co-viewing parental = alto ARPU psicológico. Defender posición dial 113 contigua a Nickelodeon. Mantener fee.'
+        ask: 'Mantener dial 113 + bundle inseparable con Nickelodeon. Garantizar posición preescolar premium junto a Disney Junior (no como alternativa de menor categoría).',
+        tactic: 'Nick Jr. es el ancla de target preescolar (2-6 años) con co-viewing parental obligado — perfil ARPU psicológico alto. Defender posición consecutiva con Nick (D113-D114). El cierre Disney Channel TDT ene 2025 y relanzamiento Disney Channel reposicionado Disney Junior abril 2026 abre ventana para reforzar Nick Jr. como preescolar #1 en Movistar.',
+        fee_estimate: '0,15-0,20 €/sub/mes (preescolar premium con co-viewing parental)',
+        offers: [
+          'Bundle inseparable Nick + Nick Jr. con renovación conjunta a 3 años + co-marketing kids escolar',
+          'Pack pre-escolar Paramount Nick Jr. + Baby TV (si aplica): "Universo Paramount Pre-K" con descuento 12% vs fee individual',
+          'Producción exclusiva PAW Patrol shorts para Movistar (windowing 30 días pre-streaming) — diferenciación claro vs Disney Junior',
+          'Activaciones bloque mañana sábado (8h-11h) con maratones temáticos co-marketing Movistar'
+        ],
+        competitor_deals: [
+          'Disney Junior en Movistar: dial 111. Único superviviente del universo Disney lineal tras cierre Disney Channel TDT (ene 2025)',
+          'Disney Channel relanzado (abril 2026): reposicionamiento como Disney Junior — riesgo de canibalización pero también de fragmentación Disney',
+          'BabyTV en Movistar (dial 110): cubre target 0-2 años, complementario a Nick Jr.',
+          'Clan TVE (TDT gratis): competidor por audiencia pero no en pack premium operador'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Movistar racionaliza parrilla preescolar manteniendo solo Disney Junior (mayor marca) y degrada Nick Jr. a dial 200+ o lo elimina.',
+            kpis: { reach: '-100% (out)', fee_impact: '-2,9M€/año revenue', arpu_loss: 'pérdida total cartera ES preescolar Movistar' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación junto con Nick a 3 años, dial 113 mantenido, fee con IPC.',
+            kpis: { reach: '17,9M subs', fee_impact: '+4,5% YoY (IPC)', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack pre-escolar Paramount con bundle Nick Jr. + BabyTV producciones exclusivas PAW Patrol. Posicionamiento como #1 preescolar en Movistar.',
+            kpis: { reach: '17,9M + windowing exclusivo', fee_impact: '+11% fee revenue', arpu_loss: '+650k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'reentrada',
         deadline: 'Q3-Q4 2026',
-        ask: 'Reentrada conjunta con Nickelodeon en pack familiar base.',
-        tactic: 'Bundle inseparable Nick + Nick Jr. para que Vodafone no pueda elegir solo uno. Negociar fee global por los dos.'
+        ask: 'Reentrada en bundle inseparable con Nickelodeon. Pack familiar base con dial 50-60.',
+        tactic: 'Vender Nick + Nick Jr. como propuesta única — Vodafone no puede elegir solo uno. Argumento: el público preescolar es decisor familiar de tarifa, alto valor para retención. Vodafone TV reforzada en sep+dic 2025 buscaba kids — propuesta única.',
+        fee_estimate: '0,12-0,18 €/sub/mes (bundle Nick + Nick Jr. con descuento conjunto)',
+        offers: [
+          'Bundle Nick + Nick Jr. con fee 30% descuento año 1, sólo si se entra como pack',
+          'Pack "Familia Paramount" preescolar + kids como add-on opcional a 2,99€/mes',
+          'Inclusión en futura OTT independiente Vodafone (si se lanza) con cláusula MFN',
+          'Co-marketing kids escolar y eventos Vodafone (descuentos en parques temáticos socios)'
+        ],
+        competitor_deals: [
+          'Vodafone tiene actualmente Disney Junior + BabyTV + Cartoon Network + Boing — cobertura infantil sin Paramount',
+          'Canal Panda no opera en España, sin amenaza directa local',
+          'Cry Babies, El reino infantil — canales de bajo coste actualmente en Vodafone, sin equivalente premium'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone consolida con Disney Junior + Cartoon Network como cobertura infantil suficiente, sin Paramount.',
+            kpis: { reach: '0', fee_impact: '-1,1M hogares potenciales', arpu_loss: '~1,5M€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Reentrada Nick + Nick Jr. en pack opcional a 2,99€/mes, dial 50-60.',
+            kpis: { reach: '1,1M hogares (penetración ~35%)', fee_impact: '+0,6M€/año', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack Familia Paramount integrado en pack base Vodafone TV. Co-marketing kids y parques temáticos.',
+            kpis: { reach: '1,1M hogares (100%)', fee_impact: '+1,8M€/año', arpu_loss: '+1,4M€/año' }
+          }
+        }
       },
       digi: {
         priority: 'crecer',
         deadline: '2026 continuo',
-        ask: 'Posición consecutiva con Nick (D74-D75) y promoción en captación.',
-        tactic: 'DIGI capta familias jóvenes urbanas — perfil ideal para Nick Jr. Negociar fee por suscriptor escalonado con bonus por crecimiento.'
+        ask: 'Posición consecutiva con Nick (D65-D66). Bundle Nick + Nick Jr. en captación.',
+        tactic: 'DIGI capta familias jóvenes urbanas — perfil ideal para Nick Jr. Fee escalonado con bonus por crecimiento DIGI TV.',
+        fee_estimate: '0,12-0,18 €/sub/mes',
+        offers: [
+          'Bundle Nick + Nick Jr. con descuento 15% vs fee individual',
+          'Posición consecutiva D65-D66 garantizada en renovación',
+          'Promo "primer mes gratis bloque infantil" para nuevos suscriptores DIGI TV',
+          'Co-marketing en zonas con alta presencia DIGI (Galicia, Cataluña, urbana joven)'
+        ],
+        competitor_deals: [
+          'DIGI tiene Disney Junior + Cartoon Network + Boing + DreamWorks — parrilla preescolar competitiva',
+          'DIGI low-cost no compite con OTT premium (Disney+, Netflix Kids) en su target',
+          'Cartoon Network como amenaza directa preescolar 4-7'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI prioriza coste y elimina Nick Jr. del pack base.',
+            kpis: { reach: '0', fee_impact: '-217k subs', arpu_loss: '~280k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación con fee escalonado, dial 66 mantenido, DIGI TV crece a 350k.',
+            kpis: { reach: '350k subs', fee_impact: '+15% YoY', arpu_loss: '+180k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI TV alcanza 500k+ con bundle Nick + Nick Jr. destacado en captación.',
+            kpis: { reach: '500k+ subs', fee_impact: '+45% vs 2025', arpu_loss: '+650k€/año' }
+          }
+        }
       },
       masorange: {
         priority: 'consolidar OTT',
         deadline: 'Renovación 2026-2027',
-        ask: 'Mantener Orange TV + push para Orange TV Libre.',
-        tactic: 'Tras consolidación Orange, asegurar parrilla unificada con Yoigo TV. Probar pack preescolar (Nick Jr. + Baby TV + Disney Junior) como opcional premium.'
+        ask: 'Mantener Orange TV principal + push para Orange TV Libre. Bundle con Nick.',
+        tactic: 'Tras consolidación Orange, asegurar parrilla unificada con Yoigo TV. Probar pack preescolar (Nick Jr. + Baby TV + Disney Junior) como opcional premium.',
+        fee_estimate: '0,14-0,20 €/sub/mes',
+        offers: [
+          'Bundle Nick + Nick Jr. inseparable en parrilla unificada post-consolidación',
+          'Inclusión Nick Jr. en Orange TV Libre como diferenciador vs competidores',
+          'Co-marketing kids con marcas Orange (Yoigo, Jazztel) — capilaridad multi-marca',
+          'Activaciones en parques infantiles y festivales kids patrocinados por Orange'
+        ],
+        competitor_deals: [
+          'Orange tiene Disney Junior + Cartoon Network + DreamWorks + BabyTV — cobertura completa',
+          'SkyShowtime en Orange TV Libre incluye contenido Nick (catálogo Paramount Pre-K)',
+          'Cartoon Network como amenaza directa kids 6-12'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Racionalización post-consolidación Orange elimina Nick Jr. priorizando Disney Junior.',
+            kpis: { reach: '-50% (de 26,8M a 13M)', fee_impact: '-30% fee revenue', arpu_loss: '~1,6M€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación 3 años, dial 68 mantenido, inclusión opcional en Orange TV Libre.',
+            kpis: { reach: '26,8M + 200k OTT Libre', fee_impact: '+5% IPC', arpu_loss: '+150k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack Paramount Familia destacado en captación post-consolidación, 8 marcas Orange.',
+            kpis: { reach: '26,8M + 700k OTT', fee_impact: '+18% YoY', arpu_loss: '+1,1M€/año' }
+          }
+        }
       }
     },
     mtv: {
       movistar: {
         priority: 'mantener cluster',
         deadline: 'Próxima renovación',
-        ask: 'Mantener cluster MTV España + MTV 00s + opcionalmente MTV Live.',
-        tactic: 'Pivot narrativo: vender MTV no como música lineal (perdida vs Spotify) sino como propiedad cross-media (festivales, EMAs, realities). Defender fee por cluster, no canal a canal.'
+        ask: 'Mantener cluster MTV España + MTV 00s + opcionalmente MTV Live. Defender fee por cluster, no canal a canal.',
+        tactic: 'Pivot narrativo: vender MTV no como música lineal (perdida vs Spotify) sino como propiedad cross-media (festivales, EMAs, realities Geordie Shore). Backbone del pack adulto joven junto a Comedy Central. Argumento: target 16-34 difícil de alcanzar vía lineal, MTV captura ambient viewing nocturno.',
+        fee_estimate: '0,06-0,12 €/sub/mes (cluster MTV completo)',
+        offers: [
+          'Cluster MTV (España + 00s + Live) fee único con descuento 20% vs canales individuales',
+          'Co-marketing festivales españoles (Mad Cool, Primavera Sound, FIB) con propiedad MTV',
+          'Premios MTV EMAs como evento Movistar Plus+ exclusivo (windowing 7 días)',
+          'Bundle MTV + Comedy Central como "Universo Paramount Adulto Joven" con descuento 15%'
+        ],
+        competitor_deals: [
+          'Sol Música, Mezzo Live: canales música nicho en Movistar (precio bajo, audiencia pequeña)',
+          'Spotify dominio absoluto música lineal — operadores reducen carteras música',
+          'Vevo en Pluto TV: alternativa gratuita FAST canal',
+          'Stingray Classica: canales clásicos premium en Movistar'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Movistar elimina MTV (o solo deja MTV España en pack premium) priorizando catálogo de cine y deportes.',
+            kpis: { reach: '-100% MTV 00s/Live', fee_impact: '-65% fee revenue cluster', arpu_loss: '~1,2M€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación cluster MTV completo a 3 años, fee plano (sin subida ni bajada).',
+            kpis: { reach: '17,9M subs', fee_impact: '0% YoY', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Cluster MTV + Comedy Central como pack adulto joven Paramount con activaciones festivales y EMAs exclusivos.',
+            kpis: { reach: '17,9M + activaciones', fee_impact: '+15% fee revenue', arpu_loss: '+520k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'reentrada',
         deadline: 'Q4 2026',
-        ask: 'Reentrada de MTV España junto a Nickelodeon como pack Paramount completo.',
-        tactic: 'No vender MTV solo: empaquetar siempre con Nick + Comedy Central. Si Vodafone solo quiere infantil, MTV out.'
+        ask: 'Reentrada de MTV España junto a Nickelodeon como pack Paramount completo (kids + adulto joven).',
+        tactic: 'No vender MTV solo: empaquetar siempre con Nick + Comedy Central. Si Vodafone solo quiere infantil, MTV out — fuerza la decisión global.',
+        fee_estimate: '0,04-0,08 €/sub/mes',
+        offers: [
+          'MTV España incluido en pack Paramount completo (Nick + Nick Jr. + MTV + Comedy)',
+          'No vender MTV aislado — sólo como parte del cluster',
+          'Activaciones festivales españoles con Vodafone como sponsor (cross-marketing)',
+          'Premios MTV EMAs como evento Vodafone TV (similar a Movistar pero contenido diferenciado)'
+        ],
+        competitor_deals: [
+          'Movie Music sustituye MTV en Vodafone desde ago 2025 — nicho menor',
+          'Vodafone tiene Sol Música como única opción música actualmente',
+          'Espacio MTV vacío en Vodafone TV — oportunidad si llega con Nick'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone consolida Movie Music como sustituto y no reincorpora MTV.',
+            kpis: { reach: '0', fee_impact: '-1,1M hogares', arpu_loss: '~280k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Reentrada MTV España en pack Paramount completo con Nick + Comedy.',
+            kpis: { reach: '1,1M hogares (penetración ~30%)', fee_impact: '+150k€/año', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Cluster MTV completo en pack base Vodafone TV + activaciones festivales sponsor Vodafone.',
+            kpis: { reach: '1,1M hogares (100%)', fee_impact: '+450k€/año', arpu_loss: '+380k€/año' }
+          }
+        }
       },
       digi: {
         priority: 'crecer',
         deadline: '2026',
-        ask: 'Mantener dial 120 y promover MTV 00s como secundario.',
-        tactic: 'Target 16-34 alineado con base joven de DIGI. Posicionar como "música que tu familia conoce" — atractivo para hogares low-cost.'
+        ask: 'Mantener dial 100 + promover MTV 00s como secundario.',
+        tactic: 'Target 16-34 alineado con base joven de DIGI. Posicionar como música que tu familia conoce — atractivo para hogares low-cost.',
+        fee_estimate: '0,04-0,08 €/sub/mes',
+        offers: [
+          'Cluster MTV + MTV 00s con fee escalonado',
+          'Promo cruzada en captación DIGI joven urbana',
+          'Co-marketing con marca DIGI en eventos Madrid, Barcelona',
+          'Activaciones gratuitas EMAs con visibilidad DIGI'
+        ],
+        competitor_deals: [
+          'DIGI tiene MTV España, MTV 00s, Sol Música, VinTV — parrilla música activa',
+          'No hay amenazas directas en su parrilla actual'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI elimina MTV priorizando música nacional low-cost.',
+            kpis: { reach: '0', fee_impact: '-217k subs', arpu_loss: '~120k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación, dial 100 mantenido, DIGI TV crece a 350k.',
+            kpis: { reach: '350k subs', fee_impact: '+15% YoY', arpu_loss: '+85k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI TV 500k+ con MTV destacado en captación joven.',
+            kpis: { reach: '500k+', fee_impact: '+45% vs 2025', arpu_loss: '+250k€/año' }
+          }
+        }
       },
       masorange: {
         priority: 'mantener cluster',
         deadline: 'Renovación 2026-2027',
-        ask: 'Mantener los 3 feeds (MTV España, MTV 00s, MTV Live).',
-        tactic: 'MASORANGE es el único que distribuye los 3 feeds. Defender esta exclusividad. Negociar co-branding en festivales españoles patrocinados por Orange.'
+        ask: 'Mantener los 3 feeds (MTV España, MTV 00s, MTV Live). MASORANGE es el único que distribuye los 3.',
+        tactic: 'Defender esta exclusividad de cluster completo. Negociar co-branding en festivales españoles patrocinados por Orange.',
+        fee_estimate: '0,05-0,10 €/sub/mes (cluster 3 feeds)',
+        offers: [
+          'Cluster MTV 3 feeds renovación 3 años con fee plano',
+          'Co-branding MTV Live en festivales Orange (sponsor histórico de Mad Cool)',
+          'Activaciones EMAs como evento Orange TV',
+          'Bundle MTV + Comedy en parrilla unificada post-consolidación'
+        ],
+        competitor_deals: [
+          'Orange tiene Sol Música, Qello Concerts, Mezzo — cartera amplia música',
+          'MASORANGE es el único que distribuye los 3 feeds MTV en España (diferenciador)',
+          'Stingray como add-on premium música'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Racionalización post-consolidación elimina MTV Live y MTV 00s, dejando solo MTV España.',
+            kpis: { reach: '26,8M solo MTV España', fee_impact: '-60% fee cluster', arpu_loss: '~720k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación cluster 3 feeds + co-branding festivales Orange.',
+            kpis: { reach: '26,8M subs', fee_impact: '+5% IPC', arpu_loss: '+80k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Cluster MTV completo + activaciones festivales sponsor Orange + bundle Paramount adulto.',
+            kpis: { reach: '26,8M + activaciones', fee_impact: '+20% YoY', arpu_loss: '+450k€/año' }
+          }
+        }
       }
     },
     comedycentral: {
       movistar: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
-        ask: 'Mantener dial 128 y posición en pack base.',
-        tactic: 'Backbone de oferta adulta-noche. South Park es retención de cartera. Defender fee actual, no abrir negociación a la baja.'
+        ask: 'Mantener dial 128 y posición en pack base. Defender South Park como activo de retención.',
+        tactic: 'Backbone de oferta adulta-noche. South Park es retención de cartera con audiencias consistentes nocturnas. Defender fee actual, no abrir negociación a la baja.',
+        fee_estimate: '0,08-0,14 €/sub/mes',
+        offers: [
+          'Renovación 3 años con fee plano + windowing exclusivo South Park 7 días pre-streaming',
+          'Bundle Comedy + MTV como Universo Paramount Adulto Joven',
+          'Stand-up specials producción local (LOL Spain) con co-marketing Movistar',
+          'Activaciones late-night con maratones temáticos (Friends, Big Bang Theory)'
+        ],
+        competitor_deals: [
+          'TNT, Warner TV: alternativas Warner para series adultas/comedia en Movistar',
+          'COSMO, Calle 13: comedia/romance Movistar (AMC pero salió ene 2025)',
+          'Netflix Specials: amenaza dominante stand-up premium global'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Movistar elimina Comedy Central priorizando Warner TV/TNT como cobertura comedia.',
+            kpis: { reach: '-100%', fee_impact: '-2,1M€/año', arpu_loss: 'pérdida total' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación 3 años, dial 128 mantenido, fee con IPC.',
+            kpis: { reach: '17,9M subs', fee_impact: '+4,5% IPC', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack Universo Paramount Adulto + windowing South Park + producción local stand-up.',
+            kpis: { reach: '17,9M + windowing', fee_impact: '+12% fee', arpu_loss: '+580k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'reentrada',
         deadline: 'Q4 2026',
         ask: 'Reentrada con bundle MTV + Comedy Central como pack entretenimiento adulto-joven.',
-        tactic: 'Vender ambos canales empaquetados. Comedy Central solo = bajo valor; con MTV se construye cluster coherente.'
+        tactic: 'Vender ambos canales empaquetados. Comedy Central solo = bajo valor; con MTV se construye cluster coherente.',
+        fee_estimate: '0,06-0,10 €/sub/mes (bundle MTV + Comedy)',
+        offers: [
+          'Bundle MTV + Comedy Central como pack único entretenimiento adulto',
+          'South Park windowing exclusivo Vodafone TV (diferenciador)',
+          'Stand-up specials co-produced Vodafone (eventos en vivo desde Madrid/BCN)',
+          'Activaciones late-night sponsor Vodafone'
+        ],
+        competitor_deals: [
+          'Warner TV en Vodafone: comedia clásica (Friends, Big Bang), competidor directo',
+          'TNT en Vodafone: series/comedia adulta',
+          'Vodafone añadió canales BBC Series, Drama, Top Gear sep 2025 — apetito comedia británica'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone consolida con Warner TV + BBC como cobertura comedia, sin Paramount.',
+            kpis: { reach: '0', fee_impact: '-1,1M hogares', arpu_loss: '~580k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Reentrada Comedy + MTV como bundle, pack opcional.',
+            kpis: { reach: '1,1M hogares (penetración ~30%)', fee_impact: '+220k€/año', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Bundle Paramount Adulto completo (Comedy + MTV) en pack base Vodafone TV con windowing exclusivo South Park.',
+            kpis: { reach: '1,1M hogares (100%)', fee_impact: '+680k€/año', arpu_loss: '+520k€/año' }
+          }
+        }
       },
       digi: {
         priority: 'ENTRAR (no presente)',
         deadline: 'Q3 2026 — clave',
-        ask: 'Primera distribución en DIGI con fee promocional año 1.',
-        tactic: 'DIGI necesita engrosar oferta adulta. Comedy Central + South Park = gancho para hogares jóvenes urbanos. Fee escalonado con bonus por suscriptores TV >300k.'
+        ask: 'Primera distribución en DIGI con fee promocional año 1. South Park como gancho.',
+        tactic: 'DIGI necesita engrosar oferta adulta. Comedy Central + South Park = gancho para hogares jóvenes urbanos. Fee escalonado con bonus por suscriptores TV >300k.',
+        fee_estimate: '0,06-0,10 €/sub/mes (año 1 promocional, escalado IPC)',
+        offers: [
+          'Año 1 con fee 40% descuento promocional para entrada en pack base',
+          'Bundle Comedy + MTV como pack adulto joven con descuento 20%',
+          'Activación South Park en captación: "primer mes gratis Comedy" para nuevos suscriptores DIGI TV',
+          'Cláusula MFN: cualquier mejora en otros operadores llega automáticamente a DIGI'
+        ],
+        competitor_deals: [
+          'DIGI tiene TNT, Warner TV, AXN — cobertura comedia adulta básica',
+          'DIGI no distribuye Comedy Central actualmente — hueco competitivo',
+          'Netflix Specials disponible vía app en deco DIGI'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI no acepta entrada (coste vs valor percibido), Comedy Central queda solo en Movistar + MASORANGE.',
+            kpis: { reach: '0', fee_impact: '-217k subs potenciales', arpu_loss: '~180k€/año oportunidad perdida' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Entrada DIGI con fee promocional, dial 130-135, DIGI TV crece a 350k.',
+            kpis: { reach: '350k subs (nueva distribución)', fee_impact: '+250k€/año revenue nuevo', arpu_loss: '+250k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Entrada bundle Comedy + MTV destacada en captación DIGI, 500k+ subs en 2027.',
+            kpis: { reach: '500k+ subs', fee_impact: '+520k€/año', arpu_loss: '+520k€/año' }
+          }
+        }
       },
       masorange: {
         priority: 'mantener',
         deadline: 'Renovación 2026-2027',
-        ask: 'Mantener dial 41 y posición en cine y series.',
-        tactic: 'Tras consolidación Orange, asegurar Comedy Central en parrilla unificada Orange + Yoigo + Jazztel. Defender fee.'
+        ask: 'Mantener dial 41 y posición en cine y series. Asegurar parrilla unificada post-consolidación.',
+        tactic: 'Tras consolidación Orange, asegurar Comedy Central en parrilla unificada Orange + Yoigo + Jazztel. Defender fee.',
+        fee_estimate: '0,07-0,12 €/sub/mes',
+        offers: [
+          'Renovación 3 años parrilla unificada post-consolidación',
+          'Bundle Comedy + MTV en pack adulto Orange TV',
+          'Stand-up specials con co-marketing Orange en festivales humor',
+          'Inclusión opcional Orange TV Libre como diferenciador'
+        ],
+        competitor_deals: [
+          'Orange tiene Warner TV, TNT, AXN, AMC, Star Channel — cartera comedia/series fuerte',
+          'Movie Music sustituye nicho cluster música/cine',
+          'Cobertura amplia comedia adulta en Orange'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Racionalización post-consolidación elimina Comedy Central priorizando Warner TV.',
+            kpis: { reach: '-50% (de 26,8M a 13M)', fee_impact: '-30% fee', arpu_loss: '~720k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación 3 años, dial 41 mantenido, parrilla unificada.',
+            kpis: { reach: '26,8M subs', fee_impact: '+5% IPC', arpu_loss: '+80k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Bundle Paramount Adulto en Orange TV principal + inclusión Orange TV Libre.',
+            kpis: { reach: '26,8M + 500k OTT', fee_impact: '+18% YoY', arpu_loss: '+580k€/año' }
+          }
+        }
       }
     }
   },
@@ -1299,53 +1774,289 @@ const ACTION_PLANS = {
     nickelodeon: {
       meo: {
         priority: 'CRÍTICO mantener',
-        deadline: 'Renovación cerrada dic 2025 — próxima 2026-2027',
-        ask: 'Mantener dial 44 y compromiso multianual (3 años) tras la renovación de dic 2025.',
-        tactic: 'MEO ya mostró reservas sobre coste Paramount. Defender fee sin subidas — la pérdida sería catastrófica (41,5% del mercado PT). Co-promo con marketing local.'
+        deadline: 'Renovación cerrada dic 2025 — próxima 2027-2028',
+        ask: 'Garantizar permanencia multianual tras renovación dic 2025. Mantener dial 44 y bundle Nick + Nick Jr. en pack base.',
+        tactic: 'MEO ya mostró reservas sobre coste Paramount en negociación 2024-2025. La pérdida sería catastrófica: 41,5% del mercado PT (4,8M paquetes). Defender fee sin subidas — co-promo con marketing local PT. Canal Panda (Dreamia, JV NOS+AMC) es la mayor amenaza local.',
+        fee_estimate: '0,20-0,28 €/sub/mes (premium en PT por escasez catálogo infantil internacional)',
+        offers: [
+          'Renovación 3 años post-2027 con incremento limitado (+IPC max 2%)',
+          'Co-marketing local con dobraje PT exclusivo (no feed global) — diferenciación vs Canal Panda',
+          'Bundle Nick + Nick Jr. como pack inseparable infantil Paramount',
+          'Activaciones eventos kids PT (festivales infantiles, cines MEO)'
+        ],
+        competitor_deals: [
+          'Canal Panda (Dreamia): líder absoluto audiencia infantil PT, top of mind 61% en adultos con niños vs 4% del 2º — amenaza máxima local',
+          'Panda Kids (Dreamia, lanzado jun 2025): canal hermano enfocado 6-9 años Geração Alpha',
+          'Disney Junior en MEO (dial 40): único Disney lineal PT tras cierre Disney Channel',
+          'MEO+SkyShowtime: integrado a 1€/mes durante 2 años para clientes M3/M4 (deal preferencial Paramount Group)'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'MEO no renueva en 2027 priorizando Canal Panda (JV con AMC) por mejor performance audiencia + coste local. Pérdida del 41,5% del mercado PT.',
+            kpis: { reach: '-100% MEO (1,99M subs perdidos)', fee_impact: '-5,2M€/año fee revenue PT', arpu_loss: 'catastrófica · 41,5% mercado PT perdido' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación 3 años post-2027 con incremento IPC limitado, dial 44 mantenido, bundle Nick + Nick Jr.',
+            kpis: { reach: '1,99M subs MEO', fee_impact: '+4,5% IPC', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Renovación con dobraje PT exclusivo, co-marketing local, bundle ampliado con SkyShowtime activaciones.',
+            kpis: { reach: '1,99M MEO + 800k SkyShowtime PT', fee_impact: '+15% fee revenue', arpu_loss: '+520k€/año' }
+          }
+        }
       },
       nos: {
-        priority: 'mantener',
-        deadline: 'Próxima renovación',
-        ask: 'Mantener dial 42 y posición en pack base.',
-        tactic: 'NOS es histórico distribuidor (desde 2005). Defender fee con plus por exclusividades de eventos (premiere series).'
+        priority: 'mantener · alta vigilancia',
+        deadline: 'Próxima renovación 2026-2027',
+        ask: 'Mantener dial 42 y posición en pack base NOS TV. Vigilar conflicto con Canal Panda (NOS es 50% propietario vía Dreamia).',
+        tactic: 'NOS es histórico distribuidor de Nickelodeon desde 2005, PERO tiene conflicto estructural: es 50% propietario de Canal Panda (Dreamia JV con AMC). Hay incentivo para priorizar Panda sobre Nick. Defender fee con plus por exclusividades de eventos + cláusula anti-degradación dial.',
+        fee_estimate: '0,18-0,25 €/sub/mes',
+        offers: [
+          'Renovación 3 años con cláusula anti-degradación dial (no mover Nick por debajo dial 50)',
+          'Premieres exclusivas series Nick en NOS (windowing 30 días) — diferenciación vs Canal Panda',
+          'Co-marketing con cines NOS (Cinemas NOS es propiedad del grupo) para activaciones kids',
+          'Producción local series con sello Nick para audiencia PT (mitigar ventaja Panda)'
+        ],
+        competitor_deals: [
+          'Canal Panda en NOS: dial 41, propiedad 50% NOS vía Dreamia — conflicto estructural',
+          'Panda Kids en NOS: dial 44, hermano Canal Panda',
+          'Cinemas NOS (propiedad NOS): potencial canal de activación cross-media',
+          'Disney Junior en NOS (dial 40)'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'NOS prioriza Canal Panda (su JV) y degrada Nick a dial 100+ o lo elimina del pack base.',
+            kpis: { reach: '-100% NOS (1,68M subs)', fee_impact: '-4,3M€/año fee revenue PT', arpu_loss: 'catastrófica · 34,9% mercado PT perdido' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación con dial 42 mantenido, fee plano, cláusula anti-degradación.',
+            kpis: { reach: '1,68M subs NOS', fee_impact: '0% YoY', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Premieres exclusivas + co-marketing Cinemas NOS + producción local — Nick refuerza posición vs Panda.',
+            kpis: { reach: '1,68M subs + cross-media', fee_impact: '+10% fee', arpu_loss: '+420k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
-        ask: 'Mantener dial 60 — empuje para promover Vodafone TV PT como destino familiar.',
-        tactic: 'Vodafone PT (20,3% cuota) está estable. Sin pretensiones expansivas, pero sí defender disponibilidad sin condiciones.'
+        ask: 'Mantener dial 60 — Vodafone TV PT estable como destino familiar.',
+        tactic: 'Vodafone PT 20,3% cuota Q1 2026, sin pretensiones expansivas pero apetito por catálogo familiar (incluye Disney+ sin coste). Defender disponibilidad sin condiciones.',
+        fee_estimate: '0,15-0,22 €/sub/mes',
+        offers: [
+          'Renovación con dial 60 mantenido y fee con IPC limitado',
+          'Bundle Nick + Nick Jr. con descuento conjunto 10%',
+          'Inclusión en pack família Vodafone TV PT',
+          'Co-marketing con Vodafone Smart TV box (kids mode)'
+        ],
+        competitor_deals: [
+          'Vodafone PT incluye Disney+ sin coste en pack TV — Paramount NO equivalente',
+          'Canal Panda en Vodafone (dial 41)',
+          'HBO Max y Prime Video también incluidos sin coste en Vodafone PT',
+          'Vodafone PT estrategia "todo incluido" en pack família'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone PT no renueva si coste sube — alternativa Canal Panda + Disney+ ya cubre infantil familiar.',
+            kpis: { reach: '-100% Vodafone PT (0,98M subs)', fee_impact: '-2,5M€/año', arpu_loss: 'pérdida 20,3% mercado PT' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 60 con fee IPC limitado.',
+            kpis: { reach: '0,98M subs', fee_impact: '+2% IPC limitado', arpu_loss: '+45k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Bundle Nick + Nick Jr. en pack família + co-marketing Smart TV kids mode.',
+            kpis: { reach: '0,98M subs + activaciones', fee_impact: '+8% fee', arpu_loss: '+180k€/año' }
+          }
+        }
       },
       digi: {
         priority: 'CRECER',
         deadline: '2026 continuo',
-        ask: 'Posición prominente en captación DIGI PT (única ganando cuota).',
-        tactic: 'DIGI PT ganó +0,4pp en Q1 2026 = motor de crecimiento. Negociar fee escalonado por suscriptor + co-marketing en campañas de captación.'
+        ask: 'Posición prominente en captación DIGI PT (única ganando cuota Q1 2026 con 3,2%).',
+        tactic: 'DIGI PT ganó +0,4pp en Q1 2026 = motor de crecimiento. Aprovechar política "sin subidas precios 2026" como argumento ARPU. Negociar fee escalonado por suscriptor + co-marketing en campañas de captación.',
+        fee_estimate: '0,12-0,18 €/sub/mes (escalado por crecimiento)',
+        offers: [
+          'Fee escalonado: 0,12€ primeros 200k subs, 0,15€ para 200-400k, 0,18€ para >400k',
+          'Bundle Nick + Nick Jr. con descuento 15% en captación DIGI PT',
+          'Co-marketing en campañas captación DIGI ("sin subida 2026 + entretenimiento kids Paramount")',
+          'Activaciones en zonas DIGI con cobertura fibra propia (Lisboa, Porto urbano)'
+        ],
+        competitor_deals: [
+          'DIGI PT añadió canales tras compra Nowo 2024 — apetito por catálogo',
+          'Canal Panda en DIGI también (necesario por cuota mercado)',
+          'DIGI PT política "sin subidas" 2026 vs MEO/NOS/Vodafone +2,2% — argumento captación'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI prioriza coste y elimina Nick priorizando catálogo más barato.',
+            kpis: { reach: '0', fee_impact: '-155k subs', arpu_loss: '~180k€/año oportunidad perdida' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación con fee escalonado, dial 53 mantenido, DIGI PT crece a 250k subs.',
+            kpis: { reach: '250k subs DIGI PT', fee_impact: '+30% YoY (crecimiento DIGI)', arpu_loss: '+150k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI PT 400k+ subs en 2027 con Nick destacado en captación + co-marketing.',
+            kpis: { reach: '400k+ subs', fee_impact: '+85% vs 2025', arpu_loss: '+520k€/año' }
+          }
+        }
       }
     },
     nickjr: {
       meo: {
         priority: 'CRÍTICO mantener',
         deadline: 'Renovación cerrada dic 2025',
-        ask: 'Mantener dial 53 y bundle con Nickelodeon.',
-        tactic: 'Bundle inseparable Nick + Nick Jr. Co-viewing parental = ARPU psicológico alto. Defender fee.'
+        ask: 'Mantener dial 53 + bundle inseparable con Nickelodeon.',
+        tactic: 'Bundle inseparable Nick + Nick Jr. Co-viewing parental = ARPU psicológico alto. Defender fee tras renovación dic 2025.',
+        fee_estimate: '0,18-0,24 €/sub/mes',
+        offers: [
+          'Bundle Nick + Nick Jr. renovación conjunta 3 años',
+          'Pack preescolar Paramount con dobraje PT exclusivo',
+          'Activaciones PAW Patrol en parques temáticos MEO',
+          'Co-marketing escolar (regreso a clases, vacaciones)'
+        ],
+        competitor_deals: [
+          'Canal Panda (preescolar 3-8) en MEO dial 41 — amenaza local máxima',
+          'Disney Junior en MEO dial 40',
+          'BabyTV en MEO (dial 40 share)',
+          'JimJam en MEO (dial 45)'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'MEO consolida con Canal Panda + Disney Junior como cobertura preescolar, elimina Nick Jr.',
+            kpis: { reach: '-100% MEO (1,99M)', fee_impact: '-4,8M€/año', arpu_loss: '41,5% mercado PT preescolar perdido' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación junto con Nick, dial 53 mantenido.',
+            kpis: { reach: '1,99M subs', fee_impact: '+IPC limitado', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Pack preescolar Paramount con dobraje PT + activaciones parques temáticos MEO.',
+            kpis: { reach: '1,99M + activaciones', fee_impact: '+12% fee', arpu_loss: '+380k€/año' }
+          }
+        }
       },
       nos: {
-        priority: 'mantener',
+        priority: 'mantener · alta vigilancia',
         deadline: 'Próxima renovación',
         ask: 'Mantener dial 46 — defender que NOS no priorice Panda Kids sobre Nick Jr.',
-        tactic: 'NOS tiene cerca a Panda Kids (canal local muy fuerte). Posicionar Nick Jr. como complemento internacional, no sustituto.'
+        tactic: 'NOS tiene Panda Kids (Dreamia JV) muy fuerte para target 6-9. Posicionar Nick Jr. como complemento internacional para 2-6, no sustituto. Cláusula anti-degradación dial.',
+        fee_estimate: '0,15-0,22 €/sub/mes',
+        offers: [
+          'Renovación 3 años con cláusula anti-degradación dial',
+          'Producción local series preescolar Nick para PT',
+          'Co-marketing con Cinemas NOS estrenos kids',
+          'Bundle Nick + Nick Jr. inseparable en NOS'
+        ],
+        competitor_deals: [
+          'Panda Kids (Dreamia, 50% NOS): canal hermano Canal Panda lanzado 2025 — amenaza directa estructural',
+          'Disney Junior en NOS',
+          'BabyTV cubre 0-2 años (complementario)',
+          'JimJam'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'NOS prioriza Panda Kids (su JV) y elimina Nick Jr.',
+            kpis: { reach: '-100% NOS (1,68M)', fee_impact: '-3,9M€/año', arpu_loss: '34,9% mercado PT preescolar perdido' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 46 mantenido, cláusula anti-degradación.',
+            kpis: { reach: '1,68M subs', fee_impact: '0% plano', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Producción local PT + bundle inseparable + co-marketing Cinemas NOS.',
+            kpis: { reach: '1,68M + activaciones', fee_impact: '+8% fee', arpu_loss: '+280k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
-        ask: 'Mantener disponibilidad.',
-        tactic: 'Vodafone PT estable, sin pretensiones expansivas.'
+        ask: 'Mantener disponibilidad dial 56.',
+        tactic: 'Vodafone PT estable, sin pretensiones expansivas pero apetito família.',
+        fee_estimate: '0,12-0,18 €/sub/mes',
+        offers: [
+          'Bundle Nick + Nick Jr. con descuento 10%',
+          'Inclusión en pack família Vodafone TV PT',
+          'Co-marketing kids mode Smart TV'
+        ],
+        competitor_deals: [
+          'Disney+ sin coste en Vodafone PT — alternativa preescolar Disney',
+          'Canal Panda + Panda Kids en Vodafone',
+          'Cobertura preescolar amplia ya'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone PT consolida con Canal Panda + Disney+ sin Paramount.',
+            kpis: { reach: '0', fee_impact: '-2,2M€/año', arpu_loss: '20,3% mercado perdido' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 56 con IPC limitado.',
+            kpis: { reach: '0,98M subs', fee_impact: '+2% IPC', arpu_loss: '+38k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Bundle Paramount preescolar destacado en pack família.',
+            kpis: { reach: '0,98M + activaciones', fee_impact: '+8% fee', arpu_loss: '+160k€/año' }
+          }
+        }
       },
       digi: {
         priority: 'CRECER',
         deadline: '2026',
-        ask: 'Promover Nick Jr. junto a Nick en captación.',
-        tactic: 'DIGI gana familias jóvenes — perfil ideal para Nick Jr. Bundle con Nick.'
+        ask: 'Promover Nick Jr. junto a Nick en captación DIGI PT.',
+        tactic: 'DIGI gana familias jóvenes — perfil ideal para Nick Jr. Bundle inseparable.',
+        fee_estimate: '0,10-0,16 €/sub/mes',
+        offers: [
+          'Bundle Nick + Nick Jr. con descuento 15%',
+          'Promo captación DIGI PT ("entretenimiento Paramount sin subida")',
+          'Co-marketing escolar regreso a clases',
+          'Activaciones zonas DIGI Lisboa, Porto'
+        ],
+        competitor_deals: [
+          'DIGI PT política sin subidas 2026',
+          'Canal Panda + Panda Kids en DIGI',
+          'Cobertura preescolar mínima en DIGI PT actual'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI prioriza coste y elimina Nick Jr.',
+            kpis: { reach: '0', fee_impact: '-145k subs', arpu_loss: '~140k€/año' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 52, DIGI PT crece a 250k.',
+            kpis: { reach: '250k subs', fee_impact: '+30% YoY', arpu_loss: '+120k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI PT 400k+ con bundle Nick + Nick Jr. destacado en captación.',
+            kpis: { reach: '400k+ subs', fee_impact: '+85% vs 2025', arpu_loss: '+380k€/año' }
+          }
+        }
       }
     },
     mtv: {
@@ -1353,25 +2064,136 @@ const ACTION_PLANS = {
         priority: 'RECUPERAR (no renovado 2025)',
         deadline: 'Q4 2026 — clave',
         ask: 'Reentrada con MTV Global como canal opcional (no obligatorio en pack base).',
-        tactic: 'MEO no renovó por coste. Negociar fee mínimo + reinclusión en pack opcional. Argumento: pérdida de 41,5% del mercado afecta la marca MTV en PT.'
+        tactic: 'MEO no renovó en 2025 por coste. Negociar fee mínimo + reinclusión en pack opcional. Argumento: pérdida de 41,5% del mercado PT afecta la marca MTV en PT y reduce alcance para anunciantes globales.',
+        fee_estimate: '0,03-0,06 €/sub/mes (mínimo viable)',
+        offers: [
+          'Fee mínimo año 1 (descuento 50%) para reentrada en pack opcional',
+          'MTV Global feed (sin dobraje PT) para reducir coste técnico',
+          'Activaciones festivales PT (MEO Sudoeste como sponsor principal Vodafone — oportunidad cross)',
+          'Bundle con SkyShowtime ya en MEO (deal 1€/mes) como pack adulto joven Paramount'
+        ],
+        competitor_deals: [
+          'MTV Portugal cesó 2025 al no renovar MEO',
+          'MTV Global feed (Polonia) sin dobraje PT en NOS, Vodafone, DIGI',
+          'NOS Alive, MEO Sudoeste, Super Bock Super Rock — festivales PT con sponsorship telco',
+          'MEO+SkyShowtime: 1€/mes 2 años — modelo de precio bajo Paramount Group'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'MEO no acepta reentrada — MTV queda fuera del 41,5% del mercado PT 3 años más.',
+            kpis: { reach: '0 en MEO', fee_impact: '-1,99M subs potenciales', arpu_loss: '~280k€/año oportunidad perdida' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Reentrada MTV Global en pack opcional con fee descuento año 1.',
+            kpis: { reach: '1,99M MEO (penetración ~10%)', fee_impact: '+85k€/año revenue nuevo', arpu_loss: '+85k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Reentrada MTV en pack base MEO + activaciones festivales PT con sponsorship MEO Sudoeste.',
+            kpis: { reach: '1,99M MEO (100%)', fee_impact: '+520k€/año', arpu_loss: '+520k€/año' }
+          }
+        }
       },
       nos: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
         ask: 'Mantener dial 120 (feed Polonia).',
-        tactic: 'Coste de distribución reducido (sin dobraje PT). Defender carrying fee mínimo.'
+        tactic: 'Coste de distribución reducido (sin dobraje PT). Defender carrying fee mínimo.',
+        fee_estimate: '0,03-0,06 €/sub/mes',
+        offers: [
+          'Renovación con fee plano',
+          'Bundle con activaciones festivales NOS (NOS Alive sponsor principal NOS)',
+          'Premios MTV EMAs como evento NOS TV'
+        ],
+        competitor_deals: [
+          'NOS Alive — sponsor principal NOS (oportunidad cross-marketing)',
+          'Mezzo, Stingray, VH1 — canales música nicho competidores',
+          'Spotify dominio absoluto música lineal'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'NOS elimina MTV priorizando música nicho local.',
+            kpis: { reach: '-100% NOS', fee_impact: '-1,68M subs', arpu_loss: '~180k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 120, fee plano.',
+            kpis: { reach: '1,68M subs', fee_impact: '0% YoY', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Activaciones festivales NOS + EMAs como evento — alineación cross-media.',
+            kpis: { reach: '1,68M + activaciones', fee_impact: '+10% fee', arpu_loss: '+85k€/año' }
+          }
+        }
       },
       vodafone: {
         priority: 'mantener',
         deadline: 'Próxima renovación',
-        ask: 'Mantener dial 120.',
-        tactic: 'Vodafone PT estable. Sin cambios.'
+        ask: 'Mantener dial 120 feed Polonia.',
+        tactic: 'Vodafone PT estable. Sin cambios significativos.',
+        fee_estimate: '0,03-0,06 €/sub/mes',
+        offers: [
+          'Renovación fee plano',
+          'Activaciones MEO Sudoeste (sponsor Vodafone)',
+          'Premios MTV EMAs Vodafone TV PT'
+        ],
+        competitor_deals: [
+          'MEO Sudoeste — festival sponsor Vodafone (cross-marketing posible)',
+          'Mezzo, Stingray en Vodafone'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'Vodafone PT no renueva MTV.',
+            kpis: { reach: '-100%', fee_impact: '-0,98M subs', arpu_loss: '~110k€/año perdidos' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación dial 120 fee plano.',
+            kpis: { reach: '0,98M subs', fee_impact: '0% YoY', arpu_loss: '0' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'Activaciones MEO Sudoeste cross-Vodafone + EMAs.',
+            kpis: { reach: '0,98M + activaciones', fee_impact: '+10% fee', arpu_loss: '+50k€/año' }
+          }
+        }
       },
       digi: {
         priority: 'mantener',
         deadline: '2026',
         ask: 'Mantener dial 120 + bundle con Nick.',
-        tactic: 'DIGI crece — MTV es complemento juvenil de la parrilla.'
+        tactic: 'DIGI PT crece — MTV es complemento juvenil de la parrilla.',
+        fee_estimate: '0,02-0,05 €/sub/mes',
+        offers: [
+          'Bundle MTV + Nick con descuento conjunto',
+          'Promo cruzada en captación DIGI PT'
+        ],
+        competitor_deals: [
+          'DIGI PT política sin subidas 2026 — argumento favorable para canales música low-cost',
+          'Cobertura música mínima en DIGI PT actual'
+        ],
+        scenarios: {
+          worst: {
+            label: 'Worst case',
+            description: 'DIGI elimina MTV (música nicho).',
+            kpis: { reach: '0', fee_impact: '-145k subs', arpu_loss: '~25k€/año' }
+          },
+          base: {
+            label: 'Base case (más probable)',
+            description: 'Renovación, DIGI PT 250k subs.',
+            kpis: { reach: '250k subs', fee_impact: '+30% YoY', arpu_loss: '+25k€/año' }
+          },
+          best: {
+            label: 'Best case',
+            description: 'DIGI PT 400k+ con MTV + Nick destacado.',
+            kpis: { reach: '400k+ subs', fee_impact: '+85% vs 2025', arpu_loss: '+85k€/año' }
+          }
+        }
       }
     }
   }
