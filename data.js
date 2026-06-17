@@ -2468,3 +2468,224 @@ const HISTORICAL_DATA = {
     }
   }
 };
+
+
+/* ════════════════════════════════════════════
+   ANÁLISIS DE AUDIENCIAS (Bloque 8)
+   Datos públicos: Barlovento (Kantar/Fifty5Blue) en ES, GfK/CAEM en PT
+   Fuentes citadas. Estimaciones marcadas claramente.
+══════════════════════════════════════════════ */
+const AUDIENCE_DATA = {
+  es: {
+    nickelodeon: {
+      share_total_tv: '~0,15-0,20%',
+      share_pay_tv: '~0,9-1,1%',
+      ranking_pay_tv: 'Top 20-25 entre temáticas pago',
+      reach_annual: '~6-7M espectadores únicos/año (estim.)',
+      target_share: 'Niños 4-12: 8-12% en franja tarde (17h-20h)',
+      trend: 'down',
+      trend_label: 'Caída moderada por canibalización OTT (Netflix Kids, Disney+, YouTube Kids)',
+      timeslot_strongest: '17h-20h (vuelta colegio)',
+      timeslot_weakest: 'Madrugada y mañana laborable',
+      top_content: ['SpongeBob (referente generacional)', 'PAW Patrol', 'The Loud House', 'Henry Danger', 'iCarly reposiciones'],
+      benchmark_competitors: [
+        { name:'Boing (TDT, Mediaset)', value:'0,8-0,9%', insight:'LÍDER infantil España 4-12 años · gratuita TDT', stronger:true },
+        { name:'Clan TVE (TDT, RTVE)', value:'0,7-0,8%', insight:'Referente preescolar/infantil gratuito · 2º infantil', stronger:true },
+        { name:'Disney Junior', value:'0,1% / 0,6% TV pago (puesto 29)', insight:'Por debajo de Nickelodeon en pago', stronger:false },
+        { name:'Cartoon Network', value:'~0,1%', insight:'Nicho dibujos animados Warner', stronger:false }
+      ],
+      key_insights: [
+        'Nickelodeon mantiene posición sólida entre temáticas pago infantiles (top 20-25 ranking Barlovento).',
+        'Por encima de Disney Junior (puesto 29 en 2025, 0,6% TV pago) — Disney Junior se relanza como Disney Channel el 1 abril 2026 reposicionado para 6-11 años, lo que aumenta competencia directa.',
+        'Boing (TDT gratuita) lidera infantil 4-12 años con 0,8-0,9% de cuota total — la gratuidad es el gran competidor en lineal.',
+        'Tendencia bajista de TV lineal infantil compensada parcialmente por co-viewing parental y momentos predecibles (tarde-noche).'
+      ],
+      source_note: 'Datos Barlovento Comunicación 2025 (Kantar/Fifty5Blue). Cifras específicas por canal de pago no se publican individualmente; rangos basados en informes mensuales y ranking de temáticas pago.',
+      sources: [
+        { label:'Barlovento Comunicación · Informe Anual 2025', url:'https://barloventocomunicacion.es/wp-content/uploads/2026/02/Analisis-Audiencia-TV_ano-2025_Barlovento.pdf' },
+        { label:'Cine y Tele · Análisis cierre 2025', url:'https://www.cineytele.com/2026/01/02/la-television-tradicional-cierra-2025-con-una-audiencia-del-93-de-la-poblacion/' },
+        { label:'Satcesc · Disney Channel vuelve TV pago', url:'https://satcesc.com/2026/03/06/disney-channel-vuelve-tv-pago/' }
+      ]
+    },
+    nickjr: {
+      share_total_tv: '~0,08-0,12%',
+      share_pay_tv: '~0,4-0,6%',
+      ranking_pay_tv: 'Top 30-40 entre temáticas pago',
+      reach_annual: '~4-5M espectadores únicos/año (estim.)',
+      target_share: 'Niños 2-6: 12-15% en mañana sábado (8h-11h)',
+      trend: 'flat',
+      trend_label: 'Estable por co-viewing parental obligado · resistente a OTT',
+      timeslot_strongest: 'Sábado mañana (8h-11h) · 17h-19h diario',
+      timeslot_weakest: 'Tarde-noche y madrugada',
+      top_content: ['PAW Patrol (#1)', 'Peppa Pig', 'Bluey', 'Blue\'s Clues', 'Dora la exploradora'],
+      benchmark_competitors: [
+        { name:'Disney Junior', value:'0,1% / 0,6% TV pago', insight:'Competidor directo preescolar · puesto 29 (Barlovento)', stronger:false },
+        { name:'Clan TVE preescolar (TDT)', value:'~0,3% target preescolar', insight:'Gratuito · alta penetración familias', stronger:true },
+        { name:'BabyTV (Disney)', value:'~0,05%', insight:'Cubre 0-2 años, complementario', stronger:false },
+        { name:'Cartoonito', value:'~0,05%', insight:'Cartoon Network preescolar · presencia baja', stronger:false }
+      ],
+      key_insights: [
+        'Nick Jr. tiene audiencia más nicho que Nickelodeon pero mayor engagement por co-viewing parental.',
+        'Mañana sábado (8h-11h) es la franja oro: cuota target preescolar 12-15%, padres comparten visionado y deciden la tarifa TV familiar.',
+        'Disney Junior relanzamiento como Disney Channel (abr 2026) deja hueco preescolar puro · oportunidad para Nick Jr. capturar audiencia 2-6 años más concentrada.',
+        'PAW Patrol es el ancla absoluta — equivalente al fenómeno Peppa Pig en términos de penetración familiar.'
+      ],
+      source_note: 'Datos Barlovento Comunicación 2025. Cuotas target preescolar son estimación basada en patrones de informes mensuales.',
+      sources: [
+        { label:'Barlovento Comunicación · Informe Anual 2025', url:'https://barloventocomunicacion.es/wp-content/uploads/2026/02/Analisis-Audiencia-TV_ano-2025_Barlovento.pdf' },
+        { label:'Datatonics · Informe mensual Barlovento abril 25', url:'https://datatonics.substack.com/p/297-informe-mensual-del-comportamiento' }
+      ]
+    },
+    mtv: {
+      share_total_tv: '~0,03-0,05%',
+      share_pay_tv: '~0,15-0,25%',
+      ranking_pay_tv: 'Top 50-60 entre temáticas pago',
+      reach_annual: '~3-4M espectadores únicos/año (estim.)',
+      target_share: 'Jóvenes 16-34: 0,4-0,8% en franja noche (22h-1h)',
+      trend: 'down',
+      trend_label: 'Declive estructural: Spotify dominó música lineal · realities mantienen audiencia',
+      timeslot_strongest: 'Noche (22h-1h) · ambient TV pisos compartidos',
+      timeslot_weakest: 'Mañana y sobremesa',
+      top_content: ['Geordie Shore', 'Acapulco Shore', 'Catfish', 'Premios MTV EMAs (evento anual)', 'Música pop/urbano latino'],
+      benchmark_competitors: [
+        { name:'Sol Música', value:'~0,02%', insight:'Música española · nicho menor', stronger:false },
+        { name:'Mezzo (clásica)', value:'~0,02%', insight:'Música clásica · target alto', stronger:false },
+        { name:'Stingray Classica', value:'~0,01%', insight:'Premium clásica add-on', stronger:false },
+        { name:'Spotify/YouTube (no lineal)', value:'>90% jóvenes', insight:'Dominador absoluto música · amenaza estructural', stronger:true }
+      ],
+      key_insights: [
+        'MTV España sufre el declive estructural más severo de toda la cartera Paramount: la música lineal está prácticamente muerta en target 16-34 (>90% usa Spotify/YouTube).',
+        'Realities (Geordie Shore, Acapulco Shore, Catfish) son los que sostienen la audiencia residual · ambient TV nocturno funciona.',
+        'EMAs (Premios MTV Europe) es el único evento anual capaz de generar pico de audiencia significativo · oportunidad de activación premium.',
+        'En el cluster MTV (España + MTV 00s + MTV Live), defender el paquete entero vs canal a canal es la jugada correcta — fee por cluster reduce el riesgo de canibalización.'
+      ],
+      source_note: 'Datos Barlovento Comunicación 2025 · informes mensuales. Cifras audiencia digital (Spotify/YouTube) provienen de IAB Spain Estudio Anual.',
+      sources: [
+        { label:'Barlovento Comunicación · Informe Anual 2025', url:'https://barloventocomunicacion.es/wp-content/uploads/2026/02/Analisis-Audiencia-TV_ano-2025_Barlovento.pdf' },
+        { label:'IAB Spain · Estudio Anual Vídeo', url:'https://iabspain.es/' }
+      ]
+    },
+    comedycentral: {
+      share_total_tv: '~0,08-0,12%',
+      share_pay_tv: '~0,4-0,6%',
+      ranking_pay_tv: 'Top 25-35 entre temáticas pago',
+      reach_annual: '~5-6M espectadores únicos/año (estim.)',
+      target_share: 'Adultos 25-40: 0,7-1,2% en late-night (22h-2h)',
+      trend: 'flat',
+      trend_label: 'Estable · South Park y Friends son retención de cartera consistente',
+      timeslot_strongest: 'Late-night 22h-2h · sofá tras trabajo',
+      timeslot_weakest: 'Mañana y sobremesa',
+      top_content: ['South Park (referente adulto)', 'Friends (reposiciones premium)', 'The Big Bang Theory', 'Comedy Central Live! stand-up', 'The Daily Show'],
+      benchmark_competitors: [
+        { name:'TNT (Warner)', value:'~0,15-0,2%', insight:'Comedia/series clásica · competidor directo Movistar', stronger:true },
+        { name:'Warner TV', value:'0,3% (puesto 4 pay)', insight:'Top temáticas pago Barlovento · gran competidor en comedia', stronger:true },
+        { name:'COSMO (NBC)', value:'~0,05%', insight:'Romance/comedia femenina · audiencia diferenciada', stronger:false },
+        { name:'Netflix Specials', value:'no medido lineal', insight:'Domina stand-up premium global · amenaza OTT', stronger:true }
+      ],
+      key_insights: [
+        'Comedy Central tiene audiencia más resiliente que MTV por el ancla South Park (target adulto fiel) y los clásicos Friends/Big Bang.',
+        'Warner TV ha capturado posición #4 en ranking Barlovento 2025 — gran competidor directo en cartera comedia/series.',
+        'Late-night (22h-2h) es la franja oro para target adulto joven · ambient TV decompresión post-trabajo.',
+        'Netflix Specials globales han debilitado la posición de stand-up lineal, pero los catálogos clásicos (Friends, Big Bang) son retención estructural.'
+      ],
+      source_note: 'Datos Barlovento Comunicación 2025. Warner TV con dato preciso (0,3%, puesto 4). Resto canales Paramount sin desglose público específico — rangos basados en patrones de informes mensuales.',
+      sources: [
+        { label:'Barlovento Comunicación · Informe Anual 2025', url:'https://barloventocomunicacion.es/wp-content/uploads/2026/02/Analisis-Audiencia-TV_ano-2025_Barlovento.pdf' },
+        { label:'Barlovento Comunicación · Publicaciones', url:'https://barloventocomunicacion.es/publicaciones/' }
+      ]
+    }
+  },
+  pt: {
+    nickelodeon: {
+      share_total_tv: '~0,3-0,5%',
+      share_pay_tv: '~0,8-1,2%',
+      ranking_pay_tv: 'Top 10-15 entre canais temáticos pago',
+      reach_annual: '~1,5-2,0M espectadores únicos/año (estim.)',
+      target_share: 'Crianças 4-12: 4-7% em tarde (17h-20h)',
+      trend: 'down',
+      trend_label: 'Perdeu liderança infantil em jul 2025 (Gloob assumiu) · Paramount renovou MEO dic 2025',
+      timeslot_strongest: '17h-20h (regresso da escola) · sábado de manhã',
+      timeslot_weakest: 'Noite profunda e madrugada',
+      top_content: ['SpongeBob', 'PAW Patrol (cross com Nick Jr.)', 'The Thundermans', 'Henry Danger', 'iCarly'],
+      benchmark_competitors: [
+        { name:'Canal Panda (Dreamia)', value:'LÍDER infantil PT', insight:'Top of mind 61% adultos com filhos vs 4% do 2º · ameaça máxima', stronger:true },
+        { name:'Panda Kids (Dreamia 2021)', value:'~0,3-0,5%', insight:'Hermano Canal Panda para 6-9 anos · refuerzo Dreamia', stronger:true },
+        { name:'Gloob (Globo)', value:'Líder infantil jul 2025', insight:'Canal brasileiro · assumiu liderança infantil PT', stronger:true },
+        { name:'Disney Junior', value:'~0,1%', insight:'Cobertura preescolar Disney · presença residual', stronger:false }
+      ],
+      key_insights: [
+        'AMENAZA ESTRUCTURAL: Canal Panda (Dreamia, JV NOS 50% + AMC 50%) é líder absoluto infantil PT com 61% top of mind vs 4% do 2º. NOS tem incentivo estrutural para priorizar Panda sobre Nickelodeon.',
+        'En julho 2025, Gloob (canal brasileiro Globo) assumiu liderança infantil PT, deslocando Nickelodeon. Mercado PT mais fragmentado que ES.',
+        'MEO renovou Nickelodeon + Nick Jr. em dic 2025 (positivo) mas NÃO renovou MTV Portugal/MTV Live/MTV 00 (saíram 31/12/2025).',
+        'Histórico de Nickelodeon PT mostra picos de 1,2% share total (junho 2020) — capacidade demonstrada de competir com generalistas em momentos peak.',
+        'No mercado LATAM/Brasil, Paramount FECHOU todos os seus canais lineares (Nick, Nick Jr., MTV, Comedy Central) em 31/12/2025 → estratégia D2C streaming. Em Iberia mantém-se distribuição linear (por enquanto).'
+      ],
+      source_note: 'GfK/CAEM (medição oficial PT). Histórico Nickelodeon PT: pico 1,2% share total (junho 2020). Cifras 2025 estimadas baseadas em padrões de informes públicos.',
+      sources: [
+        { label:'GfK Portugal · medição CAEM', url:'https://www.gfk.com/insights' },
+        { label:'CAEM · audiências TV Portugal', url:'https://www.caem.pt/' },
+        { label:'Espalha Factos · Nickelodeon PT recordes', url:'https://espalhafactos.com/2020/06/23/nickelodeon-portugal-festeja-recordes-de-audiencia/' },
+        { label:'MEO Fórum · renovação Nickelodeon dic 2025', url:'https://forum.meo.pt/tv-e-pacotes-9/canais-tv-boa-noticia-165975' }
+      ]
+    },
+    nickjr: {
+      share_total_tv: '~0,2-0,3%',
+      share_pay_tv: '~0,5-0,8%',
+      ranking_pay_tv: 'Top 20-25 entre canais temáticos pago',
+      reach_annual: '~1,0-1,5M espectadores únicos/año (estim.)',
+      target_share: 'Crianças 2-6: 8-11% em manhã sábado',
+      trend: 'flat',
+      trend_label: 'Estável por co-viewing parental · pressionado por Panda Kids (Dreamia)',
+      timeslot_strongest: 'Sábado manhã · 16h-18h diário',
+      timeslot_weakest: 'Noite e madrugada',
+      top_content: ['PAW Patrol (#1)', 'Peppa Pig', 'Bluey', 'Aprendizagem precoce'],
+      benchmark_competitors: [
+        { name:'Panda Kids (Dreamia)', value:'~0,3-0,5%', insight:'Hermano Canal Panda · ameaça directa estrutural NOS', stronger:true },
+        { name:'Canal Panda (preescolar)', value:'LÍDER 3-8 anos', insight:'Histórico líder · ameaça máxima', stronger:true },
+        { name:'Disney Junior', value:'~0,1%', insight:'Presença residual', stronger:false },
+        { name:'BabyTV', value:'~0,03%', insight:'Cubre 0-2 anos', stronger:false }
+      ],
+      key_insights: [
+        'AMENAZA ESTRUTURAL: Panda Kids (Dreamia JV NOS+AMC, lançado 2021) é o competidor directo de Nick Jr. para 6-9 anos · NOS prioriza Panda Kids por estrutura accionista.',
+        'Canal Panda é histórico líder preescolar 3-8 anos PT — Nick Jr. compete num mercado já dominado pelo grupo Dreamia.',
+        'Co-viewing parental sostiene audiência de Nick Jr. em momentos predecíveis (sábado manhã, tarde-noite).',
+        'PAW Patrol é o ancla absoluta para 2-6 anos · sem ele, Nick Jr. perderia diferenciação vs Panda Kids.'
+      ],
+      source_note: 'GfK/CAEM (medição oficial PT). Cifras Nick Jr. PT são estimação baseada em ranking de cabo CAEM e padrão de informes mensais.',
+      sources: [
+        { label:'GfK Portugal · medição CAEM', url:'https://www.gfk.com/insights' },
+        { label:'CAEM · audiências TV Portugal', url:'https://www.caem.pt/' },
+        { label:'Wikipedia · Panda Kids', url:'https://en.wikipedia.org/wiki/Panda_Kids' }
+      ]
+    },
+    mtv: {
+      share_total_tv: '~0,02-0,04%',
+      share_pay_tv: '~0,1-0,2%',
+      ranking_pay_tv: 'Fora do top 60 temáticos pago',
+      reach_annual: '~500-800k espectadores únicos/año (estim.)',
+      target_share: 'Jovens 16-34: 0,2-0,4% noite',
+      trend: 'down',
+      trend_label: 'CRÍTICA: MEO não renovou MTV Portugal/MTV Live/MTV 00 (saíram 31/12/2025) · sinal Global Polónia sem dobragem PT',
+      timeslot_strongest: 'Noite · ambient TV',
+      timeslot_weakest: 'Resto do dia',
+      top_content: ['Realities (Geordie Shore, Acapulco Shore)', 'Música pop e urbano', 'Premios MTV EMAs'],
+      benchmark_competitors: [
+        { name:'Spotify/YouTube (no lineal)', value:'>90% jovens PT', insight:'Dominador absoluto música · ameaça estrutural global', stronger:true },
+        { name:'Mezzo (clásica)', value:'~0,02%', insight:'Música nicho clásica', stronger:false },
+        { name:'Trace Urban (antes 2025)', value:'~0,01%', insight:'Música urbana · saiu MEO em 2025', stronger:false }
+      ],
+      key_insights: [
+        'SITUAÇÃO CRÍTICA: MEO saiu dos canais MTV Portugal/MTV Live/MTV 00 em 31/12/2025 — perda de 41,5% do mercado PT.',
+        'NOS também avisou a saída de MTV Live e MTV 00 em 31/12/2025. Apenas MTV Global (sinal Polónia sem dobragem) continua disponível.',
+        'No mercado LATAM, Paramount encerrou MTV Brasil em 31/12/2025 — sinal de transição global para D2C streaming via Paramount+ e Pluto TV.',
+        'EMAs (Premios MTV Europe) é único evento capaz de gerar alcance significativo · oportunidade de activação cross-media com festivais (MEO Sudoeste, NOS Alive).'
+      ],
+      source_note: 'GfK/CAEM (medição oficial PT). Cifras estimadas dado pequeno tamanho de audiência. Saída MEO/NOS de canais MTV confirmada por fontes oficiais (dezembro 2025).',
+      sources: [
+        { label:'MEO Fórum · saída canais MTV', url:'https://forum.meo.pt/tv-e-pacotes-9/possivel-saida-de-canais-do-meo-165532' },
+        { label:'MEO Fórum · atualização grelha 1 jan 2026', url:'https://forum.meo.pt/tv-e-pacotes-9/atualizacao-da-grelha-de-canais-meo-165974' },
+        { label:'Minha Operadora · Paramount LATAM encerramento', url:'https://www.minhaoperadora.com.br/2025/12/paramount-desativa-oito-canais-na-america-latina-e-reforca-aposta-no-streaming.html' }
+      ]
+    }
+  }
+};

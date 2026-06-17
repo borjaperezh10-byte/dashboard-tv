@@ -1502,6 +1502,101 @@ function renderParamountChannel(chKey) {
       </div>
     ` : ''}
 
+    ${(typeof AUDIENCE_DATA !== 'undefined' && AUDIENCE_DATA[CURRENT_COUNTRY] && AUDIENCE_DATA[CURRENT_COUNTRY][chKey]) ? (() => {
+      const aud = AUDIENCE_DATA[CURRENT_COUNTRY][chKey];
+      const trendIcon = aud.trend === 'down' ? '📉' : (aud.trend === 'up' ? '📈' : '➡️');
+      const trendColor = aud.trend === 'down' ? '#c0392b' : (aud.trend === 'up' ? '#1f9d55' : '#7a80a8');
+      return `
+        <div class="section-anchor">📊 Análisis de audiencia</div>
+        <div class="audience-intro">
+          Cuota de pantalla, alcance y posición competitiva del canal en ${CURRENT_COUNTRY === 'es' ? 'España (Barlovento Comunicación · Kantar/Fifty5Blue)' : 'Portugal (GfK · CAEM)'}.
+          Las cifras públicas individuales por canal de pago son escasas — los rangos provienen de los rankings agregados y patrones de los informes mensuales.
+        </div>
+
+        <div class="audience-kpis">
+          <div class="audience-kpi"><div class="audience-kpi-label">Cuota TV total</div><div class="audience-kpi-value">${aud.share_total_tv}</div></div>
+          <div class="audience-kpi"><div class="audience-kpi-label">Cuota TV pago</div><div class="audience-kpi-value">${aud.share_pay_tv}</div></div>
+          <div class="audience-kpi"><div class="audience-kpi-label">Ranking pago</div><div class="audience-kpi-value">${aud.ranking_pay_tv}</div></div>
+          <div class="audience-kpi"><div class="audience-kpi-label">Alcance anual</div><div class="audience-kpi-value">${aud.reach_annual}</div></div>
+          <div class="audience-kpi audience-kpi-wide"><div class="audience-kpi-label">Cuota en target</div><div class="audience-kpi-value">${aud.target_share}</div></div>
+        </div>
+
+        <div class="audience-trend" style="border-left:4px solid ${trendColor}">
+          <span style="font-size:18px">${trendIcon}</span>
+          <div><strong style="color:${trendColor}">Tendencia · </strong>${aud.trend_label}</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div>
+              <div class="card-title">Franjas horarias</div>
+              <div class="card-subtitle">Cuándo se ve más y cuándo menos</div>
+            </div></div>
+            <div class="audience-timeslot">
+              <div class="audience-timeslot-row"><span class="audience-timeslot-label strong">🔵 Fuerte:</span><span>${aud.timeslot_strongest||'—'}</span></div>
+              <div class="audience-timeslot-row"><span class="audience-timeslot-label weak">⚪ Débil:</span><span>${aud.timeslot_weakest||'—'}</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div>
+              <div class="card-title">Contenido top que mueve audiencia</div>
+              <div class="card-subtitle">Lo más visto del canal</div>
+            </div></div>
+            <div class="audience-content">
+              ${(aud.top_content||[]).map(c => `<span class="audience-content-tag">${c}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        ${aud.benchmark_competitors && aud.benchmark_competitors.length ? `
+          <div class="card">
+            <div class="card-head"><div>
+              <div class="card-title">Benchmark con competidores en el mismo segmento</div>
+              <div class="card-subtitle">Posición relativa por audiencia</div>
+            </div></div>
+            <table>
+              <thead>
+                <tr><th>Canal/competidor</th><th>Cuota</th><th>Lectura</th></tr>
+              </thead>
+              <tbody>
+                ${aud.benchmark_competitors.map(b => `
+                  <tr>
+                    <td style="font-weight:600">${b.name}</td>
+                    <td style="white-space:nowrap"><span class="op-tag" style="background:${b.stronger?'rgba(231,76,60,0.13)':'rgba(46,204,113,0.13)'}; color:${b.stronger?'#c0392b':'#1f9d55'}">${b.value}</span></td>
+                    <td style="font-size:12px; color:var(--text-secondary)">${b.insight}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        ` : ''}
+
+        ${aud.key_insights && aud.key_insights.length ? `
+          <div class="card" style="border-left:4px solid #0064ff">
+            <div class="card-head"><div><div class="card-title" style="color:#0064ff">💡 Lectura estratégica</div></div></div>
+            <ul class="audience-insights">
+              ${aud.key_insights.map(i => `<li>${i}</li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${aud.source_note || (aud.sources && aud.sources.length) ? `
+          <div class="audience-sources">
+            ${aud.source_note ? `<div class="audience-source-note">${aud.source_note}</div>` : ''}
+            ${aud.sources && aud.sources.length ? `
+              <div class="audience-sources-list">
+                <span class="audience-sources-label">Fuentes</span>
+                ${aud.sources.map((s,idx) => `
+                  <span class="audience-source-item">${s.url ? `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.label}</a>` : s.label}${idx < aud.sources.length-1 ? ' ·' : ''}</span>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        ` : ''}
+      `;
+    })() : ''}
+
     ${(renewal.strengths || renewal.weaknesses) ? `
       <div class="section-anchor">Análisis para renovación con operadores</div>
       <div class="renewal-block">
