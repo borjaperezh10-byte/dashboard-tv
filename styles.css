@@ -318,7 +318,6 @@ td.right,th.right{text-align:right}
 /* Canales: chip FAST y grupo audiovisual (Punto 5) */
 .channel-pill{flex-wrap:wrap; gap:6px}
 .channel-pill .ch-name{flex:1 1 auto; min-width:60px}
-.ch-fast{font-size:9px;font-weight:800;background:#0064ff;color:#fff;padding:1px 5px;border-radius:3px;letter-spacing:0.4px;flex-shrink:0}
 .ch-group{font-size:10px;color:var(--text-muted);font-style:italic;flex:0 0 100%;padding-top:2px;border-top:1px dotted var(--border);margin-top:2px}
 
 /* Evolución page - chart styling (Punto 2) */
@@ -408,3 +407,54 @@ td.right,th.right{text-align:right}
 .audience-source-item{font-size:11.5px;color:var(--text-secondary)}
 .audience-source-item a{color:var(--peak-blue);text-decoration:none;border-bottom:1px dotted var(--peak-blue)}
 .audience-source-item a:hover{border-bottom-style:solid}
+
+/* ════════ Framework de negociación (Bloque 9) ════════ */
+/* Term sheet */
+.termsheet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:20px}
+.termsheet-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:box-shadow 0.15s}
+.termsheet-card:hover{box-shadow:0 6px 16px rgba(0,10,60,0.06)}
+.termsheet-card-title{font-size:13px;font-weight:800;color:var(--text-primary);margin-bottom:10px;letter-spacing:-0.2px}
+.termsheet-note{font-size:11px;color:var(--text-muted);font-style:italic;margin-bottom:10px;line-height:1.4}
+.termsheet-table{width:100%;border-collapse:collapse}
+.termsheet-table td{padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top}
+.termsheet-table tr:last-child td{border-bottom:none}
+.termsheet-var{color:var(--text-muted);font-weight:600;width:42%;padding-right:10px!important}
+.termsheet-val{color:var(--text-primary);font-weight:500}
+.termsheet-val.editable{color:var(--peak-blue);font-style:italic}
+
+/* Fases timeline */
+.phases-timeline{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.phase-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;transition:box-shadow 0.15s}
+.phase-card:hover{box-shadow:0 4px 14px rgba(0,10,60,0.06)}
+.phase-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.phase-num{width:32px;height:32px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0}
+.phase-title{font-size:15px;font-weight:800;color:var(--text-primary);letter-spacing:-0.3px}
+.phase-subtitle{font-size:11.5px;color:var(--text-muted);font-style:italic}
+.phase-points{margin:0;padding-left:46px;display:flex;flex-direction:column;gap:6px;list-style:none}
+.phase-points li{font-size:12.5px;color:var(--text-secondary);line-height:1.5;position:relative;padding-left:14px}
+.phase-points li::before{content:'•';position:absolute;left:0;color:var(--peak-blue);font-weight:800}
+
+/* Recordatorio estratégico */
+.strategic-reminder{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(135deg,rgba(0,100,255,0.06),rgba(0,100,255,0.02));border:1px solid rgba(0,100,255,0.2);border-radius:12px;padding:18px 22px;margin-bottom:20px;font-size:13px;line-height:1.6;color:var(--text-primary)}
+.strategic-reminder-icon{font-size:24px;flex-shrink:0}
+
+/* Económicos term sheet por operador-canal */
+.econ-cps-row{display:flex;align-items:stretch;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.econ-cps{flex:1 1 100px;min-width:100px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-align:center}
+.econ-cps-open{border-top:3px solid #c0392b}
+.econ-cps-target{border-top:3px solid var(--peak-blue)}
+.econ-cps-walk{border-top:3px solid #1f9d55}
+.econ-cps-label{font-size:9.5px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+.econ-cps-value{font-size:21px;font-weight:900;color:var(--text-primary);letter-spacing:-0.6px;line-height:1}
+.econ-cps-sub{font-size:10px;color:var(--text-muted);margin-top:3px}
+.econ-cps-arrow{display:flex;align-items:center;color:var(--text-muted);font-size:18px;font-weight:700;flex:0 0 auto}
+.econ-table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.econ-table td{padding:9px 14px;border-bottom:1px solid var(--border);font-size:12.5px}
+.econ-table tr:last-child td{border-bottom:none}
+.econ-var{color:var(--text-muted);font-weight:600;width:42%}
+.econ-val{color:var(--text-primary);font-weight:500}
+.econ-lev{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:10px;text-transform:capitalize}
+.econ-lev.lev-high{background:rgba(46,204,113,0.13);color:#1f9d55}
+.econ-lev.lev-mid{background:rgba(0,100,255,0.1);color:var(--peak-blue)}
+.econ-lev.lev-low{background:rgba(255,166,0,0.15);color:#b07300}
+.econ-lev.lev-critical{background:rgba(231,76,60,0.13);color:#c0392b}

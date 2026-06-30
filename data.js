@@ -440,24 +440,24 @@ const OPERATORS_PT = {
 ══════════════════════════════════════════════ */
 const OTT_LIBRE = {
   'movistar-plus-lite': {
-    name: 'Movistar Plus+ (OTT)', parent: 'Telefónica España', color: '#019df4',
-    launched: '1 ago 2023 (reemplazó Movistar Plus+ Lite)', price_from: '9,99€/mes',
-    description: 'Plataforma OTT de Telefónica contratable sin ser cliente de fibra/móvil de Movistar. Acceso a 80+ canales (36 premium reales) vía app y web sin decodificador físico. Sin permanencia.',
+    name: 'Movistar Plus (OTT)', parent: 'Telefónica España', color: '#019df4',
+    launched: '1 ago 2023 · planes Libre relanzados 2025-2026', price_from: '4,99€/mes (desde)',
+    description: 'Plataforma OTT de Telefónica contratable sin ser cliente de fibra/móvil de Movistar, vía app y web sin decodificador físico y sin permanencia. Marca comercial: "Movistar Plus" (la marca premium integrada en fibra es "Movistar Plus+"). Tres planes: Gratuito, Libre Cine y Series (4,99€) y Libre Cine, Series y Deportes (9,99€).',
     subs_estimate: '3,9M IPTV+OTT (Q1 2026)',
-    subs_note: 'Telefónica reportó 3,9M suscriptores Movistar Plus+ (IPTV + OTT consolidados) a cierre marzo 2026. +86k netos Q1 2026. Crecimiento interanual 8,3%. En 2025 sumó +278k netos (récord). El OTT independiente es el motor de crecimiento.',
+    subs_note: 'Telefónica reportó 3,9M suscriptores Movistar Plus+ (IPTV + OTT consolidados) a cierre marzo 2026. +86k netos Q1 2026, crecimiento interanual 8,3%. En 2025 sumó +278k netos (récord). El OTT independiente y los nuevos planes Libre son el motor de captación de no-convergentes.',
     pricing_tiers: [
-      { label:'Plan Gratuito', price:'0€', detail:'Lanzado 26 mar 2026. Solo registro. Canal Cero! 24h + primeros episodios series + programas entretenimiento/deporte (sin partidos)' },
-      { label:'Plan Libre Cine y Series', price:'4,99€/mes', detail:'Lanzado may 2026. +70 canales (Discovery, AXN, Warner TV, TCM, NatGeo, CNN, BBC News). Sin fútbol' },
-      { label:'Plan completo', price:'9,99€/mes', detail:'80+ canales (36 premium), 700+ títulos VOD, 1 partido LaLiga EA + 1 Champions + 3 LaLiga Hypermotion (vía M+ Vamos) por jornada' },
-      { label:'Anual', price:'99,9€/año (8,33€/mes)', detail:'Equivalente al plan completo con descuento por pago anticipado' }
+      { label:'Plan Gratuito', price:'0€', detail:'Solo con tu correo. Selección de contenidos: programas de entretenimiento completos + primer capítulo de las series Originales M+. Sin permanencia' },
+      { label:'Plan Libre · Cine y Series', price:'4,99€/mes', detail:'NUEVO. Cine, series, documentales, entretenimiento y +70 canales de TV. Sin oferta deportiva. Sin permanencia' },
+      { label:'Plan Libre · Cine, Series y Deportes', price:'9,99€/mes', detail:'MÁS POPULAR. Todo lo anterior + 80 canales y deporte: el partido M+ de LaLiga EA, toda LaLiga Hypermotion, mejor partido de Champions y Premier, tenis, Euroliga, pádel, golf, rugby' },
+      { label:'miMovistar (convergente)', price:'desde 67€/mes', detail:'Fibra 600Mb + 2 líneas móviles + TV. Packs con todo el fútbol. Incluye FlixOlé y BBC Player; ampliable con SkyShowtime, HBO Max, Apple TV, Netflix o Disney+' }
     ],
-    devices: '2 dispositivos simultáneos',
+    devices: '2 reproducciones simultáneas',
     quality: 'Hasta 4K',
-    catalog: ['Series originales Movistar Plus+ (Yakarta, Poquita Fe, Querer, Anatomía de un instante)', 'Cine original Movistar', '#0 (canal propio entretenimiento)', '#Vamos (deporte)', 'LaLiga EA + Champions + LaLiga Hypermotion', 'BBC, Warner TV, TCM, NatGeo'],
-    channels_included: ['#Vamos', '#0', 'Movistar Cine', 'Movistar Series', 'Movistar Drama', 'Movistar Comedia', 'Movistar Acción', 'AXN', 'AXN Movies', 'TNT', 'Warner TV', 'TCM', 'Calle 13', 'COSMO', 'Sundance', 'Canal Hollywood', 'BBC Drama', 'BBC Food', 'BBC Top Gear', 'NatGeo', 'NatGeo Wild', 'Discovery', 'Historia', 'MTV España', 'MTV 00s', 'Nick Jr.', 'Nickelodeon'],
-    paramount_presence: 'Nickelodeon (dial 114), Nick Jr. (dial 113), MTV España (dial 120), MTV 00s (dial 121), Comedy Central, SkyShowtime 1 (dial 29 desde ene 2025) en Ficción Total',
+    catalog: ['Series Originales M+ (Yakarta, Poquita Fe, Querer, Anatomía de un instante, La Mesías)', 'Cine Original M+ y estrenos internacionales', 'Programas #0 (Ilustres Ignorantes, La Resistencia legacy)', 'Fútbol LaLiga EA + Hypermotion + Champions + Premier (plan Deportes)', 'BBC Player y FlixOlé (en miMovistar)'],
+    channels_included: ['#Vamos', '#0', 'Movistar Cine', 'Movistar Series', 'Movistar Drama', 'Movistar Comedia', 'Movistar Acción', 'AXN', 'AXN Movies', 'TNT', 'Warner TV', 'TCM', 'Calle 13', 'COSMO', 'Sundance', 'Canal Hollywood', 'BBC Drama', 'BBC Food', 'BBC Top Gear', 'NatGeo', 'NatGeo Wild', 'Discovery', 'Historia', 'CNN'],
+    paramount_presence: 'En el pack convergente miMovistar: SkyShowtime ampliable (dial 29 en Ficción Total desde ene 2025). Los canales lineales Nickelodeon, Nick Jr., MTV y Comedy Central se distribuyen en la TV de Movistar (IPTV), no en los planes Libre OTT.',
     competitors: ['Orange TV Libre (7,99€/mes)', 'SkyShowtime (5,99€/mes)', 'HBO Max', 'Netflix Estándar (12,99€/mes)', 'Disney+ Estándar (10,99€/mes)', 'Filmin (7,99€/mes)'],
-    source_url: 'https://www.movistarplus.es/planes/gratuito'
+    source_url: 'https://www.movistarplus.es/planes'
   },
   'orange-tv-libre': {
     name: 'Orange TV Libre', parent: 'MASORANGE', color: '#ff7900',
@@ -2449,6 +2449,27 @@ const HISTORICAL_DATA = {
       MASORANGE: [13.0, 13.5, 14.0, 14.5, 15.0, 16.0, 18.0, 19.5, 21.0, 22.5, 23.3],  // crece con consolidación
       Vodafone:  [27.0, 25.0, 23.0, 22.0, 22.5, 22.5, 21.0, 19.5, 18.5, 17.5, 16.7],  // pierde Zegona
       DIGI:      [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  1.5,  2.5,  3.4]   // emerge fin 2023, crece rápido
+    },
+    // Líneas móviles por operador (M) - estimación basada en cuotas CNMC
+    mobile_by_op: {
+      Movistar:  [17.5, 17.3, 17.2, 17.0, 16.8, 16.6, 16.9, 17.2, 17.5, 17.7, 17.9],
+      MASORANGE: [19.0, 19.8, 20.5, 21.4, 22.0, 22.8, 23.8, 24.7, 25.6, 26.2, 26.8],  // suma Orange+MásMóvil consolidado
+      Vodafone:  [14.5, 14.0, 13.5, 13.0, 12.5, 12.0, 11.7, 11.4, 11.1, 11.0, 10.95],  // declive sostenido
+      DIGI:      [1.2, 1.9, 2.7, 3.5, 4.2, 5.0, 5.8, 6.4, 6.9, 7.3, 7.58]   // crecimiento sostenido
+    },
+    // Líneas fibra por operador (M) - estimación basada en cuotas CNMC FTTH
+    ftth_by_op: {
+      Movistar:  [2.6, 3.3, 3.9, 4.4, 4.7, 5.0, 5.2, 5.4, 5.6, 5.75, 5.88],
+      MASORANGE: [1.2, 1.9, 2.5, 3.0, 3.3, 3.6, 3.8, 4.0, 4.15, 4.2, 4.27],
+      Vodafone:  [0.4, 1.0, 1.8, 2.4, 2.7, 2.9, 3.0, 3.0, 2.95, 2.98, 3.0],  // incl. Finetwork desde 2026
+      DIGI:      [0.05, 0.2, 0.45, 0.7, 1.0, 1.4, 1.8, 2.1, 2.4, 2.6, 2.75]
+    },
+    // Clientes TV por operador (M) - estimación basada en cuota TV × total
+    tv_by_op: {
+      Movistar:  [3.67, 4.10, 4.39, 4.51, 4.30, 4.25, 4.10, 3.94, 3.75, 3.74, 3.90],
+      MASORANGE: [0.82, 0.92, 1.01, 1.06, 1.07, 1.15, 1.26, 1.33, 1.39, 1.46, 1.50],
+      Vodafone:  [1.70, 1.70, 1.66, 1.61, 1.60, 1.62, 1.47, 1.33, 1.22, 1.14, 1.08],
+      DIGI:      [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.10, 0.16, 0.217]
     }
   },
   pt: {
@@ -2465,6 +2486,27 @@ const HISTORICAL_DATA = {
       NOS:        [36.5, 36.0, 36.0, 35.8, 35.5, 35.3, 35.0, 35.0, 35.0, 34.9, 34.9],
       Vodafone:   [21.0, 21.0, 21.0, 21.0, 21.0, 21.0, 21.5, 21.5, 21.2, 20.8, 20.3],
       DIGI:       [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0,  2.0,  3.2]   // entra 2024
+    },
+    // Líneas móviles por operador (M) - estimación ANACOM
+    mobile_by_op: {
+      MEO:        [5.1, 5.2, 5.3, 5.4, 5.5, 5.5, 5.6, 5.6, 5.7, 5.7, 5.7],
+      NOS:        [4.4, 4.4, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5],
+      Vodafone:   [4.3, 4.3, 4.2, 4.1, 4.0, 3.9, 3.7, 3.5, 3.3, 3.2, 3.1],  // declive
+      DIGI:       [0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5]   // entra ~2021
+    },
+    // Líneas fibra por operador (M) - estimación ANACOM
+    ftth_by_op: {
+      MEO:        [0.95, 1.05, 1.2, 1.35, 1.5, 1.7, 1.85, 1.95, 2.05, 2.15, 2.2],
+      NOS:        [0.8, 0.9, 1.05, 1.2, 1.35, 1.5, 1.6, 1.7, 1.78, 1.82, 1.85],
+      Vodafone:   [0.3, 0.4, 0.5, 0.6, 0.7, 0.85, 0.95, 1.0, 1.04, 1.06, 1.08],
+      DIGI:       [0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.05, 0.08, 0.12, 0.15, 0.17]
+    },
+    // Clientes TV por operador (M) - estimación cuota × total ANACOM
+    tv_by_op: {
+      MEO:        [1.51, 1.57, 1.62, 1.67, 1.72, 1.81, 1.88, 1.91, 1.94, 1.96, 1.99],
+      NOS:        [1.31, 1.33, 1.37, 1.40, 1.42, 1.48, 1.54, 1.58, 1.61, 1.64, 1.67],
+      Vodafone:   [0.76, 0.78, 0.80, 0.82, 0.84, 0.88, 0.95, 0.97, 0.97, 0.98, 0.98],
+      DIGI:       [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.10, 0.145]
     }
   }
 };
@@ -2686,6 +2728,218 @@ const AUDIENCE_DATA = {
         { label:'MEO Fórum · atualização grelha 1 jan 2026', url:'https://forum.meo.pt/tv-e-pacotes-9/atualizacao-da-grelha-de-canais-meo-165974' },
         { label:'Minha Operadora · Paramount LATAM encerramento', url:'https://www.minhaoperadora.com.br/2025/12/paramount-desativa-oito-canais-na-america-latina-e-reforca-aposta-no-streaming.html' }
       ]
+    }
+  }
+};
+
+
+/* ════════════════════════════════════════════
+   FRAMEWORK DE NEGOCIACIÓN DE CARRIAGE (Bloque 9)
+   Basado en el documento "Negociación de Carriage de Canales de TV"
+   Perspectiva: licenciante (Paramount, vendedor) frente a operador
+══════════════════════════════════════════════ */
+const NEGOTIATION_FRAMEWORK = {
+  // Plantilla de term sheet con las variables clave
+  term_sheet_sections: [
+    {
+      title: '1. Partes y objeto',
+      icon: '📋',
+      rows: [
+        { variable: 'Licenciante', value: 'Paramount Networks EMEAA', editable: false },
+        { variable: 'Operador', value: '[ Movistar / Orange / Vodafone / DIGI ]', editable: true },
+        { variable: 'Canales objeto', value: '[ Listar feeds SD/HD/4K del portfolio ]', editable: true },
+        { variable: 'Territorio', value: 'España / Portugal', editable: false },
+        { variable: 'Idiomas / versiones', value: '[ Doblaje local / feed global ]', editable: true }
+      ]
+    },
+    {
+      title: '2. Económicos',
+      icon: '💰',
+      note: 'Variables económicas clave con apertura / objetivo / walk-away. Cifras rellenadas según research; el resto plantilla.',
+      rows: [
+        { variable: 'Modelo de precio', value: 'CPS (coste por suscriptor/mes) · híbrido con mínimo garantizado', editable: false },
+        { variable: 'CPS apertura', value: 'ver por operador-canal', editable: false },
+        { variable: 'Mínimo garantizado anual', value: 'ver por operador-canal', editable: false },
+        { variable: 'Escalador anual', value: 'IPC + 1-2% (objetivo) · IPC plano (walk-away)', editable: false },
+        { variable: 'Tramos por penetración (tiering)', value: '[ Definir umbrales de bonus/descuento ]', editable: true },
+        { variable: 'Cláusula MFN', value: 'Most Favored Nation: igualar mejor trato a comparables', editable: false },
+        { variable: 'Condiciones de pago', value: '[ 30-60 días · EUR ]', editable: true },
+        { variable: 'Derecho de auditoría', value: '[ Anual · coste a cargo del auditor salvo desviación >5% ]', editable: true }
+      ]
+    },
+    {
+      title: '3. Empaquetado y distribución',
+      icon: '📦',
+      rows: [
+        { variable: 'Paquete (básico/premium/add-on)', value: '[ Objetivo: pack base, no opcional ]', editable: true },
+        { variable: 'Penetración mínima comprometida', value: '[ % de la base del operador ]', editable: true },
+        { variable: 'Definición de "abonado"', value: 'Direccionable que recibe el canal (no solo activado)', editable: false },
+        { variable: 'Bundling del portfolio', value: 'En bloque (locomotora arrastra los débiles)', editable: false },
+        { variable: 'Posición EPG / nº de canal', value: '[ Defender dial actual o contiguo a competidores ]', editable: true }
+      ]
+    },
+    {
+      title: '4. Alcance de derechos',
+      icon: '🎬',
+      rows: [
+        { variable: 'Lineal', value: 'Incluido', editable: false },
+        { variable: 'Catch-up / VOD', value: '[ Moneda de cambio · precio asociado ]', editable: true },
+        { variable: 'Start-over / Restart', value: '[ Negociable ]', editable: true },
+        { variable: 'Network PVR', value: '[ Negociable ]', editable: true },
+        { variable: 'Plataformas (STB/app/web/móvil/Smart TV)', value: '[ Multi-plataforma estándar ]', editable: true },
+        { variable: 'Calidades (SD/HD/4K)', value: '[ HD base · 4K premium ]', editable: true },
+        { variable: 'Exclusividad', value: 'Reservar como moneda de alto valor', editable: false }
+      ]
+    },
+    {
+      title: '5. Marketing y publicidad',
+      icon: '📣',
+      rows: [
+        { variable: 'Fondos de co-marketing', value: '[ Pedir alto · ceder a cambio de penetración ]', editable: true },
+        { variable: 'Compromisos de promoción en plataforma', value: '[ Destacados, banners, EPG ]', editable: true },
+        { variable: 'Inventario publicitario local', value: '[ Quién vende/monetiza ]', editable: true },
+        { variable: 'Reparto de ingresos publicitarios', value: '[ % licenciante / operador ]', editable: true }
+      ]
+    },
+    {
+      title: '6. Legal',
+      icon: '⚖️',
+      rows: [
+        { variable: 'Duración', value: '3 años (objetivo · lineal a la baja exige plazos cortos)', editable: false },
+        { variable: 'Renovación', value: '[ Negociada, no automática ]', editable: true },
+        { variable: 'Ventanas de renegociación', value: '[ Anual sobre penetración/escalador ]', editable: true },
+        { variable: 'Terminación y cambio de control', value: '[ Cláusula change-of-control ]', editable: true },
+        { variable: 'Blackout al vencimiento', value: 'Ir a negro solo si BATNA creíble', editable: false },
+        { variable: 'Ley aplicable', value: '[ España / Portugal ]', editable: true }
+      ]
+    }
+  ],
+  // Guion de negociación por fases
+  phases: [
+    {
+      num: '0',
+      title: 'Preparación',
+      subtitle: 'Antes de sentarse',
+      color: '#7a80a8',
+      points: [
+        'Define tu BATNA: ¿qué haces si no hay acuerdo? (OTT directo vía Pluto TV / Paramount+, otro operador, ir a negro).',
+        'Calcula tu ZOPA y tu walk-away price por cada variable económica.',
+        'Reúne munición de datos: share, alcance, tiempo de visionado, afinidad con el target (Kantar/Barlovento, GfK/CAEM).',
+        'Mapea el portfolio: identifica la locomotora (Nickelodeon para familias) y los canales débiles que quieres colocar (MTV).',
+        'Anticipa la munición del operador: su escala, alternativas para rellenar el hueco, su visionado real y la tendencia estructural a la baja del lineal.'
+      ]
+    },
+    {
+      num: '1',
+      title: 'Apertura y encuadre',
+      subtitle: 'Anclar alto',
+      color: '#0064ff',
+      points: [
+        'Abre con el paquete completo (todos los canales), no con el canal estrella suelto. Anclas alto y das margen para "ceder".',
+        'Encuadra el valor en términos del operador: retención de abonados y reducción de churn, no solo audiencia.',
+        'Pide más de lo que esperas (CPS, posición EPG, fondos de marketing) para tener moneda de cambio.'
+      ]
+    },
+    {
+      num: '2',
+      title: 'Exploración de intereses',
+      subtitle: 'Escuchar y sondear',
+      color: '#00a8a8',
+      points: [
+        'Identifica qué le duele de verdad al operador: ¿target infantil/familiar?, ¿completar paquete?, ¿diferenciarse de un rival?',
+        'Sondea su sensibilidad: ¿le preocupa más el coste fijo o el CPS?, ¿quiere exclusividad?',
+        'Usa preguntas, no afirmaciones, para no quemar palancas pronto.'
+      ]
+    },
+    {
+      num: '3',
+      title: 'Intercambio de concesiones',
+      subtitle: 'Nunca ceder gratis',
+      color: '#ffa600',
+      points: [
+        'Nunca cedas gratis: cada concesión va atada a una contrapartida ("bajo el CPS si subes a básico y mantienes la penetración mínima").',
+        'Usa el bundling como palanca central: el must-have (Nickelodeon) arrastra a los débiles (MTV).',
+        'Reserva la exclusividad y los derechos no lineales (VOD, catch-up) como monedas de cambio de alto valor.',
+        'Mantén el mínimo garantizado casi innegociable: es tu red de seguridad.'
+      ]
+    },
+    {
+      num: '4',
+      title: 'Cierre',
+      subtitle: 'Blindar definiciones',
+      color: '#1f9d55',
+      points: [
+        'Cierra primero los principios económicos (modelo, CPS, mínimo, duración) y luego el detalle legal.',
+        'Blinda las definiciones ambiguas: sobre todo "abonado" y los comparables del MFN.',
+        'Fija ventanas de renegociación realistas dadas las tendencias del lineal.'
+      ]
+    },
+    {
+      num: '5',
+      title: 'Si no hay acuerdo',
+      subtitle: 'Blackout creíble',
+      color: '#c0392b',
+      points: [
+        'La amenaza de blackout solo funciona si es creíble y llega en el timing de renovación.',
+        'Ten preparado el plan B comunicado internamente (OTT directo, otro operador) antes de tensar la cuerda.',
+        'Evita faroles que no puedas sostener: el operador dominante los detecta.'
+      ]
+    }
+  ],
+  strategic_reminder: 'En carriage manda quien tiene una alternativa creíble al "ir a negro". Tu poder real = fuerza de marca × escasez de alternativas para el operador × credibilidad de tu BATNA. Las tendencias a la baja del lineal (infantil y música) erosionan tu leverage cada año: tenlo en cuenta en duración y escaladores.'
+};
+
+/* ════════════════════════════════════════════
+   ECONÓMICOS DE NEGOCIACIÓN POR OPERADOR-CANAL (Bloque 9)
+   CPS (coste por suscriptor/mes), mínimo garantizado, escalador, MFN, BATNA
+   Indexado: NEGOTIATION_ECONOMICS[country][channel][operator]
+   Cifras de apertura/objetivo/walk-away estimadas para uso interno.
+══════════════════════════════════════════════ */
+const NEGOTIATION_ECONOMICS = {
+  es: {
+    nickelodeon: {
+      movistar:  { cps_open:'0,28 €', cps_target:'0,22 €', cps_walkaway:'0,18 €', min_guarantee:'2,8 M€/año', escalator:'IPC +1,5%', mfn:'Sí · vs Vodafone y Orange', bundle:'Nick + Nick Jr. en bloque', batna:'Pluto TV + Paramount+ directo · alcance ya alto', leverage:'alto' },
+      vodafone:  { cps_open:'0,18 €', cps_target:'0,15 €', cps_walkaway:'0,12 €', min_guarantee:'1,0 M€/año', escalator:'IPC plano año 1', mfn:'Sí · cláusula de igualación', bundle:'Nick + Nick Jr. + SkyShowtime', batna:'Seguir ausente · presión vía marca', leverage:'medio' },
+      digi:      { cps_open:'0,20 €', cps_target:'0,16 €', cps_walkaway:'0,14 €', min_guarantee:'0,5 M€/año', escalator:'escalonado por hitos de subs', mfn:'No (operador en crecimiento)', bundle:'Nick + Nick Jr. con bonus crecimiento', batna:'Crecer vía otros · DIGI necesita catálogo', leverage:'medio-alto' },
+      masorange: { cps_open:'0,24 €', cps_target:'0,19 €', cps_walkaway:'0,16 €', min_guarantee:'2,0 M€/año', escalator:'IPC +1%', mfn:'Sí · vs Movistar', bundle:'Nick + Nick Jr. en Orange TV + OTT Libre', batna:'OTT Libre integra SkyShowtime · sinergia', leverage:'alto' }
+    },
+    nickjr: {
+      movistar:  { cps_open:'0,20 €', cps_target:'0,16 €', cps_walkaway:'0,13 €', min_guarantee:'1,8 M€/año', escalator:'IPC +1,5%', mfn:'Atado a Nickelodeon', bundle:'Inseparable de Nickelodeon', batna:'Co-viewing parental = alto valor retención', leverage:'alto' },
+      vodafone:  { cps_open:'0,14 €', cps_target:'0,11 €', cps_walkaway:'0,09 €', min_guarantee:'0,7 M€/año', escalator:'IPC plano año 1', mfn:'Atado a Nickelodeon', bundle:'Inseparable de Nickelodeon', batna:'Pack familiar incompleto sin él', leverage:'medio' },
+      digi:      { cps_open:'0,15 €', cps_target:'0,12 €', cps_walkaway:'0,10 €', min_guarantee:'0,4 M€/año', escalator:'escalonado por subs', mfn:'No', bundle:'Con Nickelodeon, posición consecutiva', batna:'Captación familias jóvenes urbanas', leverage:'medio' },
+      masorange: { cps_open:'0,18 €', cps_target:'0,14 €', cps_walkaway:'0,12 €', min_guarantee:'1,4 M€/año', escalator:'IPC +1%', mfn:'Atado a Nickelodeon', bundle:'Inseparable + parrilla unificada', batna:'Pack pre-escolar premium opcional', leverage:'alto' }
+    },
+    mtv: {
+      movistar:  { cps_open:'0,10 €', cps_target:'0,07 €', cps_walkaway:'0,05 €', min_guarantee:'0,6 M€/año', escalator:'plano', mfn:'No', bundle:'Cluster MTV (España+00s+Live)', batna:'Débil · lineal música casi muerto', leverage:'bajo' },
+      vodafone:  { cps_open:'0,07 €', cps_target:'0,05 €', cps_walkaway:'0,04 €', min_guarantee:'0,2 M€/año', escalator:'plano', mfn:'No', bundle:'Empaquetar con Nick + Comedy', batna:'Muy débil · solo entra con bundle', leverage:'muy bajo' },
+      digi:      { cps_open:'0,06 €', cps_target:'0,05 €', cps_walkaway:'0,04 €', min_guarantee:'0,15 M€/año', escalator:'plano', mfn:'No', bundle:'Con Nick', batna:'Débil', leverage:'bajo' },
+      masorange: { cps_open:'0,09 €', cps_target:'0,07 €', cps_walkaway:'0,05 €', min_guarantee:'0,5 M€/año', escalator:'plano', mfn:'No · único con los 3 feeds', bundle:'Cluster 3 feeds exclusivo', batna:'Exclusividad de cluster es la palanca', leverage:'medio-bajo' }
+    },
+    comedycentral: {
+      movistar:  { cps_open:'0,14 €', cps_target:'0,11 €', cps_walkaway:'0,08 €', min_guarantee:'1,0 M€/año', escalator:'IPC plano', mfn:'No', bundle:'South Park como ancla', batna:'Catálogo Friends/Big Bang = retención', leverage:'medio' },
+      vodafone:  { cps_open:'0,10 €', cps_target:'0,08 €', cps_walkaway:'0,06 €', min_guarantee:'0,4 M€/año', escalator:'IPC plano', mfn:'No', bundle:'Con MTV (cluster adulto joven)', batna:'Warner TV/BBC cubren comedia', leverage:'bajo-medio' },
+      digi:      { cps_open:'0,10 €', cps_target:'0,07 €', cps_walkaway:'0,06 €', min_guarantee:'0,25 M€/año', escalator:'IPC plano', mfn:'No', bundle:'Entrada nueva · South Park gancho', batna:'DIGI sin Comedy Central hoy · hueco', leverage:'medio' },
+      masorange: { cps_open:'0,12 €', cps_target:'0,10 €', cps_walkaway:'0,07 €', min_guarantee:'0,8 M€/año', escalator:'IPC +1%', mfn:'No', bundle:'En cine y series Orange', batna:'Parrilla unificada post-consolidación', leverage:'medio' }
+    }
+  },
+  pt: {
+    nickelodeon: {
+      meo:        { cps_open:'0,30 €', cps_target:'0,24 €', cps_walkaway:'0,20 €', min_guarantee:'2,5 M€/año', escalator:'IPC máx +2%', mfn:'Sí', bundle:'Nick + Nick Jr. doblaje PT', batna:'MEO = 41,5% mercado · pérdida catastrófica', leverage:'medio (renovado dic 2025)' },
+      nos:        { cps_open:'0,25 €', cps_target:'0,20 €', cps_walkaway:'0,17 €', min_guarantee:'2,0 M€/año', escalator:'IPC plano', mfn:'Sí · cláusula anti-degradación dial', bundle:'Nick + Nick Jr.', batna:'CONFLICTO: NOS posee 50% Canal Panda', leverage:'bajo (conflicto estructural)' },
+      vodafone:   { cps_open:'0,22 €', cps_target:'0,18 €', cps_walkaway:'0,15 €', min_guarantee:'1,0 M€/año', escalator:'IPC máx', mfn:'Sí', bundle:'Nick + Nick Jr. pack família', batna:'Disney+ incluido sin coste · alternativa', leverage:'medio' },
+      digi:       { cps_open:'0,18 €', cps_target:'0,14 €', cps_walkaway:'0,12 €', min_guarantee:'0,3 M€/año', escalator:'escalonado por subs', mfn:'No', bundle:'Nick + Nick Jr. en captación', batna:'DIGI única ganando cuota · motor', leverage:'medio-alto' }
+    },
+    nickjr: {
+      meo:        { cps_open:'0,24 €', cps_target:'0,18 €', cps_walkaway:'0,15 €', min_guarantee:'1,8 M€/año', escalator:'IPC máx +2%', mfn:'Atado a Nickelodeon', bundle:'Inseparable de Nickelodeon', batna:'Co-viewing parental alto valor', leverage:'medio' },
+      nos:        { cps_open:'0,20 €', cps_target:'0,16 €', cps_walkaway:'0,13 €', min_guarantee:'1,4 M€/año', escalator:'IPC plano', mfn:'Anti-degradación dial', bundle:'Inseparable de Nickelodeon', batna:'CONFLICTO: Panda Kids es de NOS/Dreamia', leverage:'bajo (conflicto)' },
+      vodafone:   { cps_open:'0,16 €', cps_target:'0,13 €', cps_walkaway:'0,11 €', min_guarantee:'0,6 M€/año', escalator:'IPC máx', mfn:'Atado a Nickelodeon', bundle:'Inseparable', batna:'Cobertura preescolar ya amplia', leverage:'medio' },
+      digi:       { cps_open:'0,14 €', cps_target:'0,11 €', cps_walkaway:'0,09 €', min_guarantee:'0,25 M€/año', escalator:'escalonado', mfn:'No', bundle:'Con Nickelodeon en captación', batna:'Captación familias jóvenes', leverage:'medio' }
+    },
+    mtv: {
+      meo:        { cps_open:'0,06 €', cps_target:'0,04 €', cps_walkaway:'0,03 €', min_guarantee:'0,15 M€/año', escalator:'plano', mfn:'No', bundle:'MTV Global pack opcional', batna:'CRÍTICO: MEO ya salió 31/12/2025', leverage:'muy bajo (recuperar)' },
+      nos:        { cps_open:'0,05 €', cps_target:'0,04 €', cps_walkaway:'0,03 €', min_guarantee:'0,12 M€/año', escalator:'plano', mfn:'No', bundle:'MTV Global feed Polonia', batna:'NOS salió MTV Live/00 31/12/2025', leverage:'muy bajo' },
+      vodafone:   { cps_open:'0,05 €', cps_target:'0,04 €', cps_walkaway:'0,03 €', min_guarantee:'0,12 M€/año', escalator:'plano', mfn:'No', bundle:'MTV Global', batna:'Débil', leverage:'bajo' },
+      digi:       { cps_open:'0,04 €', cps_target:'0,03 €', cps_walkaway:'0,02 €', min_guarantee:'0,08 M€/año', escalator:'plano', mfn:'No', bundle:'Con Nick', batna:'Débil', leverage:'bajo' }
     }
   }
 };

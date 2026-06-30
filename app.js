@@ -283,20 +283,30 @@ function renderHome() {
 
     <div class="kpi-grid">
       ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_mobile_lines', fieldId:'mkt.mob', sourceUrl:m.data_source_url })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mkt.ftth', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Líneas fibra', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mkt.ftth', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Clientes TV (4 operadores foco)', value:fmt(opsList.reduce((s,o)=>s+(o.tv_subs||0),0), 2), unit:'M', accent:'pink', subtitle:'Suma de clientes TV pago', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'tv_clients', fieldId:'mkt.tv', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Top 4 cuota móvil', value:fmt(m.top4_mobile), unit:'%', accent:'movistar', subtitle:'Top 3: '+fmt(m.top3_mobile)+'%', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'top4_share', fieldId:'mkt.top4', sourceUrl:m.data_source_url })}
     </div>
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota FTTH (% líneas)</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota líneas fibra (%)</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.ftth_share, colorMap)}
       </div>
       <div class="card">
         <div class="card-head"><div><div class="card-title">Cuota líneas móviles</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.mobile_share, colorMap)}
       </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Cuota clientes TV (% sobre 4 operadores foco)</div><div class="card-subtitle">${m.last_data_date} · TV pago · suma operadores foco = 100%</div></div></div>
+      ${(() => {
+        const totTV = opsList.reduce((s,o)=>s+(o.tv_subs||0),0);
+        const tvShare = {};
+        opsList.forEach(o => { tvShare[o.name] = totTV>0 ? +(o.tv_subs/totTV*100).toFixed(1) : 0; });
+        return renderHBarChart(tvShare, colorMap);
+      })()}
     </div>
 
     <div class="card">
@@ -326,7 +336,7 @@ function renderHome() {
           <div class="card-head"><div><div class="card-title" style="color:${op.color}">${op.name}</div><div class="card-subtitle">${op.tagline}</div></div></div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px">
             <div><div style="font-size:10.5px; color:var(--text-muted); text-transform:uppercase">Móvil</div><div style="font-size:18px; font-weight:800">${fmt(op.mobile_lines)}<span style="font-size:11px; color:var(--text-muted)"> M</span></div></div>
-            <div><div style="font-size:10.5px; color:var(--text-muted); text-transform:uppercase">FTTH</div><div style="font-size:18px; font-weight:800">${fmt(op.ftth_lines)}<span style="font-size:11px; color:var(--text-muted)"> M</span></div></div>
+            <div><div style="font-size:10.5px; color:var(--text-muted); text-transform:uppercase">Fibra</div><div style="font-size:18px; font-weight:800">${fmt(op.ftth_lines)}<span style="font-size:11px; color:var(--text-muted)"> M</span></div></div>
             <div><div style="font-size:10.5px; color:var(--text-muted); text-transform:uppercase">TV subs</div><div style="font-size:18px; font-weight:800">${op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M'}</div></div>
             <div><div style="font-size:10.5px; color:var(--text-muted); text-transform:uppercase">Canales</div><div style="font-size:18px; font-weight:800">${op.channels_count}</div></div>
           </div>
@@ -444,45 +454,72 @@ function renderEvolution() {
     <div class="page-header">
       <div class="page-title-block">
         <h1>Evolución — ${countryName}</h1>
-        <div class="page-desc">Series anuales 2016–2026 de líneas móviles, FTTH, clientes TV pago y cuota TV por operador. Fuente: ${m.regulator} (informes anuales).</div>
+        <div class="page-desc">Series anuales 2016–2026 de líneas móviles, fibra, clientes TV pago y desglose por operador. Fuente: ${m.regulator} (informes anuales). Las series por operador son estimaciones basadas en cuotas oficiales.</div>
       </div>
       <div class="page-meta"><span class="page-meta-dot"></span> 10 años · ${m.regulator}</div>
     </div>
 
+    <div class="section-anchor">📱 Líneas móviles</div>
     <div class="grid-2">
       <div class="card chart-card">
         <div class="card-head"><div>
-          <div class="card-title">Líneas móviles totales</div>
+          <div class="card-title">Total mercado</div>
           <div class="card-subtitle">Evolución 2016-2026 · ${m.regulator}</div>
         </div></div>
         <div class="chart-wrap">${lineChart(h.mobile_lines, '#0064ff', 'M')}</div>
       </div>
-
       <div class="card chart-card">
         <div class="card-head"><div>
-          <div class="card-title">Líneas FTTH</div>
+          <div class="card-title">Por operador (4 foco)</div>
+          <div class="card-subtitle">Líneas móviles · M · estimación sobre cuotas</div>
+        </div></div>
+        <div class="chart-wrap">${h.mobile_by_op ? multiLineChart(h.mobile_by_op, opColors, 'M') : '<div style="color:var(--text-muted); padding:20px">Sin desglose</div>'}</div>
+      </div>
+    </div>
+
+    <div class="section-anchor">🔵 Líneas fibra</div>
+    <div class="grid-2">
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Total mercado</div>
           <div class="card-subtitle">Evolución 2016-2026 · crecimiento explosivo de fibra</div>
         </div></div>
         <div class="chart-wrap">${lineChart(h.ftth_lines, '#ffa600', 'M')}</div>
       </div>
+      <div class="card chart-card">
+        <div class="card-head"><div>
+          <div class="card-title">Por operador (4 foco)</div>
+          <div class="card-subtitle">Líneas fibra · M · estimación sobre cuotas</div>
+        </div></div>
+        <div class="chart-wrap">${h.ftth_by_op ? multiLineChart(h.ftth_by_op, opColors, 'M') : '<div style="color:var(--text-muted); padding:20px">Sin desglose</div>'}</div>
+      </div>
     </div>
 
+    <div class="section-anchor">📺 Clientes TV pago</div>
     <div class="grid-2">
       <div class="card chart-card">
         <div class="card-head"><div>
-          <div class="card-title">Clientes TV pago</div>
-          <div class="card-subtitle">Evolución 2016-2026 · ${CURRENT_COUNTRY==='es' ? 'pico ~7,3M en 2019, declive por canibalización OTT' : 'crecimiento sostenido, 4,8M hoy'}</div>
+          <div class="card-title">Total mercado</div>
+          <div class="card-subtitle">Evolución 2016-2026 · ${CURRENT_COUNTRY==='es' ? 'pico ~7,3M en 2019, declive por OTT' : 'crecimiento sostenido, 4,8M hoy'}</div>
         </div></div>
         <div class="chart-wrap">${lineChart(h.tv_subs, '#ec3c8d', 'M')}</div>
       </div>
-
       <div class="card chart-card">
         <div class="card-head"><div>
-          <div class="card-title">Cuota TV por operador (%)</div>
-          <div class="card-subtitle">Evolución 2016-2026 · operadores foco</div>
+          <div class="card-title">Por operador (4 foco)</div>
+          <div class="card-subtitle">Clientes TV · M · estimación sobre cuotas</div>
         </div></div>
-        <div class="chart-wrap">${multiLineChart(h.tv_share_by_op, opColors, '%')}</div>
+        <div class="chart-wrap">${h.tv_by_op ? multiLineChart(h.tv_by_op, opColors, 'M') : '<div style="color:var(--text-muted); padding:20px">Sin desglose</div>'}</div>
       </div>
+    </div>
+
+    <div class="section-anchor">📊 Cuota TV por operador</div>
+    <div class="card chart-card">
+      <div class="card-head"><div>
+        <div class="card-title">Cuota TV por operador (%)</div>
+        <div class="card-subtitle">Evolución 2016-2026 · % sobre 4 operadores foco</div>
+      </div></div>
+      <div class="chart-wrap">${multiLineChart(h.tv_share_by_op, opColors, '%')}</div>
     </div>
 
     <div class="card">
@@ -529,14 +566,14 @@ function renderMarket() {
 
     <div class="kpi-grid">
       ${kpi({ label:'Líneas móviles', value:fmt(m.total_mobile_lines), unit:'M', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_mobile_lines', fieldId:'mk.mob', sourceUrl:m.data_source_url })}
-      ${kpi({ label:'Líneas FTTH', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mk.ftth', sourceUrl:m.data_source_url })}
+      ${kpi({ label:'Líneas fibra', value:fmt(m.total_ftth_lines), unit:'M', accent:'gold', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_ftth_lines', fieldId:'mk.ftth', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Banda ancha fija', value:fmt(m.total_bb_lines), unit:'M', accent:'pink', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'total_bb_lines', fieldId:'mk.bb', sourceUrl:m.data_source_url })}
       ${kpi({ label:'Top 3 cuota móvil', value:fmt(m.top3_mobile), unit:'%', accent:'movistar', subtitle:'Top 4 con DIGI: '+fmt(m.top4_mobile)+'%', date:m.last_data_date+' · pub. '+m.last_pub_date, tipKey:'top3_share', fieldId:'mk.top3', sourceUrl:m.data_source_url })}
     </div>
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><div><div class="card-title">Cuota FTTH</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
+        <div class="card-head"><div><div class="card-title">Cuota líneas fibra</div><div class="card-subtitle">${m.last_data_date} · ${m.regulator} · pub. ${m.last_pub_date}</div></div></div>
         ${renderHBarChart(m.ftth_share, colorMap)}
       </div>
       <div class="card">
@@ -586,14 +623,11 @@ function renderOperator(key) {
       ${catObj.items.map(ch => {
         const info = getChannelInfo(ch.name);
         const group = info ? info.group : null;
-        const isFast = info && info.fast;
-        const fastOn = info && info.fastOn ? info.fastOn : '';
         return `
-        <div class="channel-pill ${catClass[catObj.cat]||''}" ${group ? `data-tip="${group}${fastOn?' · FAST en '+fastOn.replace(/"/g,'&quot;'):''}"` : ''}>
+        <div class="channel-pill ${catClass[catObj.cat]||''}" ${group ? `data-tip="${group.replace(/"/g,'&quot;')}"` : ''}>
           ${ch.dial ? `<span class="dial">${ch.dial}</span>` : ''}
           <span class="ch-name">${ch.name}</span>
-          ${isFast ? `<span class="ch-fast" title="Disponible en FAST">FAST</span>` : ''}
-          ${group ? `<span class="ch-group">${group.length > 22 ? group.slice(0,21)+'…' : group}</span>` : ''}
+          ${group ? `<span class="ch-group">${group.length > 24 ? group.slice(0,23)+'…' : group}</span>` : ''}
         </div>
       `}).join('')}
     </div>
@@ -647,7 +681,7 @@ function renderOperator(key) {
         const pctTV   = totTV>0   ? (op.tv_subs / totTV * 100).toFixed(1) : '—';
         return `
           ${kpi({ label:'Líneas móvil', value:fmt(op.mobile_lines), unit:'M', accent:key, subtitle:pctMob+'% sobre 4 ops foco', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'mobile_lines_op', fieldId:`${key}.mob`, sourceUrl:op.data_source_url })}
-          ${kpi({ label:'Líneas FTTH', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:pctFTTH+'% sobre 4 ops foco', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'ftth_lines_op', fieldId:`${key}.ftth`, sourceUrl:op.data_source_url })}
+          ${kpi({ label:'Líneas fibra', value:fmt(op.ftth_lines), unit:'M', accent:key, subtitle:pctFTTH+'% sobre 4 ops foco', date:op.data_period||(market.last_data_date+' · '+market.regulator), tipKey:'ftth_lines_op', fieldId:`${key}.ftth`, sourceUrl:op.data_source_url })}
           ${kpi({ label:'Clientes TV', value:op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M', accent:key, subtitle:pctTV+'% sobre 4 ops foco · '+op.tv_brand, date:op.data_period||market.last_data_date, tipKey:'tv_subs_op', fieldId:`${key}.tv`, sourceUrl:op.data_source_url })}
           ${kpi({ label:'Canales TV', value:op.channels_count, accent:key, subtitle:'parrilla actual', date:op.data_period||market.last_data_date, tipKey:'channels_count_op', fieldId:`${key}.ch` })}
           ${kpi({ label:'ARPU convergente ~', value:op.arpu_convergente, unit:'€/mes', accent:'pink', subtitle:'estimación pública', date:op.data_period||market.last_data_date, tipKey:'arpu', fieldId:`${key}.arpu`, sourceUrl:op.data_source_url })}
@@ -782,6 +816,56 @@ function renderRenovacionesHub() {
         `;
       }).join('')}
     </div>
+
+    ${typeof NEGOTIATION_FRAMEWORK !== 'undefined' ? `
+      <div class="section-anchor">📑 Marco de negociación de carriage</div>
+      <div class="action-intro">
+        Term sheet y guion de negociación aplicables a todos los operadores. Perspectiva: Paramount como licenciante (vendedor).
+        Los campos marcados con <code>[ ]</code> se rellenan en la mesa; las variables económicas clave (CPS, mínimo, escalador, MFN) están precargadas por operador-canal en cada ficha.
+      </div>
+
+      <div class="termsheet-grid">
+        ${NEGOTIATION_FRAMEWORK.term_sheet_sections.map(sec => `
+          <div class="termsheet-card">
+            <div class="termsheet-card-title">${sec.icon} ${sec.title}</div>
+            ${sec.note ? `<div class="termsheet-note">${sec.note}</div>` : ''}
+            <table class="termsheet-table">
+              ${sec.rows.map(r => `
+                <tr>
+                  <td class="termsheet-var">${r.variable}</td>
+                  <td class="termsheet-val ${r.editable ? 'editable' : ''}">${r.value}</td>
+                </tr>
+              `).join('')}
+            </table>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="section-anchor">🤝 Guion de negociación por fases</div>
+      <div class="phases-timeline">
+        ${NEGOTIATION_FRAMEWORK.phases.map(ph => `
+          <div class="phase-card" style="border-left:4px solid ${ph.color}">
+            <div class="phase-head">
+              <span class="phase-num" style="background:${ph.color}">${ph.num}</span>
+              <div>
+                <div class="phase-title">${ph.title}</div>
+                <div class="phase-subtitle">${ph.subtitle}</div>
+              </div>
+            </div>
+            <ul class="phase-points">
+              ${ph.points.map(p => `<li>${p}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+
+      ${NEGOTIATION_FRAMEWORK.strategic_reminder ? `
+        <div class="strategic-reminder">
+          <div class="strategic-reminder-icon">♟️</div>
+          <div><strong>Recordatorio estratégico.</strong> ${NEGOTIATION_FRAMEWORK.strategic_reminder}</div>
+        </div>
+      ` : ''}
+    ` : ''}
   `;
 }
 
@@ -872,6 +956,49 @@ function renderRenovacionesOperador(opKey) {
             ${p.competitor_deals.map(c => `<li>${c}</li>`).join('')}
           </ul>
         </div>` : ''}
+
+        ${(typeof NEGOTIATION_ECONOMICS !== 'undefined' && NEGOTIATION_ECONOMICS[CURRENT_COUNTRY] && NEGOTIATION_ECONOMICS[CURRENT_COUNTRY][chK] && NEGOTIATION_ECONOMICS[CURRENT_COUNTRY][chK][opKey]) ? (() => {
+          const ec = NEGOTIATION_ECONOMICS[CURRENT_COUNTRY][chK][opKey];
+          const levClass = (l) => {
+            const s = (l||'').toLowerCase();
+            if (s.includes('alto')) return 'lev-high';
+            if (s.includes('muy bajo') || s.includes('conflicto')) return 'lev-critical';
+            if (s.includes('bajo')) return 'lev-low';
+            return 'lev-mid';
+          };
+          return `
+          <div class="action-section">
+            <div class="action-section-title">💶 Term sheet económico (posición de negociación)</div>
+            <div class="econ-cps-row">
+              <div class="econ-cps econ-cps-open">
+                <div class="econ-cps-label">CPS apertura</div>
+                <div class="econ-cps-value">${ec.cps_open}</div>
+                <div class="econ-cps-sub">por sub/mes</div>
+              </div>
+              <div class="econ-cps-arrow">→</div>
+              <div class="econ-cps econ-cps-target">
+                <div class="econ-cps-label">CPS objetivo</div>
+                <div class="econ-cps-value">${ec.cps_target}</div>
+                <div class="econ-cps-sub">realista</div>
+              </div>
+              <div class="econ-cps-arrow">→</div>
+              <div class="econ-cps econ-cps-walk">
+                <div class="econ-cps-label">Walk-away</div>
+                <div class="econ-cps-value">${ec.cps_walkaway}</div>
+                <div class="econ-cps-sub">mínimo</div>
+              </div>
+            </div>
+            <table class="econ-table">
+              <tr><td class="econ-var">Mínimo garantizado</td><td class="econ-val">${ec.min_guarantee}</td></tr>
+              <tr><td class="econ-var">Escalador anual</td><td class="econ-val">${ec.escalator}</td></tr>
+              <tr><td class="econ-var">Cláusula MFN</td><td class="econ-val">${ec.mfn}</td></tr>
+              <tr><td class="econ-var">Estrategia de bundle</td><td class="econ-val">${ec.bundle}</td></tr>
+              <tr><td class="econ-var">BATNA (alternativa)</td><td class="econ-val">${ec.batna}</td></tr>
+              <tr><td class="econ-var">Leverage (poder negociador)</td><td class="econ-val"><span class="econ-lev ${levClass(ec.leverage)}">${ec.leverage}</span></td></tr>
+            </table>
+          </div>
+          `;
+        })() : ''}
 
         ${(sc.worst || sc.base || sc.best) ? `
         <div class="action-section">
@@ -1063,16 +1190,15 @@ function renderOTTLibre(key) {
       <div class="card">
         <div class="card-head"><div>
           <div class="card-title">Canales destacados incluidos</div>
-          <div class="card-subtitle">Con grupo audiovisual y disponibilidad FAST</div>
+          <div class="card-subtitle">Con grupo audiovisual</div>
         </div></div>
         <div class="channel-grid">
           ${ott.channels_included.map(ch => {
             const info = enrichChannel(ch);
             return `
-              <div class="channel-pill" ${info.group ? `data-tip="${info.group}${info.fastOn?' · FAST en '+info.fastOn.replace(/"/g,'&quot;'):''}"` : ''}>
+              <div class="channel-pill" ${info.group ? `data-tip="${info.group.replace(/"/g,'&quot;')}"` : ''}>
                 <span class="ch-name">${info.name}</span>
-                ${info.fast ? `<span class="ch-fast" title="Disponible en FAST">FAST</span>` : ''}
-                ${info.group ? `<span class="ch-group">${info.group.length > 22 ? info.group.slice(0,21)+'…' : info.group}</span>` : ''}
+                ${info.group ? `<span class="ch-group">${info.group.length > 24 ? info.group.slice(0,23)+'…' : info.group}</span>` : ''}
               </div>
             `;
           }).join('')}
@@ -1106,8 +1232,8 @@ function renderCompare() {
   const rows = [
     ['Operador matriz', op => op.parent],
     ['Líneas móviles (M)', op => fmt(op.mobile_lines)],
-    ['Líneas FTTH (M)', op => fmt(op.ftth_lines)],
-    ['Cuota FTTH', op => fmt(market.ftth_share[op.name] || 0)+'%'],
+    ['Líneas fibra (M)', op => fmt(op.ftth_lines)],
+    ['Cuota fibra', op => fmt(market.ftth_share[op.name] || 0)+'%'],
     ['Suscriptores TV', op => op.tv_subs < 1 ? fmtInt(op.tv_subs*1000)+'k' : fmt(op.tv_subs)+'M'],
     ['Marca TV', op => op.tv_brand],
     ['Canales TV', op => op.channels_count],
@@ -1397,13 +1523,6 @@ function renderParamountChannel(chKey) {
       ${kpi({ label:'Target', value:(ch.target_short||ch.target_age||ch.target||'').split(' ')[0], accent:'pink', subtitle:ch.target_short||ch.target_age||ch.target||'', date:'Posicionamiento', fieldId:null })}
       ${ch.competitors ? kpi({ label:'Competidores directos', value:ch.competitors.length, accent:'vodafone', date:'Análisis propio', fieldId:`pch.${chKey}.comp` }) : ''}
     </div>
-
-    ${ch.target_detail ? `
-      <div class="card">
-        <div class="card-head"><div><div class="card-title">Descripción del target</div></div></div>
-        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6">${ch.target_detail}</p>
-      </div>
-    ` : ''}
 
     ${(typeof TARGET_PROFILES !== 'undefined' && TARGET_PROFILES[CURRENT_COUNTRY] && TARGET_PROFILES[CURRENT_COUNTRY][chKey]) ? (() => {
       const tp = TARGET_PROFILES[CURRENT_COUNTRY][chKey];
